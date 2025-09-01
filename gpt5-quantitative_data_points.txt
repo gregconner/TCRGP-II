@@ -1,0 +1,144 @@
+# GPT-5 Quantitative Data Point Questions for Co-op Interviews
+
+## How to Answer While Reading an Interview Transcript
+1. Read the full transcript once to understand context and actors.
+2. For each metric below, search the transcript using the bolded keywords.
+3. Extract the most specific numeric value. If only a range is given, pick the midpoint and note the range in your working notes.
+4. If not stated, record -1 (Unknown) and add a brief note in your working notes (e.g., "not mentioned").
+5. Use the allowed encodings exactly. Do not improvise new codes.
+6. Prefer figures specific to the cooperative entity (not a parent nonprofit) unless explicitly stated otherwise.
+7. If numbers conflict, choose the latest figure in the transcript and note the conflict in your working notes.
+
+## Global Conventions
+- Unknown / Not stated: -1
+- Counts: non-negative integers
+- Currency: USD or CAD as stated in transcript; when using brackets, encode via category code (see Q02)
+- Frequencies per year: weekly=52, monthly=12, quarterly=4, annually=1
+
+## 25 Quantitative Metrics (with why they are meaningful)
+For each metric: Name (Data Type) — Allowed Values/Encoding — Why a meaningful quantity.
+
+1) Members_Current (int)
+   - Allowed: 0..∞ (or -1 if unknown)
+   - Keywords: "members", "in good standing"
+   - Why: Measures scale and reach of the co-op at time of interview.
+
+2) Annual_Revenue_Bracket_Code (int)
+   - Allowed: 1:<$25k, 2:$25–50k, 3:$50–100k, 4:$100–200k, 5:>$200k
+   - Keywords: "annual revenue", "budget", "sales"
+   - Why: Standardized bracket enables comparison of financial health without sensitive exact figures.
+
+3) Employees_FullTime (int)
+   - Allowed: 0..∞
+   - Keywords: "full time", "FTE"
+   - Why: Direct job creation indicator.
+
+4) Employees_PartTime (int)
+   - Allowed: 0..∞
+   - Keywords: "part time"
+   - Why: Captures additional employment beyond FTEs.
+
+5) Employees_Contract (int)
+   - Allowed: 0..∞
+   - Keywords: "contract", "consultant", "advisor"
+   - Why: Reflects contingent workforce and operational model.
+
+6) External_Partners_Count (int)
+   - Allowed: 0..∞
+   - Keywords: "partner", "collaborate", "with [org]"
+   - Why: Network breadth correlates with resource access and resilience.
+
+7) Sustainability_Initiatives_Count (int)
+   - Allowed: 0..∞
+   - Keywords: "regenerative", "conservation", "sustainability"
+   - Why: Quantifies environmental action portfolio.
+
+8) Innovations_Count (int)
+   - Allowed: 0..∞
+   - Keywords: "innovative", "new model", "platform", "first-of-its-kind"
+   - Why: Measures adaptation capacity to industry challenges.
+
+9) Programs_or_Services_Added_Count (int)
+   - Allowed: 0..∞
+   - Keywords: "added", "launched", "new service/program"
+   - Why: Captures diversification of offerings after founding.
+
+10) Training_Programs_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "training", "workforce", "scholarship", "capacity building"
+    - Why: Indicates investment in human capital.
+
+11) Challenges_Identified_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "challenge", "obstacle", "barrier"
+    - Why: Enables risk landscape comparison across co-ops.
+
+12) Revenue_Streams_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "revenue stream", "income from", "we earn"
+    - Why: Diversification reduces risk; more streams often means more stability.
+
+13) Cultural_Integrations_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "traditional", "cultural values", "elders", "language"
+    - Why: Quantifies alignment with cultural priorities.
+
+14) Jobs_Created_Total (int)
+    - Allowed: 0..∞ (or -1 if not quantified)
+    - Keywords: "employ", "jobs created"
+    - Why: Direct measure of economic impact.
+
+15) Future_Initiatives_Planned_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "plan to", "initiative", "roadmap"
+    - Why: Indicates strategic momentum and pipeline.
+
+16) Board_Size (int)
+    - Allowed: 0..∞ (or -1 if unknown)
+    - Keywords: "board", "directors"
+    - Why: Governance scale impacts decision-making efficiency.
+
+17) Digital_Tools_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "website", "platform", "QR", "social media", "traceability"
+    - Why: Proxy for operational digitization.
+
+18) New_Products_or_Services_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "developed", "product", "service"
+    - Why: Outputs from innovation that can drive revenue.
+
+19) Community_Engagement_Events_Count (int)
+    - Allowed: 0..∞ (or -1 if only described qualitatively)
+    - Keywords: "workshop", "event", "conference", "meeting"
+    - Why: Measures outreach intensity.
+
+20) Financial_Review_Frequency_Per_Year (int)
+    - Allowed: 1, 4, 12, 52 (or other integer if specified)
+    - Keywords: "review budget", "monthly", "quarterly", "annually"
+    - Why: Frequency signals financial discipline and agility.
+
+21) Membership_Growth_Percent (int)
+    - Allowed: -1 if unknown; else 0..∞ (rounded integer)
+    - Definition: 100*(CurrentMembers – BaselineMembers)/BaselineMembers
+    - Why: Normalized growth enables cross-co-op comparisons.
+
+22) Risk_Strategies_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "risk", "mitigation", "strategy"
+    - Why: Quantifies preparedness.
+
+23) Cultural_Preservation_Modes_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "preserve", "language", "traditional foods", "stories"
+    - Why: Measures concrete cultural-impact actions.
+
+24) Grants_or_Funding_Sources_Count (int)
+    - Allowed: 0..∞
+    - Keywords: "grant", "funding", "loan (non-repayable portion)"
+    - Why: Resource acquisition breadth.
+
+25) NonIndigenous_Partnerships_Count (int)
+    - Allowed: 0..∞
+    - Keywords: names of non-Indigenous orgs/companies
+    - Why: Indicates ecosystem integration and market access.

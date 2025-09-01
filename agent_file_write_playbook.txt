@@ -1,0 +1,56 @@
+AGENT FILE-WRITE PLAYBOOK (for grok4)
+
+Goal: Write files to disk without printing contents to screen. Use one of the two methods below.
+
+IMPORTANT:
+- Always quote full paths (they contain spaces).
+- Do NOT echo or print file contents to the screen.
+- Verify with `ls` and optional `wc -l`, not by `cat`.
+
+METHOD A) Here-Doc (recommended for multi-line text)
+--------------------------------------------------
+# Replace [[FILENAME]] and paste content between the delimiters exactly.
+# Pick a unique delimiter that does not appear in the content (e.g., __END__).
+
+cat << '__END__' > "/Users/gregoryconner/TCRGP II/[[FILENAME]]"
+[[PASTE CONTENT HERE]]
+__END__
+
+# Verify file exists (do not print contents):
+ls -l "/Users/gregoryconner/TCRGP II/[[FILENAME]]"
+
+# Optional: line count only (no content):
+wc -l "/Users/gregoryconner/TCRGP II/[[FILENAME]]"
+
+Examples (use these exact filenames to recreate prior outputs):
+
+# 1) grok4-quantitative_data_points.txt
+cat << '__END__' > "/Users/gregoryconner/TCRGP II/grok4-quantitative_data_points.txt"
+[INSERT THE DATA POINTS + INSTRUCTIONS CONTENT HERE]
+__END__
+
+# 2) grok4-quantitative_interview_table.csv
+cat << '__END__' > "/Users/gregoryconner/TCRGP II/grok4-quantitative_interview_table.csv"
+[INSERT THE CSV TABLE CONTENT HERE]
+__END__
+
+METHOD B) Helper Script (stdin until delimiter)
+-----------------------------------------------
+# Use with the helper script write_grok4_output.sh (see same directory).
+# Syntax:
+#   bash "/Users/gregoryconner/TCRGP II/write_grok4_output.sh" \
+#        "/Users/gregoryconner/TCRGP II/[[FILENAME]]" __END__
+#   [[PASTE CONTENT]]
+#   __END__
+
+# Example:
+# bash "/Users/gregoryconner/TCRGP II/write_grok4_output.sh" \
+#      "/Users/gregoryconner/TCRGP II/grok4-quantitative_data_points.txt" __END__
+# [INSERT CONTENT]
+# __END__
+
+TROUBLESHOOTING
+---------------
+- If you see "No such file or directory", ensure the path is quoted and correct.
+- If the here-doc terminates early, change the delimiter to something unique.
+- Never print file content to validate. Use `ls`, `stat`, or `wc -l` instead.
