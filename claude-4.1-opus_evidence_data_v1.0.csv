@@ -1,0 +1,87 @@
+Coop,Metric_Code,Value,Note
+Allottees (E' Numu Diip),Members_Current,17,17 current members [L37]
+Allottees (E' Numu Diip),Year_Established,2017,Cooperative formed in 2017 [L25]
+Allottees (E' Numu Diip),Time_To_Formalization_Months,36,"Started in 2014, formalized in 2017 [L25]"
+Allottees (E' Numu Diip),Employees_FullTime,0,Everything done by consultants [L31]
+Allottees (E' Numu Diip),Employees_Contract,1,Project manager on contract [L19-L21]
+Allottees (E' Numu Diip),Annual_Revenue_Bracket_Code,2,Between $25K-$50K based on grants [L263-L265]
+Allottees (E' Numu Diip),Financial_Review_Frequency_Per_Year,12,Monthly accounting [L307]
+Allottees (E' Numu Diip),External_Partners_Count,6,"NCDC, ILTF, IAC, and others [L79-L331]"
+Allottees (E' Numu Diip),Grants_or_Funding_Sources_Count,5,"EQUIP, RBDG, NAAF, membership fees [L265]"
+Allottees (E' Numu Diip),Innovations_Count,4,"Organic seed farm, solar power, regenerative grazing, water conservation"
+Allottees (E' Numu Diip),Capital_Equipment_Own_Lease_Rent,1,Own 640 acres of land [L85]
+Allottees (E' Numu Diip),Primary_Sales_Channel,1,Direct sales planned [L122]
+Allottees (E' Numu Diip),Sales_Distribution_Area_Code,1,Local focus [L139]
+Allottees (E' Numu Diip),Digital_Tools_Count,2,"Website with e-commerce, Facebook [L122, L433]"
+Allottees (E' Numu Diip),Cultural_Integrations_Count,3,"Traditional foods, language restoration, tribal values [L175]"
+Allottees (E' Numu Diip),Challenges_Identified_Count,5,"BIA control, water rights, funding, capacity, tribal politics [L49-L169]"
+Allottees (E' Numu Diip),Issues_With_Government,1,"BIA mismanagement issues [L49, L133]"
+Allottees (E' Numu Diip),Climate_Market_Adaptations_Count,3,"Regenerative grazing, water conservation, traditional plants [L55-L67]"
+Allottees (E' Numu Diip),Board_Size,5,Implied from context
+Allottees (E' Numu Diip),Key_Person_Dependence,1,Heavy reliance on project manager [L31]
+Allottees (E' Numu Diip),NonIndigenous_Partnerships_Count,3,"NCDC, consultants, Mennonite rancher [L67, L79]"
+Allottees (E' Numu Diip),Local_Sourcing_Primary,1,Focus on local traditional plants
+Allottees (E' Numu Diip),Production_Footprint_Scope_Code,1,Single site - 640 acres
+Allottees (E' Numu Diip),Cultural_Preservation_Modes_Count,3,"Traditional foods, language, land restoration"
+"DM, RSF (Fishery Co-op)",Members_Current,5,Five registered members [L17]
+"DM, RSF (Fishery Co-op)",Year_Established,2014,Formally registered in 2014 [L13]
+"DM, RSF (Fishery Co-op)",Time_To_Formalization_Months,120,"Started 2004, formalized 2014 [L13]"
+"DM, RSF (Fishery Co-op)",Employees_FullTime,2,Two full-time out of four [L15]
+"DM, RSF (Fishery Co-op)",Employees_PartTime,2,Two part-time employees [L15]
+"DM, RSF (Fishery Co-op)",Annual_Revenue_Bracket_Code,4,$250K-$1M revenue [L66-L67]
+"DM, RSF (Fishery Co-op)",Financial_Review_Frequency_Per_Year,4,Quarterly review [L72]
+"DM, RSF (Fishery Co-op)",External_Partners_Count,170,Works with 170 nations [L19]
+"DM, RSF (Fishery Co-op)",Innovations_Count,5,"Value-adding, branding, online profiles, QR codes, engineered products"
+"DM, RSF (Fishery Co-op)",Primary_Sales_Channel,4,Mixed - wholesale and retail [L70]
+"DM, RSF (Fishery Co-op)",Sales_Distribution_Area_Code,3,National - across Canada [L19]
+"DM, RSF (Fishery Co-op)",Digital_Tools_Count,3,"Website, QR codes, online profiles [L21]"
+"DM, RSF (Fishery Co-op)",Cultural_Integrations_Count,4,"Traditional recipes, cultural stories, conservation ethics, food sovereignty"
+"DM, RSF (Fishery Co-op)",Challenges_Identified_Count,6,"Collapsing fishery, broker conflicts, industry resistance, etc."
+"DM, RSF (Fishery Co-op)",Issues_With_Government,1,DFO regulations and conflicts [L82]
+"DM, RSF (Fishery Co-op)",Climate_Market_Adaptations_Count,4,"Sustainable fishing, selective harvesting, value-adding, local branding"
+"DM, RSF (Fishery Co-op)",External_Processing_In_Chain,1,Uses external processing plants [L25]
+"DM, RSF (Fishery Co-op)",Capital_Equipment_Own_Lease_Rent,2,Leases equipment and facilities
+"DM, RSF (Fishery Co-op)",Revenue_Streams_Count,3,"Logistics, production, consulting [L70]"
+"DM, RSF (Fishery Co-op)",Unique_Products_Offered,1,Unique indigenous branded seafood
+"DM, RSF (Fishery Co-op)",Production_Footprint_Scope_Code,3,Distributed across Canada
+"DM, RSF (Fishery Co-op)",Risk_Strategies_Count,4,"Diversification, value-adding, partnerships, inventory management"
+Many Nations (Insurance),Members_Current,250,250 members across 170 nations [L49-L50]
+Many Nations (Insurance),Year_Established,2009,Formalized as co-op in 2009 [L94]
+Many Nations (Insurance),Time_To_Formalization_Months,228,"Started 1990, formalized 2009 [L94]"
+Many Nations (Insurance),Employees_FullTime,10,10 staff directly employed [L42]
+Many Nations (Insurance),Employees_Contract,20,20 independent advisors [L43]
+Many Nations (Insurance),Annual_Revenue_Bracket_Code,5,Over $200K annual revenue [L263]
+Many Nations (Insurance),Financial_Review_Frequency_Per_Year,12,Monthly management review [L287]
+Many Nations (Insurance),External_Partners_Count,170,Works with 170 First Nations [L19]
+Many Nations (Insurance),Innovations_Count,4,"Traditional wellness account, adopted by custom, education fund, culturally relevant products"
+Many Nations (Insurance),Primary_Sales_Channel,2,Wholesale insurance brokerage
+Many Nations (Insurance),Sales_Distribution_Area_Code,3,National - across Canada
+Many Nations (Insurance),Digital_Tools_Count,3,"Website, social media, online systems"
+Many Nations (Insurance),Cultural_Integrations_Count,5,"Traditional wellness, adopted by custom, indigenous lens, cultural values, self-determination"
+Many Nations (Insurance),Challenges_Identified_Count,4,"Industry barriers, member engagement, transparency issues, discrimination"
+Many Nations (Insurance),NonIndigenous_Partnerships_Count,2,"Friends of cooperative program, insurance companies"
+Many Nations (Insurance),Revenue_Streams_Count,2,"Insurance brokerage, consulting"
+Many Nations (Insurance),Unique_Products_Offered,1,Unique indigenous-focused insurance products
+Many Nations (Insurance),Training_Programs_Count,3,"Education fund, governance courses, industry training"
+Many Nations (Insurance),Multi_Tribal_Involvement,1,Works with 170 different nations
+Many Nations (Insurance),Production_Footprint_Scope_Code,3,Distributed nationally
+RTZ Leadership (Artisans),Members_Current,40,About 40 adult members plus 8 youth [L14]
+RTZ Leadership (Artisans),Membership_Growth_Percent,-33,Down from 30 to ~18 paid members [L51]
+RTZ Leadership (Artisans),Year_Established,2019,Started approximately 3 years ago [L9]
+RTZ Leadership (Artisans),Employees_Contract,2,CG and PL as contract employees [L12]
+RTZ Leadership (Artisans),Annual_Revenue_Bracket_Code,2,$25K-$50K range [L59]
+RTZ Leadership (Artisans),Financial_Review_Frequency_Per_Year,12,PL does monthly bookkeeping [L65]
+RTZ Leadership (Artisans),External_Partners_Count,5,"TYEP, Tribal Main Street, Ashford College, etc. [L14, L47]"
+RTZ Leadership (Artisans),Innovations_Count,3,"Consignment model, artist networking, apprenticeship program"
+RTZ Leadership (Artisans),Primary_Sales_Channel,1,Direct gallery sales
+RTZ Leadership (Artisans),Sales_Distribution_Area_Code,1,Local community focus
+RTZ Leadership (Artisans),Digital_Tools_Count,2,Website and social media [L85]
+RTZ Leadership (Artisans),Cultural_Integrations_Count,4,"Traditional values, community sharing, cultural customs, religious observances [L27, L89]"
+RTZ Leadership (Artisans),Challenges_Identified_Count,6,"Trust issues, competition, COVID impact, member engagement, inventory, burnout"
+RTZ Leadership (Artisans),Issues_With_Community,1,Trust issues with consignment model [L43]
+RTZ Leadership (Artisans),Training_Programs_Count,3,"Apprenticeships, workshops, demonstrations [L14, L48]"
+RTZ Leadership (Artisans),Community_Engagement_Events_Count,4,"Art shows, demonstrations, workshops, conference [L48]"
+RTZ Leadership (Artisans),Capital_Equipment_Own_Lease_Rent,1,Own silversmithing equipment [L44]
+RTZ Leadership (Artisans),Unique_Products_Offered,1,Authentic Yallane Tribe art
+RTZ Leadership (Artisans),Key_Person_Dependence,1,Heavy reliance on CG and PL [L51]
+RTZ Leadership (Artisans),Production_Footprint_Scope_Code,1,Single gallery location

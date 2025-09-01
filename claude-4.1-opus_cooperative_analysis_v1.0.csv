@@ -1,0 +1,44 @@
+Category,Metric,Description,Allottees (E' Numu Diip),"DM, RSF (Fishery Co-op)",Many Nations (Insurance),RTZ Leadership (Artisans)
+Organizational Structure,Members_Current,Current member count,17,5,250,40
+Organizational Structure,Membership_Growth_Percent,Membership growth rate (%),N/A,N/A,N/A,-33
+Organizational Structure,Member_Retention_Percent,Member retention rate (%),N/A,N/A,N/A,N/A
+Organizational Structure,Year_Established,Year established,2017,2014,2009,2019
+Organizational Structure,Time_To_Formalization_Months,Time to formalization (months),36,120,228,N/A
+Organizational Structure,Board_Size,Board size,5,N/A,N/A,N/A
+Organizational Structure,Key_Person_Dependence,"Key person dependence (0=No, 1=Yes)",1,N/A,N/A,1
+Organizational Structure,Key_Person_Contingency_Plan,"Contingency plan exists (0=No, 1=Yes)",N/A,N/A,N/A,N/A
+Employment & Workforce,Employees_FullTime,Full-time employees,0,2,10,N/A
+Employment & Workforce,Employees_PartTime,Part-time employees,N/A,2,N/A,N/A
+Employment & Workforce,Employees_Contract,Contract employees,1,N/A,20,2
+Employment & Workforce,Jobs_Created_Total,Total jobs created,N/A,N/A,N/A,N/A
+Employment & Workforce,NonMember_Workers_Employed,Non-member workers employed,N/A,N/A,N/A,N/A
+Financial Performance,Annual_Revenue_Bracket_Code,"Annual revenue bracket (1=<$25K, 2=$25-50K, 3=$50-100K, 4=$100-200K, 5=>$200K)",2,4,5,2
+Financial Performance,Financial_Review_Frequency_Per_Year,Financial review frequency (per year),12,4,12,12
+Financial Performance,Lines_Of_Credit_Sufficient,"Sufficient lines of credit (0=No, 1=Yes)",N/A,N/A,N/A,N/A
+Financial Performance,Revenue_Streams_Count,Number of revenue streams,N/A,3,2,N/A
+Financial Performance,Grants_or_Funding_Sources_Count,Number of grants/funding sources,5,N/A,N/A,N/A
+Partnerships & Networks,External_Partners_Count,External partner count,6,170,170,5
+Partnerships & Networks,NonIndigenous_Partnerships_Count,Non-Indigenous partnership count,3,N/A,2,N/A
+Partnerships & Networks,Multi_Tribal_Involvement,"Multi-tribal involvement (0=No, 1=Yes)",N/A,N/A,1,N/A
+Innovation & Services,Programs_or_Services_Added_Count,Programs/services added,N/A,N/A,N/A,N/A
+Innovation & Services,Training_Programs_Count,Training programs offered,N/A,N/A,3,3
+Innovation & Services,Community_Engagement_Events_Count,Community engagement events,N/A,N/A,N/A,4
+Innovation & Services,Innovations_Count,Innovations implemented,4,5,4,3
+Innovation & Services,New_Products_or_Services_Count,New products/services,N/A,N/A,N/A,N/A
+Innovation & Services,Unique_Products_Offered,"Unique products offered (0=No, 1=Yes)",N/A,1,1,1
+Operations & Supply Chain,External_Processing_In_Chain,"External processing required (0=No, 1=Yes)",N/A,1,N/A,N/A
+Operations & Supply Chain,Capital_Equipment_Own_Lease_Rent,"Equipment ownership (0=None, 1=Own, 2=Lease, 3=Rent)",1,2,N/A,1
+Operations & Supply Chain,Local_Sourcing_Primary,"Primary local sourcing (0=No, 1=Yes)",1,N/A,N/A,N/A
+Operations & Supply Chain,Local_Purchasing_Primary,"Primary local purchasing (0=No, 1=Yes)",N/A,N/A,N/A,N/A
+Operations & Supply Chain,Primary_Sales_Channel,"Primary sales channel (1=Direct, 2=Wholesale, 3=Online, 4=Mixed)",1,4,2,1
+Operations & Supply Chain,Sales_Distribution_Area_Code,"Distribution area (1=Local, 2=Regional, 3=National, 4=International)",1,3,3,1
+Operations & Supply Chain,Production_Footprint_Scope_Code,"Production scope (1=Single site, 2=Multiple sites, 3=Distributed)",1,3,3,1
+Technology & Culture,Digital_Tools_Count,Digital tools utilized,2,3,3,2
+Technology & Culture,Cultural_Integrations_Count,Cultural integrations,3,4,5,4
+Technology & Culture,Cultural_Preservation_Modes_Count,Cultural preservation modes,3,N/A,N/A,N/A
+Challenges & Risk Management,Challenges_Identified_Count,Challenges identified,5,6,4,6
+Challenges & Risk Management,Issues_With_Government,"Issues with government (0=No, 1=Yes)",1,1,N/A,N/A
+Challenges & Risk Management,Issues_With_Tribes,"Issues with tribes (0=No, 1=Yes)",N/A,N/A,N/A,N/A
+Challenges & Risk Management,Issues_With_Community,"Issues with community (0=No, 1=Yes)",N/A,N/A,N/A,1
+Challenges & Risk Management,Risk_Strategies_Count,Risk mitigation strategies,N/A,4,N/A,N/A
+Challenges & Risk Management,Climate_Market_Adaptations_Count,Climate/market adaptations,3,4,N/A,N/A

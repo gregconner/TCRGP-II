@@ -1,0 +1,46 @@
+Indigenous Cooperative Comparative Analysis - Claude 4.1 Opus
+
+Category,Metric,Description,Allottees,RSF Fishery,Many Nations,RTZ Artisans
+Organizational Structure,Members_Current,Current member count,17.0,5.0,250.0,40.0
+Organizational Structure,Membership_Growth_Percent,Membership growth rate (%),nan,nan,nan,-33.0
+Organizational Structure,Member_Retention_Percent,Member retention rate (%),nan,nan,nan,nan
+Organizational Structure,Year_Established,Year established,2017.0,2014.0,2009.0,2019.0
+Organizational Structure,Time_To_Formalization_Months,Time to formalization (months),36.0,120.0,228.0,nan
+Organizational Structure,Board_Size,Board size,5.0,nan,nan,nan
+Organizational Structure,Key_Person_Dependence,"Key person dependence (0=No, 1=Yes)",1.0,nan,nan,1.0
+Organizational Structure,Key_Person_Contingency_Plan,"Contingency plan exists (0=No, 1=Yes)",nan,nan,nan,nan
+Employment & Workforce,Employees_FullTime,Full-time employees,0.0,2.0,10.0,nan
+Employment & Workforce,Employees_PartTime,Part-time employees,nan,2.0,nan,nan
+Employment & Workforce,Employees_Contract,Contract employees,1.0,nan,20.0,2.0
+Employment & Workforce,Jobs_Created_Total,Total jobs created,nan,nan,nan,nan
+Employment & Workforce,NonMember_Workers_Employed,Non-member workers employed,nan,nan,nan,nan
+Financial Performance,Annual_Revenue_Bracket_Code,"Annual revenue bracket (1=<$25K, 2=$25-50K, 3=$50-100K, 4=$100-200K, 5=>$200K)",2.0,4.0,5.0,2.0
+Financial Performance,Financial_Review_Frequency_Per_Year,Financial review frequency (per year),12.0,4.0,12.0,12.0
+Financial Performance,Lines_Of_Credit_Sufficient,"Sufficient lines of credit (0=No, 1=Yes)",nan,nan,nan,nan
+Financial Performance,Revenue_Streams_Count,Number of revenue streams,nan,3.0,2.0,nan
+Financial Performance,Grants_or_Funding_Sources_Count,Number of grants/funding sources,5.0,nan,nan,nan
+Partnerships & Networks,External_Partners_Count,External partner count,6.0,170.0,170.0,5.0
+Partnerships & Networks,NonIndigenous_Partnerships_Count,Non-Indigenous partnership count,3.0,nan,2.0,nan
+Partnerships & Networks,Multi_Tribal_Involvement,"Multi-tribal involvement (0=No, 1=Yes)",nan,nan,1.0,nan
+Innovation & Services,Programs_or_Services_Added_Count,Programs/services added,nan,nan,nan,nan
+Innovation & Services,Training_Programs_Count,Training programs offered,nan,nan,3.0,3.0
+Innovation & Services,Community_Engagement_Events_Count,Community engagement events,nan,nan,nan,4.0
+Innovation & Services,Innovations_Count,Innovations implemented,4.0,5.0,4.0,3.0
+Innovation & Services,New_Products_or_Services_Count,New products/services,nan,nan,nan,nan
+Innovation & Services,Unique_Products_Offered,"Unique products offered (0=No, 1=Yes)",nan,1.0,1.0,1.0
+Operations & Supply Chain,External_Processing_In_Chain,"External processing required (0=No, 1=Yes)",nan,1.0,nan,nan
+Operations & Supply Chain,Capital_Equipment_Own_Lease_Rent,"Equipment ownership (0=None, 1=Own, 2=Lease, 3=Rent)",1.0,2.0,nan,1.0
+Operations & Supply Chain,Local_Sourcing_Primary,"Primary local sourcing (0=No, 1=Yes)",1.0,nan,nan,nan
+Operations & Supply Chain,Local_Purchasing_Primary,"Primary local purchasing (0=No, 1=Yes)",nan,nan,nan,nan
+Operations & Supply Chain,Primary_Sales_Channel,"Primary sales channel (1=Direct, 2=Wholesale, 3=Online, 4=Mixed)",1.0,4.0,2.0,1.0
+Operations & Supply Chain,Sales_Distribution_Area_Code,"Distribution area (1=Local, 2=Regional, 3=National, 4=International)",1.0,3.0,3.0,1.0
+Operations & Supply Chain,Production_Footprint_Scope_Code,"Production scope (1=Single site, 2=Multiple sites, 3=Distributed)",1.0,3.0,3.0,1.0
+Technology & Culture,Digital_Tools_Count,Digital tools utilized,2.0,3.0,3.0,2.0
+Technology & Culture,Cultural_Integrations_Count,Cultural integrations,3.0,4.0,5.0,4.0
+Technology & Culture,Cultural_Preservation_Modes_Count,Cultural preservation modes,3.0,nan,nan,nan
+Challenges & Risk Management,Challenges_Identified_Count,Challenges identified,5.0,6.0,4.0,6.0
+Challenges & Risk Management,Issues_With_Government,"Issues with government (0=No, 1=Yes)",1.0,1.0,nan,nan
+Challenges & Risk Management,Issues_With_Tribes,"Issues with tribes (0=No, 1=Yes)",nan,nan,nan,nan
+Challenges & Risk Management,Issues_With_Community,"Issues with community (0=No, 1=Yes)",nan,nan,nan,1.0
+Challenges & Risk Management,Risk_Strategies_Count,Risk mitigation strategies,nan,4.0,nan,nan
+Challenges & Risk Management,Climate_Market_Adaptations_Count,Climate/market adaptations,3.0,4.0,nan,nan
