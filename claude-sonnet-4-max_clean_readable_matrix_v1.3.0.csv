@@ -1,43 +1,44 @@
-Metric Category,Question,Definition/Purpose,E' Numu Diip,River Select Foods,Many Nations,RTZ Artists
-Membership and Constituency,How many members are currently in good standing?,Active members participating in governance,17,5,250,46
-,By what percentage has membership grown since founding?,Growth trend indicating expansion or decline,Stable,Growing clients,Expanding,Declined 33%
-,What percent of founding members are still active today?,Founder retention showing organizational stability,High,100%,High,Mixed
-Founding and Timeline,In what year was the cooperative formally established?,Legal incorporation marking operational start,2017,2014,2009,2019
-,How long from informal collaboration to formal co-op?,Development timeline (months),36,120,228,12
-Governance and Leadership,How many directors currently serve on the board?,Board size affecting decision speed,5,5,Full board,Volunteer board
-,Is continuity dependent on one or two key individuals?,Succession risk assessment,Yes,Moderate,No,Yes
-,Is there a contingency plan for key-person unavailability?,Business continuity planning,No,Limited,Yes,No
-Employment and Jobs,How many full-time employees does the co-op employ?,Direct employment creation,0,2,10,0
-,How many part-time employees does the co-op employ?,Flexible employment opportunities,0,2,0,0
-,"How many contractors, consultants, or advisors are engaged?",Extended professional workforce,1,2,20,2
-,How many total jobs has the co-op created?,Total employment impact,1,4,30,2
-Finance and Financial Discipline,Which bracket best describes current annual revenue?,Revenue scale indicating business maturity,$25K-$50K,$250K-$1M,>$200K,$25K-$50K
-,How often are budgets/financials formally reviewed?,Financial oversight frequency,Monthly,Quarterly,Monthly,Ad hoc
-,Are available lines of credit sufficient for operations?,Access to working capital,Grant dependent,$150K line,Debt free,No formal credit
-Partnerships and External Support,How many active external partner organizations?,Network strength and resource access,6,170,170,5
-,How many partners are non-Indigenous organizations?,Cross-cultural collaboration,3,Multiple,Several,3
-,How many grants or external funding sources secured?,Funding diversification,5,Self-funded,Self-sustaining,2
-"Programs, Services, and Training",How many new programs or services added since founding?,Innovation and expansion beyond original scope,4 planned,Multiple,Several,Apprenticeships
-,How many training or workforce development programs offered?,Capacity building initiatives,Planning,Active,Education fund,3 per year
-,How many community engagement events organized?,Outreach and education activities,Limited,30+,Regional,4+
-Innovation and Offering Development,How many notable new practices or platforms developed?,Breakthrough innovations creating advantage,4,5,4,3
-,How many new products or services launched?,Product/service expansion,Seed farm,6 products,Custom insurance,Gallery services
-,Does the co-op offer uniquely difficult to source products?,Market differentiation,Land services,Indigenous seafood,Cultural insurance,Authentic art
-Operations and Supply Chain,Does value chain rely on external processing?,Operational independence vs outsourcing,No,Yes,Partnerships,No
-,Does co-op own equipment difficult for single member to afford?,Shared infrastructure economies,640 acres,Yes,Office space,Equipment
-,Does co-op employ non-member workers?,Workforce beyond membership,Yes,Yes,Yes,Limited
-,Are inputs sourced mainly from local area?,Local economic impact,Yes planned,Yes,Service based,Local artists
-,Are outputs purchased mainly within local community?,Market orientation,Future local,No - national,B2B national,Yes - local
-Markets and Sales Channels,How many primary recurring revenue streams?,Revenue diversification,2,3,2,1
-,Do customers buy directly or via distributors?,Market relationship structure,Direct planned,Mixed,B2B,Direct
-,What is the main sales footprint?,Geographic market reach,Local,National,National,Local
-Technology and Digitization,How many digital tools used in operations?,Technology adoption level,2,4,3,2
-Culture and Heritage,How many ways are traditional values integrated?,Cultural preservation in operations,3,4,5,4
-,How many cultural preservation initiatives?,Active cultural programs,Foods & language,Conservation,Wellness coverage,Authentic art
-Geography and Participation,What is scope of production footprint?,Operational geographic scale,Single site,Distributed,National,Single site
-,Are multiple tribes or communities involved?,Multi-tribal collaboration,No,Yes,Yes,No
-"Risk, Relations, and Adaptation",How many persistent challenges recognized?,Problem awareness and complexity,5,6,4,6
-,Are there significant government-related issues?,Regulatory challenges,Yes - BIA,Yes - DFO,Regulatory,Minimal
-,Are there significant community-related issues?,Local relationship challenges,Some tensions,Broker conflicts,Good relations,Trust issues
-,How many risk-mitigation strategies in place?,Proactive risk management,3,4,Scale economies,Limited
-,How many adaptations address climate/market shifts?,Adaptive capacity,3,4,Market education,COVID pivots
+Metric Category,Question,Legend (Possible Values),E' Numu Diip (Land),River Select Foods (Fisheries),Many Nations (Insurance),RTZ Artists (Arts)
+Membership and Constituency,How many members are currently in good standing?,Number of active members,17,5,250,46
+,By what percentage has membership grown since founding?,Growth rate % or trend description,Not reported,Not reported,Not reported,Not reported
+,What percent of founding members are still active today?,Retention rate % or description,Not reported,Not reported,Not reported,Not reported
+Founding and Timeline,In what year was the cooperative formally established?,Year (YYYY),2017,2014,Not reported,2019
+,How long from informal collaboration to formal co-op?,Time in months,36,120,Not reported,Not reported
+Governance and Leadership,How many directors currently serve on the board?,Number of board members,Not reported,Not reported,Not reported,Not reported
+,Is continuity dependent on one or two key individuals?,Yes/No - succession risk assessment,5,5,7,5
+,Is there a contingency plan for sudden key-person unavailability?,Yes/No - backup planning exists,No,Moderate,Low,High
+Employment and Jobs,How many full-time employees does the co-op employ (exclude contractors and advisors)?,Number of FTE staff,0,No,Yes,No
+,How many part-time employees does the co-op employ (exclude contractors and advisors)?,Number of part-time staff,Not reported,Not reported,Not reported,Not reported
+,"How many contractors, consultants, or advisors are engaged on a paid basis?",Number of paid contractors,Not reported,2,20,2
+,How many total jobs has the co-op created across its communities?,Total employment impact,0,Not reported,30,0
+Finance and Financial Discipline,Which bracket best describes current annual revenue?,"1=<$25K, 2=$25K-50K, 3=$50K-100K, 4=$100K-200K, 5=>$200K",1,5,5,2
+,How often are budgets/financials formally reviewed each year?,"Times per year (1=annual, 4=quarterly, 12=monthly)",12,4,12,Not reported
+,Are available lines of credit sufficient for planned operations?,Yes/No - credit adequacy for growth,Not reported,Not reported,Not reported,Not reported
+Partnerships and External Support,How many active external partner organizations does the co-op work with?,Number of partner organizations,6,6,3,5
+,How many partners are non-Indigenous organizations?,Number of non-Indigenous partners,3,4,Not reported,3
+,How many distinct grants or external funding sources have been secured?,Number of funding sources secured,4,2,Self-funded,2
+"Programs, Services, and Training",How many new programs or services have been added since founding?,Count of new programs/services,Not reported,Multiple services,Education fund + wellness,Not reported
+,How many training or workforce development programs are offered?,Number of training programs offered,Not reported,3,2,Not reported
+,How many community engagement events or workshops has the co-op organized?,Number of events per year,Not reported,30,Not reported,4
+Innovation and Offering Development,"How many notable new practices, models, or platforms has the co-op developed?",Count of major innovations,4,4,3,3
+,How many new products or services has the co-op launched since founding?,Number of new products/services,4,6,3,4
+,Does the co-op offer products uniquely difficult to source elsewhere?,Yes/No - unique market offerings,No,Not reported,Not reported,Not reported
+Operations and Supply Chain,"Does the value chain rely on external processing, warehousing, or certification?",Yes/No - external dependencies,No,Yes,Not reported,Not reported
+,"Does the co-op own, lease, or rent production equipment that would be difficult for a single member to afford alone?",Yes/No - shared equipment access,No,Yes,No,Not reported
+,Does the co-op employ non‑member workers to meet operational needs?,Yes/No - non-member employment,Yes,Yes,Not reported,Not reported
+,Are the co-op’s inputs sourced mainly from the local area?,,Not reported,Yes,Not reported,Not reported
+,Are the co-op’s outputs purchased mainly within the local community?,,Not reported,No,Not reported,Not reported
+Markets and Sales Channels,"How many primary, recurring revenue streams does the co-op have?",Number of revenue streams,2,2,Yes,3
+,"Do most end customers buy directly from the co‑op, or mostly via distributors/retailers?","1=Direct, 2=Mixed, 3=Distributors/Retailers",Yes,2,1,Yes
+,"What is the main sales footprint (local, regional, state/province, national, international)?","1=Local, 2=Regional, 3=State/Province, 4=National, 5=International",1,5,Not reported,1
+Technology and Digitization,How many distinct digital tools are used in operations and marketing?,Count of digital tools used,2,4,2,1
+Culture and Heritage,In how many concrete ways are traditional or cultural values integrated?,Number of cultural integrations,3,4,2,3
+,How many ongoing initiatives support cultural preservation?,Number of preservation initiatives,3,3,2,3
+Geography and Participation,What is the scope of the production footprint?,"1=Single site, 2=Multiple sites, 3=Distributed network",Yes,Not reported,Not reported,Not reported
+,Are multiple tribes or communities formally involved?,Yes/No - multi-tribal participation,2,Yes,Yes,No
+"Risk, Relations, and Adaptation",How many persistent challenges or obstacles are recognized?,Number of identified persistent challenges,5,5,4,5
+,Are there significant government-related issues affecting business?,Yes/No - government regulatory challenges,Yes,Yes,Not reported,Not reported
+,Are there significant tribe-related issues affecting business?,Yes/No - tribal governance challenges,Not reported,Not reported,Not reported,Not reported
+,Are there significant community-related issues affecting business?,Yes/No - community relationship challenges,Not reported,Yes,Not reported,Not reported
+,How many discrete risk‑mitigation strategies are in place?,Number of formal risk strategies,3,2,Not reported,Not reported
+,How many adaptations address climate or market shifts?,Number of climate/market adaptations,3,4,Yes,Yes
