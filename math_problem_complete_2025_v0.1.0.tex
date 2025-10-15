@@ -1,0 +1,199 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+
+\title{Triangular Numbers and Perfect Squares:\\A Mathematical Journey to 2025}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Part 1: The Universal Theorem}
+
+\subsection*{Problem Statement}
+
+A \textbf{triangular number} has the form $T_n = \frac{n(n+1)}{2}$ for $n \in \mathbb{N}$.
+
+\vspace{0.3cm}
+
+\textbf{Problem 1:} Show that every perfect square greater than 1 is the sum of two consecutive triangular numbers.
+
+\subsection*{Solution to Problem 1}
+
+\begin{theorem}
+For all integers $n \geq 1$, we have $T_n + T_{n+1} = (n+1)^2$.
+\end{theorem}
+
+\begin{proof}
+We compute directly:
+\begin{align*}
+T_n + T_{n+1} &= \frac{n(n+1)}{2} + \frac{(n+1)(n+2)}{2} \\
+&= \frac{n(n+1) + (n+1)(n+2)}{2} \\
+&= \frac{(n+1)[n + (n+2)]}{2} \\
+&= \frac{(n+1)(2n+2)}{2} \\
+&= \frac{(n+1) \cdot 2(n+1)}{2} \\
+&= \frac{2(n+1)^2}{2} \\
+&= (n+1)^2
+\end{align*}
+\end{proof}
+
+\textbf{Corollary:} Every perfect square $k^2$ with $k \geq 2$ can be expressed as the sum of two consecutive triangular numbers: $k^2 = T_{k-1} + T_k$.
+
+\subsection*{Examples}
+
+\begin{align*}
+4 &= 2^2 = T_1 + T_2 = 1 + 3 \\
+9 &= 3^2 = T_2 + T_3 = 3 + 6 \\
+16 &= 4^2 = T_3 + T_4 = 6 + 10 \\
+25 &= 5^2 = T_4 + T_5 = 10 + 15 \\
+36 &= 6^2 = T_5 + T_6 = 15 + 21 \\
+49 &= 7^2 = T_6 + T_7 = 21 + 28 \\
+\vdots \\
+2025 &= 45^2 = T_{44} + T_{45} = 990 + 1035
+\end{align*}
+
+\section*{Part 2: A Special Number}
+
+\subsection*{Problem Statement}
+
+\textbf{Problem 2:} Find a number that is both:
+\begin{enumerate}[label=(\alph*)]
+\item The square of a triangular number, and
+\item The sum of two consecutive triangular numbers
+\end{enumerate}
+
+\subsection*{Solution to Problem 2}
+
+We need to find $n$ and $m$ such that:
+\begin{equation}
+(T_n)^2 = T_m + T_{m+1}
+\end{equation}
+
+From Theorem 1, we know that $T_m + T_{m+1} = (m+1)^2$, so we need:
+\begin{equation}
+(T_n)^2 = (m+1)^2
+\end{equation}
+
+This gives us:
+\begin{equation}
+T_n = m+1
+\end{equation}
+
+So we need to find $n$ such that $T_n = m+1$ for some integer $m$. Since any triangular number $T_n$ can play this role, we can choose any value of $n$.
+
+Let's explore small values:
+
+\subsubsection*{Case $n = 1$:}
+\begin{align*}
+T_1 &= 1 \\
+(T_1)^2 &= 1^2 = 1
+\end{align*}
+
+We need $1 = T_m + T_{m+1} = (m+1)^2$, which gives $m+1 = 1$, so $m = 0$.
+But $m$ must be a positive integer, so this doesn't work in the natural numbers (though $T_0 = 0$ is sometimes considered).
+
+\subsubsection*{Case $n = 2$:}
+\begin{align*}
+T_2 &= 3 \\
+(T_2)^2 &= 9
+\end{align*}
+
+We need $9 = T_m + T_{m+1} = (m+1)^2$, which gives $m+1 = 3$, so $m = 2$.
+
+Verification: $T_2 + T_3 = 3 + 6 = 9 = 3^2$ ✓
+
+Therefore, $\boxed{9}$ is the smallest positive integer that is both the square of a triangular number and the sum of two consecutive triangular numbers.
+
+\subsubsection*{Case $n = 3$:}
+\begin{align*}
+T_3 &= 6 \\
+(T_3)^2 &= 36
+\end{align*}
+
+We need $36 = T_m + T_{m+1} = (m+1)^2$, which gives $m+1 = 6$, so $m = 5$.
+
+Verification: $T_5 + T_6 = 15 + 21 = 36 = 6^2$ ✓
+
+\subsubsection*{Case $n = 9$:}
+\begin{align*}
+T_9 &= \frac{9 \cdot 10}{2} = 45 \\
+(T_9)^2 &= 45^2 = 2025
+\end{align*}
+
+We need $2025 = T_m + T_{m+1} = (m+1)^2$, which gives $m+1 = 45$, so $m = 44$.
+
+Verification: $T_{44} + T_{45} = 990 + 1035 = 2025 = 45^2$ ✓
+
+\section*{General Pattern}
+
+\begin{proposition}
+For any positive integer $n$, the number $(T_n)^2$ is both the square of a triangular number and the sum of two consecutive triangular numbers. Specifically:
+\begin{equation}
+(T_n)^2 = T_{T_n - 1} + T_{T_n}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let $k = T_n$. Then from Theorem 1:
+\begin{equation}
+T_{k-1} + T_k = k^2 = (T_n)^2
+\end{equation}
+\end{proof}
+
+\section*{The Special Significance of 2025}
+
+The number 2025 has several remarkable properties:
+
+\begin{enumerate}
+\item $2025 = 45^2$ (a perfect square)
+\item $2025 = (T_9)^2$ (the square of the 9th triangular number)
+\item $2025 = T_{44} + T_{45}$ (the sum of two consecutive triangular numbers)
+\item $T_9 = 45$ and $90 = 2 \cdot T_9$ (90 is twice the 9th triangular number)
+\item $T_{44} = 990 = 45 \cdot 22$ and $T_{45} = 1035 = 45 \cdot 23$
+\end{enumerate}
+
+\subsection*{Additional Beautiful Relationships}
+
+Notice that:
+\begin{align*}
+2025 &= 45^2 \\
+&= (T_9)^2 \\
+&= T_{44} + T_{45} \\
+&= \frac{44 \cdot 45}{2} + \frac{45 \cdot 46}{2} \\
+&= \frac{45(44 + 46)}{2} \\
+&= \frac{45 \cdot 90}{2} \\
+&= 45 \cdot 45
+\end{align*}
+
+And remarkably, $90 = 2 \cdot 45 = 2 \cdot T_9$, creating a beautiful recursive relationship:
+\begin{equation}
+2025 = (T_9)^2 = T_9 \cdot (2T_9) / 1 = 45 \cdot 45
+\end{equation}
+
+\section*{Summary}
+
+\begin{itemize}
+\item \textbf{Universal Theorem:} Every perfect square $(n+1)^2$ for $n \geq 1$ equals $T_n + T_{n+1}$
+\item \textbf{Special Numbers:} Every number of the form $(T_n)^2$ is both:
+\begin{itemize}
+\item The square of a triangular number
+\item The sum of two consecutive triangular numbers
+\end{itemize}
+\item \textbf{Smallest Example:} $9 = (T_2)^2 = T_2 + T_3 = 3 + 6$
+\item \textbf{The 2025 Example:} $2025 = (T_9)^2 = T_{44} + T_{45} = 990 + 1035$
+\end{itemize}
+
+\vspace{1cm}
+
+Therefore, the answer to finding "the number" that is both the square of a triangular number and the sum of two consecutive triangular numbers is that there are infinitely many such numbers, given by $(T_n)^2$ for any $n \geq 2$. The smallest is $\boxed{9}$, and a particularly beautiful example for the year 2025 is $\boxed{2025}$ itself.
+
+\end{document}
