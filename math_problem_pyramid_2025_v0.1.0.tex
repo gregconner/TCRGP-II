@@ -1,0 +1,36 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Number Theory Problem: Pyramid Numbers and Triangular Numbers}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problem Statement}
+
+A \textbf{triangular number} has the form $T_n = \frac{n(n+1)}{2}$.
+
+A \textbf{pyramid number} has the form $P_n = T_{T_n}$ (that is, the $T_n$-th triangular number).
+
+For example:
+\begin{align}
+T_1 &= 1, \quad T_2 = 3, \quad T_3 = 6, \quad T_4 = 10, \ldots \\
+P_1 &= T_{T_1} = T_1 = 1 \\
+P_2 &= T_{T_2} = T_3 = 6 \\
+P_3 &= T_{T_3} = T_6 = 21 \\
+P_4 &= T_{T_4} = T_{10} = 55
+\end{align}
+
+\textbf{Problem:} What is the smallest number that is both a pyramid number and a triangular number?
+
+\vspace{0.5cm}
+
+\textbf{Hint:} You may find it helpful to consider the relationship between pyramid numbers and perfect squares, and to look for patterns in the sequence of triangular numbers.
+
+\end{document}
