@@ -1,0 +1,2214 @@
+WEBVTT
+
+1
+00:00:01.900 --> 00:00:12.490
+Pamela Standing: And just thank you for taking the time to be with us so we can learn about the work that you do, and just a little bit of conversation I had with you. I was really excited about
+
+2
+00:00:12.820 --> 00:00:20.950
+Pamela Standing: how you're such an advocate for your communities, and so proud of your UPIC culture. So, thank you for being with us.
+
+3
+00:00:22.930 --> 00:00:24.150
+Anna Sattler: Thank you.
+
+4
+00:00:25.680 --> 00:00:31.800
+Anna Sattler: So I just wanted to start off, by saying that I'm not a technical person.
+
+5
+00:00:31.980 --> 00:00:48.279
+Anna Sattler: So, I really hope that I can ask you guys to give me some grace. If there are technical questions and I'm not able to answer them immediately, that you would give me, you know, half hour or so to email you the answer.
+
+6
+00:00:48.410 --> 00:00:58.620
+Anna Sattler: Because we have, you know, engineering and operations, and I have a bunch of people that I can ask if I don't have an answer to a technical question.
+
+7
+00:01:00.290 --> 00:01:07.730
+Jodi Burshia: Absolutely, yes, that sounds good. I don't think any of us are really, we just pick things up as we go, and so…
+
+8
+00:01:07.920 --> 00:01:18.559
+Jodi Burshia: if we're using different types of, like, different types of technology, we've just, you know, we're like, oh, okay, and COVID forced us to, like, use these things, and so this is where we are.
+
+9
+00:01:20.330 --> 00:01:33.199
+Jodi Burshia: But we're just, you know, wanting to learn from you, to learn about your experiences working with this co-op, and any information that you find that would be, pertinent to what we're working with, that would be wonderful.
+
+10
+00:01:34.330 --> 00:01:34.980
+Jodi Burshia: That's okay.
+
+11
+00:01:34.980 --> 00:01:35.630
+Anna Sattler: mate.
+
+12
+00:01:36.660 --> 00:01:56.580
+Jodi Burshia: So, I mean, the project description, which I believe you've received previously, yet, what we're doing is building research capacity, and we're inviting tribal college students. So, we want to definitely involve students, Mississippi students and other Indigenous students as we go along.
+
+13
+00:01:56.840 --> 00:02:11.720
+Jodi Burshia: to be involved in the research process, to have access to both qualitative and quantitative data, which I didn't have until grad school, so it was just sort of, I mean, like, for the students to have this opportunity now, it is just wonderful that they're able to do
+
+14
+00:02:11.880 --> 00:02:23.730
+Jodi Burshia: to do some of these different things and have this access. And so, that's what we're working on. So we can, go through these questions. I put them here on your screen. Are you able to see them?
+
+15
+00:02:26.210 --> 00:02:40.570
+Anna Sattler: I have them… I have a Word document up, because I… I, spent a couple of days… well, a couple of evenings making sure that I had some good bullet points to be able to answer these questions.
+
+16
+00:02:40.760 --> 00:02:47.050
+Jodi Burshia: Wonderful! Okay, then I will close this window, and so it's just, you and I looking at the…
+
+17
+00:02:47.280 --> 00:02:50.100
+Jodi Burshia: And the information here. Let me pull this up.
+
+18
+00:02:54.120 --> 00:02:54.830
+Jodi Burshia: Oops.
+
+19
+00:02:57.110 --> 00:03:00.639
+Jodi Burshia: finish here… Talk about technology.
+
+20
+00:03:01.600 --> 00:03:06.620
+Jodi Burshia: And just getting things on the right side. Okay, so,
+
+21
+00:03:07.060 --> 00:03:10.849
+Jodi Burshia: Well, I'm from, the Southwest. I,
+
+22
+00:03:10.900 --> 00:03:30.700
+Jodi Burshia: grew up… well, part of the time on Daytona Autom Reservation there in southern Arizona, and then the other part of the time here in New Mexico. And so, getting a chance to be… to move home, it took a little while, took about, a few years, you know, to get here, but… but now I'm here. And just, you know, the different things, that there's so much…
+
+23
+00:03:30.700 --> 00:03:43.309
+Jodi Burshia: wisdom and so much knowledge that is included here that, just being… I feel like I learned something brand new from the people around me, and so it's just… it's just great, and I learn every day.
+
+24
+00:03:43.370 --> 00:03:57.400
+Jodi Burshia: So that's why, you know, we're extremely excited, so thank you for taking this time to meet with us, to talk about, you know, the things that are going on with this cooperative, and then your… and then your role in all of it. That's exciting.
+
+25
+00:03:58.550 --> 00:04:03.270
+Anna Sattler: I just got back from Phoenix, Gilbert, Tuesday.
+
+26
+00:04:03.270 --> 00:04:04.270
+Jodi Burshia: Okay.
+
+27
+00:04:05.050 --> 00:04:09.120
+Anna Sattler: I spent my 55th birthday down there.
+
+28
+00:04:09.670 --> 00:04:12.460
+Anna Sattler: They've completed.
+
+29
+00:04:12.460 --> 00:04:13.000
+Jodi Burshia: birthday.
+
+30
+00:04:13.000 --> 00:04:13.460
+Anna Sattler: words.
+
+31
+00:04:13.460 --> 00:04:14.030
+Jodi Burshia: Wonderful.
+
+32
+00:04:14.030 --> 00:04:20.510
+Anna Sattler: I love Arizona. I love the heat. Anyway… Yeah.
+
+33
+00:04:21.339 --> 00:04:38.609
+Jodi Burshia: Well, wonderful, I'm glad. I'm glad you had a good experience. Yep, Arizona is, you know, there's so many different things going on there, so many temperatures, you know, like in Northern Arizona, like, the Flagstaff area. And then you go south, and it's, like, desert area, and it's warm, and it's arid, and all those different things.
+
+34
+00:04:38.699 --> 00:04:41.829
+Jodi Burshia: So, there's so much there, for sure.
+
+35
+00:04:42.769 --> 00:04:48.149
+Jodi Burshia: Well, wonderful. Well, the first question, if you are able to…
+
+36
+00:04:48.649 --> 00:04:55.109
+Jodi Burshia: To help with this one, where is your cooperative located, and what is the purpose of your cooperative?
+
+37
+00:04:56.250 --> 00:05:09.930
+Anna Sattler: So, AVAC serves 58 rural communities. Ends up being about 60-some tribes, And…
+
+38
+00:05:10.460 --> 00:05:20.710
+Anna Sattler: We were first established in 1967, and then, in 67,
+
+39
+00:05:22.540 --> 00:05:29.930
+Anna Sattler: and we started providing electricity, I'm sorry, I just panicked there for a second, to remote
+
+40
+00:05:30.680 --> 00:05:36.710
+Anna Sattler: 3 remote communities that didn't have any electricity. None.
+
+41
+00:05:36.930 --> 00:05:44.850
+Anna Sattler: So, and that was, Hooper Bay, New Lotto, and… Old Harbor.
+
+42
+00:05:46.730 --> 00:05:51.540
+Anna Sattler: And so, if you… if you look at the map of Alaska,
+
+43
+00:05:52.210 --> 00:06:02.849
+Anna Sattler: we have 229 federally recognized tribes, but if you look at the map of Alaska, AVAC's service area goes all the way to Kibalina in the Northwest Arctic.
+
+44
+00:06:03.610 --> 00:06:08.770
+Anna Sattler: it… and then all the way down to Yak… Old Harbor.
+
+45
+00:06:08.840 --> 00:06:27.820
+Anna Sattler: On Kodiak Island, so that's closer to the chain. We have Yakutat, which is southeast Alaska, and then way over west, Gamble, and then east, Minto. And Minto is the only community that is served
+
+46
+00:06:27.820 --> 00:06:31.249
+Anna Sattler: by a road. Everything else
+
+47
+00:06:31.440 --> 00:06:42.999
+Anna Sattler: is served by barge or airplane. And when I'm talking airplane, I'm talking, like, a 737 into a hub community, like Bethel.
+
+48
+00:06:43.050 --> 00:07:00.920
+Anna Sattler: And it serves 56 communities surrounding it, and so you're able to get in and out with a single engine or a twin-engine, airplane. That's it. I mean, they, you know, it's rea… Alaska's really, really unique that way.
+
+49
+00:07:02.140 --> 00:07:03.630
+Anna Sattler: So,
+
+50
+00:07:03.790 --> 00:07:19.439
+Anna Sattler: to answer… I just wanted to give you, like, a little 30,000-foot overview of how… of… of our territory. I mean, it's… it's huge. You cut Alaska into thirds, and it would make Texas the fourth largest state.
+
+51
+00:07:19.700 --> 00:07:24.619
+Anna Sattler: So, I mean, it's just, you know, it's massive. So,
+
+52
+00:07:24.770 --> 00:07:37.030
+Anna Sattler: You know, as we go down this… down the questions, you know, logistics is an issue, because everything has to be imported.
+
+53
+00:07:39.200 --> 00:07:55.560
+Anna Sattler: But yeah, anyway, so we wanted to… AVAC's mission is to, you know, our founding purpose is to improve living conditions and support community development and, be able to teach,
+
+54
+00:07:55.700 --> 00:08:11.970
+Anna Sattler: community members how… some skills on how to, you know, for distribution, and for power plant maintenance, and, you know, those kinds of things, and then just enhance the quality of life. I do want to just mention one thing, and I'll try to keep all my other answers shorter.
+
+55
+00:08:12.160 --> 00:08:26.779
+Anna Sattler: we… we have a book of letters from 5th and 6th and 7th graders from Imanguk. It's… Imanoc, I don't know how to… E-M-M-O-N-A-K,
+
+56
+00:08:26.990 --> 00:08:39.590
+Anna Sattler: And in 1969, these kids wrote AVAC a letter about… letters about how excited they were to get electricity and the things that they were gonna do.
+
+57
+00:08:40.409 --> 00:08:42.300
+Anna Sattler: Just having a light bulb.
+
+58
+00:08:42.549 --> 00:08:54.909
+Anna Sattler: having, a radio, having… I mean, just the… the cutest things, and then these, a lot of the names of these kids ended up being
+
+59
+00:08:55.090 --> 00:09:02.129
+Anna Sattler: Alaska state leaders, like, one of them is the superintendent for the school district out there. Another one, Molly Hooch.
+
+60
+00:09:02.220 --> 00:09:12.869
+Anna Sattler: Was the first… was part of a lawsuit that create… that made sure that schools were built in all of the villages, and they weren't
+
+61
+00:09:12.870 --> 00:09:29.910
+Anna Sattler: importing all of the… all of the villagers, to, you know, Chimaua, or Edgecombe, or, you know, all of the other boarding schools. And so, it's really… it's really sort of neat how new Alaska is,
+
+62
+00:09:30.000 --> 00:09:36.240
+Anna Sattler: For everything, because, you know, late 60s, early 70s, to get electrified is pretty new.
+
+63
+00:09:36.630 --> 00:09:38.350
+Anna Sattler: Anyway, okay.
+
+64
+00:09:39.830 --> 00:09:43.609
+Anna Sattler: Sorry, Jodi, I'll try to keep my answers shorter.
+
+65
+00:09:43.610 --> 00:09:44.250
+Jodi Burshia: That is…
+
+66
+00:09:44.400 --> 00:10:03.409
+Jodi Burshia: No, that is great background information, you know, especially with thinking about how, you know, quickly people have access to, like, electricity now. That's huge, that's a huge and important point, you know, that people are not aware of, and they're not, you know, when they think of Alaska, they don't… they just think of, like.
+
+67
+00:10:03.460 --> 00:10:20.300
+Jodi Burshia: they might think of, like, Anchorage or something of that sort, but they don't know. Or they might think of Juneau, but they might not think about, like, everything else, you know, that is involved into that. And so that is a great point of talking about, you know, like, electricity.
+
+68
+00:10:20.410 --> 00:10:23.470
+Jodi Burshia: Something that many of us take for granted.
+
+69
+00:10:24.560 --> 00:10:25.270
+Anna Sattler: Right?
+
+70
+00:10:25.970 --> 00:10:37.749
+Jodi Burshia: Absolutely. Which leads us to the next question. What is your role or position in the cooperative? I mean, I know that you mentioned some of it, but if you want to mention some more of it, that'd be great.
+
+71
+00:10:38.510 --> 00:10:41.869
+Anna Sattler: So, I'm the community relations person for AVAC,
+
+72
+00:10:42.080 --> 00:10:45.379
+Anna Sattler: for our 58 communities, and
+
+73
+00:10:45.820 --> 00:10:57.669
+Anna Sattler: So I just build and maintain relationships with the leaders. So, Alaska Villages are unique in that they have three governing entities. One is the city government, right?
+
+74
+00:10:57.670 --> 00:11:12.279
+Anna Sattler: And then the next is the tribe, and then the next is the village corporation. There's also regional corporations, but just in each community. The village corporation is the landowner, and I know that that's different than Lower 48.
+
+75
+00:11:12.420 --> 00:11:26.590
+Anna Sattler: where the tribe is the landowner. In Alaska, it's the corporation, the village corporation, or the regional corporation. So, my job is to make sure that I know
+
+76
+00:11:26.780 --> 00:11:44.049
+Anna Sattler: all of the board members and council members, and that we get their buy-in, because when we do a project, or we're redoing a project, we often have to get site control, and so that's, that's one of my jobs. But,
+
+77
+00:11:44.710 --> 00:11:57.200
+Anna Sattler: you know, the other thing is just, oftentimes these communities, if you go… when you visit them, it's often, like, going backwards, like, 75, 100 years, and I…
+
+78
+00:11:57.260 --> 00:12:04.730
+Anna Sattler: I say that really carefully, but as an Alaska, you know, Indigenous person,
+
+79
+00:12:05.630 --> 00:12:18.539
+Anna Sattler: it is true, you know, and then UPIC, which is my culture, and, like, English is my second language, you know, started learning English when I went to kindergarten. But,
+
+80
+00:12:18.760 --> 00:12:27.470
+Anna Sattler: in my area, meetings are conducted in UPIC. UPIC is the second most commonly spoken language in Alaska.
+
+81
+00:12:27.580 --> 00:12:31.670
+Anna Sattler: And it's the only Indigenous language in the
+
+82
+00:12:31.940 --> 00:12:41.309
+Anna Sattler: whole United States, that is the second most commonly spoken language. It is spoken. But there's lots, all kinds of different cultures here. Inupiat.
+
+83
+00:12:41.550 --> 00:12:48.159
+Anna Sattler: There's several different kinds of, Indian, Tlingit, Haida, deny…
+
+84
+00:12:48.290 --> 00:12:55.690
+Anna Sattler: you know, but there's a lot of what is more commonly referred to as Eskimos, Inupiat, Yupik.
+
+85
+00:12:55.860 --> 00:13:07.480
+Anna Sattler: Jupik, you know, Ali, you know, there's all different kinds of Indigenous culture… cultures here. But, my job is… and there… and each region is, like.
+
+86
+00:13:08.250 --> 00:13:27.830
+Anna Sattler: politics are touchy and undefined and regionally specific, and my job is to make sure that we, I'm communicating and translating what all of the engineers and the operations department, is wanting and needing from the community, but also
+
+87
+00:13:27.830 --> 00:13:38.850
+Anna Sattler: Explaining the project, and then being able to come back to all of these engineers and explaining what the community's needs are.
+
+88
+00:13:38.930 --> 00:13:47.299
+Anna Sattler: and what their goals are, and, you know, if they oppose a project, the reasons why. So at, you know, that's…
+
+89
+00:13:47.750 --> 00:13:49.399
+Anna Sattler: That's my job.
+
+90
+00:13:51.380 --> 00:13:55.970
+Jodi Burshia: That's definitely huge. That is a… that is a huge job that, you know.
+
+91
+00:13:56.000 --> 00:14:13.470
+Jodi Burshia: definitely making something, you know, like, the information accessible to people. Like, you mentioned, like, the engineers who, might understand, like, these certain things, but they do not understand all of, like, the background information, and so I'm so glad that you are able to
+
+92
+00:14:13.470 --> 00:14:23.339
+Jodi Burshia: to help them with that information, with that background information, for sure. And you have a lot of, you know, long-term background knowledge that other people don't have.
+
+93
+00:14:23.510 --> 00:14:31.260
+Jodi Burshia: And that's just important. You can't put a price on that or anything, and that's really important.
+
+94
+00:14:32.590 --> 00:14:33.220
+Anna Sattler: Yeah.
+
+95
+00:14:33.790 --> 00:14:41.079
+Anna Sattler: It is. It's, you know, rural Alaska is very different, and so when you're not used to
+
+96
+00:14:41.390 --> 00:14:57.249
+Anna Sattler: I mean, it's a huge learning curve when people come here and try to do a project in rural Alaska, because, you know, if it's grant fund… publicly funded, or whatever, you know, all of these engineers go in and are like, we're trying to do something nice for you.
+
+97
+00:14:57.250 --> 00:15:11.080
+Anna Sattler: But they're getting some pushback, and so the first blush is that they're difficult to work with. No, they live there, they're appreciative of new infrastructure, but they have some concerns.
+
+98
+00:15:11.550 --> 00:15:15.440
+Anna Sattler: What we do… We have a lot of fuel.
+
+99
+00:15:15.580 --> 00:15:16.220
+Jodi Burshia: Hmm.
+
+100
+00:15:16.830 --> 00:15:19.350
+Anna Sattler: When we work on a community tank farm.
+
+101
+00:15:19.540 --> 00:15:29.160
+Anna Sattler: There… there are some issues there, and they are right… they have a right to be concerned about those kinds of things, where they're placed.
+
+102
+00:15:29.330 --> 00:15:44.009
+Anna Sattler: the long-term, you know, effects of… of having a tank farm sit there in a power plant, sit there for the last 50, 60 years. What… what's going on with the soil there, right? And, you know, so…
+
+103
+00:15:44.240 --> 00:15:45.899
+Anna Sattler: Yeah, anyway.
+
+104
+00:15:47.420 --> 00:15:54.720
+Jodi Burshia: Absolutely, that's definitely important information that, you know, isn't always included. You know, it's just sort of like these, like.
+
+105
+00:15:54.750 --> 00:16:14.340
+Jodi Burshia: caveats about this and that, and it's like, well, no, like, that's… that's important information that makes, you know, cooperatives and that makes other organizations come together. Most definitely. And that… that's actually a great segue to thinking about our next question. What brought the community together to start the cooperative?
+
+106
+00:16:14.390 --> 00:16:16.759
+Jodi Burshia: For the original vision of the co-op.
+
+107
+00:16:18.250 --> 00:16:28.749
+Anna Sattler: Well, there was an elect… there was not electricity in rural Alaska, so Governor Wally Hickel sort of got some leaders together, and… and,
+
+108
+00:16:29.330 --> 00:16:39.809
+Anna Sattler: created this task force, I guess, on how to solve this problem. And so, you know, in the 60s,
+
+109
+00:16:40.700 --> 00:16:55.879
+Anna Sattler: late 60s, when AVAC, you know, started working on this and became a cooperative, they visited other cooperatives, they met with the community leaders.
+
+110
+00:16:55.980 --> 00:17:05.490
+Anna Sattler: Because, you know, BIA… some BIA schools in rural Alaska had electricity, but that was it.
+
+111
+00:17:05.750 --> 00:17:17.720
+Anna Sattler: And, you know, maybe some stores had their own generators, but they were real limited, on when they would, run them, right?
+
+112
+00:17:17.849 --> 00:17:24.480
+Anna Sattler: And so… We… AVAC got loans from,
+
+113
+00:17:25.210 --> 00:17:30.799
+Anna Sattler: from RUS, Rural Utility Services, and REA. Oh, let me…
+
+114
+00:17:31.620 --> 00:17:38.139
+Anna Sattler: I didn't… I'm blanking on REA, Rural Electric… let me… let me make sure that I have that right.
+
+115
+00:17:39.080 --> 00:17:47.950
+Anna Sattler: Rural Electrification Administration. Okay, I should have wrote that one down. Thank you for that. And…
+
+116
+00:17:48.790 --> 00:18:08.579
+Anna Sattler: it would… they got a $5 million loan that… and they were able to build generation plants and… and then tank farms, because in rural Alaska, you have… everything is run on diesel. We're not going to get away from diesel for a long time, because our communities are so far spread apart, and they're…
+
+117
+00:18:08.590 --> 00:18:23.790
+Anna Sattler: you know, might… they're a microgrid. There are some communities that have, you know, an inner tie if they're close, but for the majority of our communities, they're all little microgrids. And it's… we have some pictures, it's real cute, of how
+
+118
+00:18:23.790 --> 00:18:40.340
+Anna Sattler: we would send in a generator, and that was the power plant, and the whole community came, would come, and they would drag it on skids on the snow to where the new power plant would be. I mean, every… you know, it was that exciting.
+
+119
+00:18:40.340 --> 00:18:44.720
+Anna Sattler: But yeah, that's how AVAC was started.
+
+120
+00:18:46.440 --> 00:18:49.940
+Anna Sattler: And then the cooperative model was chosen,
+
+121
+00:18:50.610 --> 00:18:56.070
+Anna Sattler: Because of how we could accept federal funding
+
+122
+00:18:56.220 --> 00:19:01.250
+Anna Sattler: And those kinds of things, because we rely heavily on, on, on grants.
+
+123
+00:19:01.390 --> 00:19:04.139
+Anna Sattler: For new construction in rural Alaska.
+
+124
+00:19:08.580 --> 00:19:10.630
+Anna Sattler: Does that answer the question?
+
+125
+00:19:13.390 --> 00:19:31.120
+Jodi Burshia: It definitely does. Sorry, I was trying to, like, unmute myself. And yes, it definitely answers the question, and it provides, like, some of that background information that, you know, that we're certainly looking for as part of, you know, looking at how these different, how your particular cooperative came together.
+
+126
+00:19:31.230 --> 00:19:32.720
+Jodi Burshia: And it,
+
+127
+00:19:33.600 --> 00:19:53.499
+Jodi Burshia: you know, like, thinking of our next question, has your culture influenced the design of the cooperative? Much of that, you definitely, included some of that as part of your initial answer. I'm wondering if you could, you know, answer some more of that. How has your culture influenced the design of the cooperative?
+
+128
+00:19:54.930 --> 00:20:00.569
+Anna Sattler: Well, I mean, I wasn't around when it was first, you know, started, but…
+
+129
+00:20:00.760 --> 00:20:11.289
+Anna Sattler: And AVAC is not tribally owned, even though our members, our owners of the cooperative, are 90-some percent.
+
+130
+00:20:11.430 --> 00:20:15.539
+Anna Sattler: Indigenous, you know, Alaska Natives.
+
+131
+00:20:15.830 --> 00:20:20.410
+Anna Sattler: We are not tribally owned, so we don't have,
+
+132
+00:20:20.820 --> 00:20:25.279
+Anna Sattler: Tribal hiring preferences, or those kinds of things.
+
+133
+00:20:25.410 --> 00:20:27.060
+Anna Sattler: But…
+
+134
+00:20:27.890 --> 00:20:42.720
+Anna Sattler: as a cooperative, and just being part of Alaska, and having to come up with solutions that are very unique to anywhere else in the world, we share a lot of traditional,
+
+135
+00:20:43.860 --> 00:20:58.620
+Anna Sattler: values, and, you know, we do that by just how we communicate and how we work with… with each, of the… our communities. Our… our community… each community has, a delegate.
+
+136
+00:20:58.620 --> 00:21:05.720
+Anna Sattler: And a chairperson, and they host an annual meeting in each one of their communities.
+
+137
+00:21:05.790 --> 00:21:09.930
+Anna Sattler: And then, once they do that, it,
+
+138
+00:21:10.200 --> 00:21:15.650
+Anna Sattler: the delegate is… comes to Anchorage for the big annual meeting.
+
+139
+00:21:15.660 --> 00:21:32.920
+Anna Sattler: Where all of the delegates from, our communities come in with our board of directors to meet. And so there… there's shared… there's just communication. What are the major issues in your community? What are the major goals?
+
+140
+00:21:33.020 --> 00:21:38.600
+Anna Sattler: And then just a lot of education on our part.
+
+141
+00:21:38.730 --> 00:21:52.390
+Anna Sattler: Communicating with the, you know, the community. But… but there's a lot of mutual support, so those are the kinds of things that, you know, we share, with… with our traditional,
+
+142
+00:21:53.120 --> 00:21:54.650
+Anna Sattler: member owners.
+
+143
+00:21:55.120 --> 00:22:06.210
+Anna Sattler: But yeah, I just needed to make that distinction that we're not tribally owned, even though I wish we were. We're not tribally owned, and… you know what I mean?
+
+144
+00:22:06.260 --> 00:22:08.479
+Jodi Burshia: Absolutely. I wish we were.
+
+145
+00:22:09.190 --> 00:22:16.710
+Jodi Burshia: That is a huge discussion, you know, definitely thinking about when tribes exercise their sovereignty and what that means.
+
+146
+00:22:16.810 --> 00:22:21.700
+Jodi Burshia: Because it means something different for each tribe, each community, and…
+
+147
+00:22:21.760 --> 00:22:37.470
+Jodi Burshia: thinking about what that would look like, you know, those are definite conversations that are… that are swirling around that people are having, especially with this government shutdown. So thinking about all those different dynamics and thinking about what that would actually look like tomorrow.
+
+148
+00:22:37.870 --> 00:22:41.050
+Jodi Burshia: Or this afternoon, you know, like, what that would actually look like.
+
+149
+00:22:42.370 --> 00:22:52.339
+Jodi Burshia: And so, yeah. So, how did your cooperative members learn about the cooperative? Like, how did they learn about the work you do, the important work you do?
+
+150
+00:22:53.460 --> 00:22:55.710
+Anna Sattler: Like, today, or when we started?
+
+151
+00:22:56.120 --> 00:23:02.520
+Jodi Burshia: Both, actually. Any sort of, like, when it was initially started, and then maybe if, like.
+
+152
+00:23:03.110 --> 00:23:06.589
+Jodi Burshia: It's taken a turn with, like, social media, things of that sort.
+
+153
+00:23:10.870 --> 00:23:19.999
+Anna Sattler: because later on, you have a marketing question, so I don't want to answer that. But… so early AVAC leaders, you know, working
+
+154
+00:23:20.200 --> 00:23:31.910
+Anna Sattler: With state partners, and others, visited all of our… those three communities that we started out with, and, visited other cooperatives.
+
+155
+00:23:32.720 --> 00:23:35.070
+Anna Sattler: And… and those models, but…
+
+156
+00:23:35.610 --> 00:23:51.759
+Anna Sattler: because we're in Alaska, and because you can't drive to these communities, AVEC had to adapt the traditional cooperative model through our EA, or Rural Electrification Administration.
+
+157
+00:23:52.250 --> 00:23:57.790
+Anna Sattler: But we relied on technical and, and, and, and financial,
+
+158
+00:23:58.500 --> 00:24:10.790
+Anna Sattler: guidance, I guess, from state and federal agencies and other cooperatives. And then now, you know,
+
+159
+00:24:10.900 --> 00:24:17.609
+Anna Sattler: because we do get new… new communities occasionally, since I've been here for 16 years, and
+
+160
+00:24:17.790 --> 00:24:19.890
+Anna Sattler: And let's see, I mean…
+
+161
+00:24:20.250 --> 00:24:36.160
+Anna Sattler: we've… we've probably… we've had at least a handful of new communi… I'm looking back at the map. We've had a handful of new communities join. The cooperative model really works. The community that I'm from, Gwichluk.
+
+162
+00:24:36.830 --> 00:24:46.040
+Anna Sattler: which is, about 400 miles, west of Anchorage, is not part of the… a cooperative,
+
+163
+00:24:46.610 --> 00:24:59.369
+Anna Sattler: But… but if you look at our… at the AVAC cooperative, and look at communities surrounding our communities, you'll see that our rates are really, really good.
+
+164
+00:24:59.550 --> 00:25:04.759
+Anna Sattler: That's one thing that the cooperative does. Even though
+
+165
+00:25:05.460 --> 00:25:17.630
+Anna Sattler: we're, you know, 3, 4 times more expensive and more than the lower 48. I mean, we have one… we have a couple communities where we're flying in fuel at
+
+166
+00:25:17.880 --> 00:25:25.970
+Anna Sattler: You know, sometimes $17 a gallon, and their electricity rates are over a dollar a kilowatt.
+
+167
+00:25:26.100 --> 00:25:29.799
+Anna Sattler: In most of our communities, they're about 60 cents.
+
+168
+00:25:30.990 --> 00:25:47.160
+Anna Sattler: it's really expensive to do business in rural Alaska. Fortunately, we have power cost equalization, so at least at, you know, your private home or a public facility, you can be eligible for
+
+169
+00:25:49.000 --> 00:26:07.090
+Anna Sattler: for that subsidy that… that then reduces the cost, and… and equalizes it to… to what the road system, pays, or what I pay here in Anchorage, which is… it ends up being, you know, 26 cents a kilowatt.
+
+170
+00:26:07.320 --> 00:26:10.850
+Anna Sattler: Ish, but that makes it a little bit more affordable.
+
+171
+00:26:11.200 --> 00:26:19.260
+Anna Sattler: And then later, I'll talk about, like, how…
+
+172
+00:26:19.490 --> 00:26:22.940
+Anna Sattler: how we reach our communities, unless you want me to do that now.
+
+173
+00:26:22.940 --> 00:26:27.370
+Jodi Burshia: Sure, then I will just, you know, we won't talk about that later. That'd be completely fine.
+
+174
+00:26:28.020 --> 00:26:37.770
+Anna Sattler: Okay, so… I'm gonna go down to my notes. So, we don't…
+
+175
+00:26:39.380 --> 00:26:43.190
+Anna Sattler: like, I was a little stumped on this question, because
+
+176
+00:26:44.190 --> 00:26:47.899
+Anna Sattler: We don't do traditional marketing, like, you know.
+
+177
+00:26:48.250 --> 00:27:06.799
+Anna Sattler: like, maybe, someone like you guys might do, because we're the… we're the only option for electricity in our communities. There's no other option. There's no inner ties. These communities aren't connected by road or… or anything else, so when you're… when you want electricity.
+
+178
+00:27:07.360 --> 00:27:20.079
+Anna Sattler: and you're in one of AVAC's communities, AVAC's the option. So, you know what I mean? So, it just makes marketing a little bit different. But we do have… we are part of, the Rural Light.
+
+179
+00:27:20.350 --> 00:27:25.219
+Anna Sattler: we get… we get a certain amount of pages every month.
+
+180
+00:27:25.420 --> 00:27:34.100
+Anna Sattler: And so do other cooperatives in Alaska and around… I'm sure you've… you know about the Rural Light, no? Anyway,
+
+181
+00:27:34.590 --> 00:27:39.240
+Anna Sattler: Yeah, so we get a certain amount of pages, and
+
+182
+00:27:39.340 --> 00:27:51.199
+Anna Sattler: So… so when our… I'm a member of the cooperative. I have an account in Bethel, I have a place in Bethel, which is a AVAC community, but we get these
+
+183
+00:27:51.220 --> 00:28:00.079
+Anna Sattler: the rural light, and we're able to highlight specific things about Alaska. The majority of it is, you know.
+
+184
+00:28:00.210 --> 00:28:10.600
+Anna Sattler: cooperatives from, you know, the entire country. And then the back page, Bill Stam, our president and CEO, is able to address our membership
+
+185
+00:28:11.230 --> 00:28:18.650
+Anna Sattler: every month by writing a letter. And then, one of the things that
+
+186
+00:28:19.160 --> 00:28:29.119
+Anna Sattler: is unique, I believe, is that we use Facebook a lot. Rural Alaska seems to, utilize Facebook
+
+187
+00:28:29.260 --> 00:28:36.100
+Anna Sattler: more than anyone else. And one of the reasons is because, cell phones
+
+188
+00:28:36.850 --> 00:28:46.399
+Anna Sattler: if you're sending a picture, or… or just, you know, some self… cell phones just sometimes don't work in villages, but…
+
+189
+00:28:46.650 --> 00:28:55.090
+Anna Sattler: you can always send a picture via Facebook Messenger. And I don't know exactly why that is,
+
+190
+00:28:56.450 --> 00:29:14.959
+Anna Sattler: But, we utilize Facebook a lot, so whenever we have a scheduled outage, or even an unplanned one, or we're doing projects, we put on our Facebook page, these notifications, and that seems to get the word out. In addition to, you know.
+
+191
+00:29:15.030 --> 00:29:33.980
+Anna Sattler: posting in a community. And then we have community meetings, we publish news that, the world… we don't publish it. We submit articles and stuff, and it does get published and mailed out. But we also publish and distribute annual reports.
+
+192
+00:29:34.110 --> 00:29:39.440
+Anna Sattler: And then, in the communities.
+
+193
+00:29:39.480 --> 00:29:57.140
+Anna Sattler: We just have a really good relationship with the tribes, the cities, and the corporations. And the… one of the best things that, the best ways to get the word out is to have them post a flyer at the post office, the city, the school, you know.
+
+194
+00:29:57.140 --> 00:30:05.860
+Anna Sattler: the community building, the washateria, and that… and that has worked successfully for us.
+
+195
+00:30:10.890 --> 00:30:17.449
+Jodi Burshia: That is wonderful. Who would have thought? You know, like, Facebook, you know, it's one of those things where it,
+
+196
+00:30:17.490 --> 00:30:31.949
+Jodi Burshia: keeps people, you know, in touch with one another, and it also communicates important information, like you're saying. Who would have thought, you know, like, years ago, that Facebook would serve that type of purpose, but it… it does, and I'm sure, like, the creators of Facebook
+
+197
+00:30:31.980 --> 00:30:39.930
+Jodi Burshia: Maybe they had that as part of their plan, who knows? I mean, I don't… it's just funny, you know, just thinking about Facebook and, things of that sort.
+
+198
+00:30:40.310 --> 00:30:41.530
+Jodi Burshia: And so…
+
+199
+00:30:42.120 --> 00:30:56.750
+Jodi Burshia: Thank you for sharing that information. That's really important, you know, information that isn't necessarily thought of, especially, you know, people just think of, social media and just like, oh, let me just hop on social media, but they don't find it as, like.
+
+200
+00:30:56.960 --> 00:30:59.260
+Jodi Burshia: One of the main sources
+
+201
+00:30:59.390 --> 00:31:17.959
+Jodi Burshia: potentially, like, the only source of information, especially if you're, like, in very rural communities where, like, they might not have, some cell phone tire… excuse me, some cell phone towers to, to… to communicate those different things. So that is… that is important information. Thank you for sharing that.
+
+202
+00:31:19.590 --> 00:31:22.050
+Jodi Burshia: And that makes me, you know,
+
+203
+00:31:22.640 --> 00:31:41.660
+Jodi Burshia: So our next question, did your cooperative adapt or adopt standard cooperative development approaches to meet the needs of… I mean, it sounds like you did, at least with, like, the social media part and, like, connecting with the people that need, you know, the electricity, but I'm sure you've done other things.
+
+204
+00:31:42.460 --> 00:31:49.690
+Anna Sattler: Yeah, we've… we've adopted the cooperative, governance structure.
+
+205
+00:31:49.890 --> 00:31:56.270
+Anna Sattler: But we have to adapt, because Alaska's so unique and so spread… so spread out.
+
+206
+00:31:56.480 --> 00:32:03.199
+Anna Sattler: We… we train local residents because we rely on
+
+207
+00:32:04.760 --> 00:32:09.520
+Anna Sattler: On power plant operators to run the, the, the,
+
+208
+00:32:10.340 --> 00:32:17.729
+Anna Sattler: The power plant day-to-day, and so we have power plant operators and alternate power plant operators.
+
+209
+00:32:18.680 --> 00:32:32.909
+Anna Sattler: Because they, you know, they need to go check the power plant 3 times a day, at a minimum, early morning and midday and late at night, and fill day tanks and those kinds of things, and then routine maintenance.
+
+210
+00:32:33.160 --> 00:32:46.239
+Anna Sattler: And then, we often have, agreements with the city, governments To hire and, and,
+
+211
+00:32:50.880 --> 00:33:07.969
+Anna Sattler: and to hire and then manage the power plant operators, but we do also employ directly power plant operators ourselves. When a city says, we're just not going to do this anymore, we need help,
+
+212
+00:33:08.390 --> 00:33:23.150
+Anna Sattler: we'll… we'll go ahead and… and hire them directly. But if they're hired by the city, then we just pay them, monthly, plus a little bit extra for, administrative fees and,
+
+213
+00:33:23.180 --> 00:33:41.949
+Anna Sattler: And they're able to watch the power plant operator day to day. But we do have a power plant operator supervisor here that's in contact with them all the time. But that's 58 communities, you know, serving… and we serve 60 communities through InnerTies, but…
+
+214
+00:33:42.140 --> 00:33:45.539
+Anna Sattler: it's a lot to manage.
+
+215
+00:33:46.690 --> 00:33:50.880
+Anna Sattler: And then, you know, we're unique in that
+
+216
+00:33:51.340 --> 00:33:57.670
+Anna Sattler: We have independent microgrids, so it's just, you know, it's… Yeah, it…
+
+217
+00:33:58.110 --> 00:34:10.059
+Anna Sattler: it's just so different. And then, you know, because we're based, our administration is based in Anchorage, we're able to share, services, so we have a small, tight.
+
+218
+00:34:10.360 --> 00:34:18.670
+Anna Sattler: accounting office. Our… our department, does all new construction and key accounts. We have
+
+219
+00:34:18.670 --> 00:34:34.600
+Anna Sattler: you know, engineering that is small and tight, and then operations. You know, we have a handful of linemen, a handful of mechanics, a handful of trainers, a handful of wind technicians that go out
+
+220
+00:34:34.929 --> 00:34:38.909
+Anna Sattler: That are always out going to our communities.
+
+221
+00:34:41.449 --> 00:34:51.470
+Anna Sattler: Yeah, and then… and then I just… one final… I'm looking at my, my bullet points. I want to make sure that, you know, the… the board is elected by its members.
+
+222
+00:34:51.620 --> 00:34:59.950
+Anna Sattler: And then, you know, management and operational staff are paid employees. I wanted to make that
+
+223
+00:35:00.170 --> 00:35:06.960
+Anna Sattler: because we… that is exactly like the cooperative governance, right? We have a seven-member board,
+
+224
+00:35:07.850 --> 00:35:13.359
+Anna Sattler: And they're all, members. And then the other thing is, is that, you know.
+
+225
+00:35:13.620 --> 00:35:28.030
+Anna Sattler: most of our employees are not cooperative members, because we're here in Anchorage, and Anchorage isn't an AVAC community. So that's, you know, unique. I think I might be the only employee
+
+226
+00:35:28.360 --> 00:35:36.699
+Anna Sattler: that is… that has a… that is a member of AVAC that has an electricity account.
+
+227
+00:35:39.760 --> 00:35:42.840
+Anna Sattler: I could be wrong, but I think I… I think it's…
+
+228
+00:35:43.380 --> 00:35:46.430
+Anna Sattler: That was true from a couple of years ago, at least.
+
+229
+00:35:46.830 --> 00:35:47.550
+Jodi Burshia: Right.
+
+230
+00:35:47.780 --> 00:35:54.210
+Jodi Burshia: That… that's really interesting in thinking about all those different dynamics. Thank you for sharing that.
+
+231
+00:35:54.720 --> 00:36:01.880
+Jodi Burshia: For sure. And so you were talking about, you know, you know, people having these different types of,
+
+232
+00:36:02.090 --> 00:36:05.959
+Jodi Burshia: You know, access and information, like, they're having these different roles.
+
+233
+00:36:06.120 --> 00:36:17.040
+Jodi Burshia: So how do you keep tribal, tribal leaders involved in all of this? All these different changes, which I'm sure that they're aware, but how do you keep them involved?
+
+234
+00:36:24.290 --> 00:36:27.140
+Anna Sattler: Well, I mean, just communication.
+
+235
+00:36:28.080 --> 00:36:41.310
+Anna Sattler: When… When our maintenance guys and wind technicians and linemen, and others are in a community.
+
+236
+00:36:42.100 --> 00:36:56.980
+Anna Sattler: they reach out to the leadership. You know, these communities are pretty small, like, 100 people. I think Cooper Bay was our largest at 1,000, but now that we have Bethel, you know, that's like 6,000 people.
+
+237
+00:36:58.630 --> 00:37:12.520
+Anna Sattler: you know, Yakutat has, like, 800… I mean, these are real, pretty small communities, and so it's easy to get the word out. A lot of our communities still rely on, VHF,
+
+238
+00:37:12.660 --> 00:37:13.780
+Anna Sattler: Radio?
+
+239
+00:37:13.980 --> 00:37:24.500
+Anna Sattler: And so, you know, you can just go and make an announcement on VHF, everybody will hear it on that channel if they're inside their home or in a… in a
+
+240
+00:37:24.670 --> 00:37:28.230
+Anna Sattler: You know, in a building somewhere.
+
+241
+00:37:30.010 --> 00:37:33.070
+Anna Sattler: Wait, Jody, what was your question again?
+
+242
+00:37:34.960 --> 00:37:45.300
+Jodi Burshia: it was about how you keep tribal members engaged, and the reason why I'm asking that is because, you know, down here in the Southwest, and then, like, other,
+
+243
+00:37:45.440 --> 00:38:01.439
+Jodi Burshia: all these other tribes, part of the lower 48, are, you know, thinking about, you know, there's a lot of people that are looking to their tribal leaders, you know, to be… to be leaders. You know, to really, you know, to be up to date on, like, what's going on in their communities, and…
+
+244
+00:38:01.590 --> 00:38:04.969
+Jodi Burshia: So I'm wondering if that's the same for your community.
+
+245
+00:38:06.300 --> 00:38:06.950
+Jodi Burshia: And how you…
+
+246
+00:38:06.950 --> 00:38:20.509
+Anna Sattler: But we, equally, the city government, the tribal government, the tribal government usually is the social arm, and then the village corporation
+
+247
+00:38:20.760 --> 00:38:29.389
+Anna Sattler: is the for-profit, you know, arm. We communicate with the leadership of all three entities.
+
+248
+00:38:29.790 --> 00:38:37.269
+Anna Sattler: so, it's not primarily the tribe, but when we're looking for money.
+
+249
+00:38:37.390 --> 00:38:44.950
+Anna Sattler: we work with the entity that is the most eligible. Oftentimes, it's us, but, you know, there…
+
+250
+00:38:45.150 --> 00:38:55.940
+Anna Sattler: before this administration, there really was a focus on tribal energy money through, Department of Energy, Indian Energy, you know.
+
+251
+00:38:56.090 --> 00:38:58.030
+Anna Sattler: So… so…
+
+252
+00:38:58.760 --> 00:39:11.900
+Anna Sattler: But we always, even if we're, like, even if we're working with just, like, the city for, like, a community development block grant to upgrade a community to three-phase,
+
+253
+00:39:12.110 --> 00:39:23.839
+Anna Sattler: and other things to be able to accept renewable energy in the future, or whatever. Even though we're working with the city as the… as the grant applicant, we do all the work.
+
+254
+00:39:25.660 --> 00:39:36.099
+Anna Sattler: From, you know, grant application to construction to grant reporting for the community, but we work very tightly with them. But we always include
+
+255
+00:39:36.110 --> 00:39:47.779
+Anna Sattler: We always copy, or carbon copy, the tribe and the village corporation, and oftentimes the regional corporation, or the regional entities as well.
+
+256
+00:39:47.810 --> 00:39:51.620
+Anna Sattler: Because they all work so closely together.
+
+257
+00:39:51.920 --> 00:39:57.660
+Anna Sattler: yeah, I think that answers your question.
+
+258
+00:39:57.920 --> 00:40:00.210
+Jodi Burshia: Absolutely, you know, because
+
+259
+00:40:00.410 --> 00:40:07.820
+Jodi Burshia: As we're thinking about these things, are members of the cooperative eligible to serve on the board, or…
+
+260
+00:40:07.930 --> 00:40:09.890
+Jodi Burshia: Okay, are you able to explain that?
+
+261
+00:40:10.500 --> 00:40:14.540
+Anna Sattler: Yeah, they're elected, you have to be a member of…
+
+262
+00:40:14.660 --> 00:40:22.830
+Anna Sattler: AVAC to even run for the board, and board members are elected by the members.
+
+263
+00:40:23.130 --> 00:40:24.320
+Anna Sattler: of APAC.
+
+264
+00:40:27.710 --> 00:40:46.219
+Jodi Burshia: That is definitely important, and thinking about, you know, how people feel, you know, like, this is, like, their ownership. They're like, okay, let me make some good decisions, especially when this is part of, like, this is impacting me and, like, my family, and so that's really important to think about.
+
+265
+00:40:46.830 --> 00:40:54.680
+Jodi Burshia: You know, and definitely thinking about tribal leaders, and thinking about, you know, everyone who's a part of this process. It's just,
+
+266
+00:40:55.230 --> 00:40:56.890
+Jodi Burshia: It is wild, so…
+
+267
+00:40:57.340 --> 00:41:07.850
+Jodi Burshia: Are there members that are, volunteer, or are they paid? Or, I mean, and I don't need to know, like, the dollar amount, but just how are they… how do they have these different roles?
+
+268
+00:41:09.800 --> 00:41:11.150
+Anna Sattler: the… the…
+
+269
+00:41:11.920 --> 00:41:19.589
+Anna Sattler: the AVAC board? Correct. Or, like, the… like, in each community, like, the chair and the delegate and the… or…
+
+270
+00:41:20.240 --> 00:41:22.579
+Anna Sattler: Could you expand on that question, please?
+
+271
+00:41:22.800 --> 00:41:31.740
+Jodi Burshia: Correct. So, I'm asking if, like, the people that are involved in these cooperatives, if they, if they're, like, on a volunteer basis, or they're being paid to do this?
+
+272
+00:41:31.880 --> 00:41:32.950
+Jodi Burshia: How does that work?
+
+273
+00:41:33.860 --> 00:41:43.589
+Anna Sattler: Yeah, the… like, the board, gets a stipend for, you know, their meetings, and then the community leadership,
+
+274
+00:41:43.760 --> 00:42:03.100
+Anna Sattler: whoever is elected, the community chairperson, and then the delegate, they get a very small meeting fee, to coordinate the meeting, and then our office, Member Services, sends them, you know, all of the material. It's a… it's a huge
+
+275
+00:42:03.210 --> 00:42:05.340
+Anna Sattler: huge endeavor.
+
+276
+00:42:06.710 --> 00:42:26.220
+Anna Sattler: every year, I… all of the boxes that, you know, Member Services has to send out, they send out door prizes and those kinds of things, but it takes… they… they send out a big box to every chairman, and then help them coordinate a meeting,
+
+277
+00:42:26.450 --> 00:42:40.199
+Anna Sattler: you know, to try to… to try to get, membership to… to participate so that, you know, they're eligible to send a delegate to the… the big annual meeting in… in… in Anchorage.
+
+278
+00:42:41.250 --> 00:42:57.629
+Anna Sattler: I mean, it's a huge, you know, it's… those roles are… they're… I mean, they're mostly volunteer, because that… their… their only duty is to… to get… to ensure a community meeting every year, but they are compensated a tiny bit.
+
+279
+00:42:57.690 --> 00:43:05.940
+Anna Sattler: I wish we could compensate them more, but for all of the members, There's no compensation.
+
+280
+00:43:07.550 --> 00:43:14.670
+Anna Sattler: You know, we just… We really try to make electricity affordable and consistent.
+
+281
+00:43:16.430 --> 00:43:26.120
+Anna Sattler: And then our office here, we, you know, we take care of, you know, the PCE payments and the billing and, you know, all of that, so…
+
+282
+00:43:31.760 --> 00:43:41.080
+Jodi Burshia: Thank you for answering that. Yes, that's really important information, especially when we're thinking about, you know, how people have these certain roles, and they…
+
+283
+00:43:41.080 --> 00:43:52.340
+Jodi Burshia: you know, what they do to, like, maintain them, but just like you mentioned, you know, like, making electricity affordable and things of that… of that type, because I'm just thinking about, like, the cost of,
+
+284
+00:43:52.410 --> 00:44:00.600
+Jodi Burshia: You know, things within stores, you know, that we've seen, like, okay, so, like, a loaf of bread is, like.
+
+285
+00:44:00.770 --> 00:44:13.210
+Jodi Burshia: I don't know, $15 or something. Where over here, like, it's… it's not $15, it's, like, $2 or $3, but… but still, you know, just thinking about some of those, some of those different things, you know, and thinking about…
+
+286
+00:44:13.280 --> 00:44:25.320
+Jodi Burshia: You know, whether people are, you know, just like you said, like you said, whether or not they're, they receive a stipend or things of that sort, which is… which is really important in just thinking about all those different dynamics.
+
+287
+00:44:25.430 --> 00:44:40.710
+Jodi Burshia: And as you've mentioned, you know, many of these different things, you've discussed, like, the marketing plans, you've discussed issues that, like, your… the cooperative, you know, like, it targets and it works towards making it,
+
+288
+00:44:41.010 --> 00:44:45.859
+Jodi Burshia: You know, solving different problems if, like, people see these things as, like, a problem.
+
+289
+00:44:46.600 --> 00:44:52.119
+Jodi Burshia: And working towards that, which is really important, especially when we're thinking about, like.
+
+290
+00:44:52.240 --> 00:45:02.500
+Jodi Burshia: Things such as, like, electricity and… and things of that sort, which, you know, people can't, generate themselves unless they are creating, like, their own…
+
+291
+00:45:02.820 --> 00:45:13.629
+Jodi Burshia: wind turbines, or water turbines, like, whatever it is. And so, but you, some people aren't able to do those types of things, so this is really important thinking about
+
+292
+00:45:13.770 --> 00:45:19.400
+Jodi Burshia: Those different needs that it fulfills, that it serves, and then all of it.
+
+293
+00:45:19.750 --> 00:45:30.519
+Jodi Burshia: So in the future, are there… well, in the currently and in the future, are there issues in the community that… that your cooperative intends to… intends to help?
+
+294
+00:45:32.100 --> 00:45:38.969
+Anna Sattler: Yeah, you know, the funding climate has really changed.
+
+295
+00:45:39.510 --> 00:45:45.730
+Anna Sattler: and… It's sort of cr… You know, and then climate change.
+
+296
+00:45:46.070 --> 00:45:48.879
+Anna Sattler: The tundra is melting,
+
+297
+00:45:49.340 --> 00:45:59.989
+Anna Sattler: just… we've had… we just went through a really huge storm in western Alaska, and… and just the other day, Cox of View, which is a hub for
+
+298
+00:46:00.370 --> 00:46:04.080
+Anna Sattler: the communities in the Northwest Arctic region.
+
+299
+00:46:04.260 --> 00:46:10.070
+Anna Sattler: Their runway was completely under. Everyone… it was mandatory evacuation.
+
+300
+00:46:11.980 --> 00:46:28.590
+Anna Sattler: the jet… the Alaska Airlines jet couldn't land in Kotzebu for days. In Kivolina, they had an evacuation there because they're right on the Bering Sea, and so the whole coastline
+
+301
+00:46:28.590 --> 00:46:35.730
+Anna Sattler: western Alaska suffered from a really huge storm where Where, the tide…
+
+302
+00:46:35.870 --> 00:46:38.040
+Anna Sattler: The tides went up, you know.
+
+303
+00:46:38.530 --> 00:46:44.819
+Anna Sattler: I… I think it was 10 feet or something, and now we're expecting another one on Sunday.
+
+304
+00:46:44.950 --> 00:46:51.240
+Anna Sattler: That… You know, combined with
+
+305
+00:46:51.600 --> 00:47:00.990
+Anna Sattler: funding not being available like it has been. We don't have Senator Ted Stevens anymore with earmarks for Alaska.
+
+306
+00:47:01.960 --> 00:47:03.530
+Anna Sattler: So, you know.
+
+307
+00:47:04.220 --> 00:47:20.600
+Anna Sattler: all of these things combined, it's really… I mean, it really… it's really creating the perfect storm, honestly, that things are going to have to change, and communities are going to have to start contributing towards projects.
+
+308
+00:47:23.510 --> 00:47:33.709
+Anna Sattler: And that is going… that's going to be, you know, scary, and it's going to be, it's going to be a huge learning curve for communities.
+
+309
+00:47:33.870 --> 00:47:39.420
+Anna Sattler: because, you know, we have communities that are literally sinking.
+
+310
+00:47:40.030 --> 00:47:44.459
+Anna Sattler: When you build on tundra, if you're not building with
+
+311
+00:47:44.670 --> 00:47:48.840
+Anna Sattler: You know, thermal… thermal siphons.
+
+312
+00:47:49.020 --> 00:48:05.749
+Anna Sattler: Keeping the ground frozen with pile, you can have entire tank farms and their tanks toppling over, at spring break, or during these 100-year storms that are happening every year.
+
+313
+00:48:07.470 --> 00:48:19.529
+Anna Sattler: And where the, you know, the permafrost is melting, and existing infrastructure, homes, and, you know, those kinds of things, you always are having to,
+
+314
+00:48:19.970 --> 00:48:22.990
+Anna Sattler: What is it called when you,
+
+315
+00:48:24.400 --> 00:48:34.999
+Anna Sattler: re-level, when you level a house. That's an… that's a thing here. It's always been a thing, but it is more so now.
+
+316
+00:48:36.800 --> 00:48:49.330
+Anna Sattler: But I… I wanted to say that, but I wanted to be real specific, too. We've had a… we do a, because we collaborate with our communities, we,
+
+317
+00:48:49.820 --> 00:49:02.360
+Anna Sattler: we have a couple of really good success stories. One of them is… is Stebbins and St. Michael, in western Alaska. They're… it's around, Unile Cleet area.
+
+318
+00:49:02.770 --> 00:49:09.340
+Anna Sattler: So about, you know, 550 miles sort of northwest of Anchorage.
+
+319
+00:49:09.580 --> 00:49:27.270
+Anna Sattler: they… they got all new infrastructure. They happened to be connected by an existing road, but we were able to build a brand new co-located and shared power plant to serve both communities.
+
+320
+00:49:27.270 --> 00:49:36.860
+Anna Sattler: And then build the community a tank farm, AVAC a new tank farm, build an 11-mile inner tie, and then with
+
+321
+00:49:37.040 --> 00:49:52.370
+Anna Sattler: In cooperation with Stebbins and St. Michael, we built a 900 kilowatt wind turbine there. We have recovered heat. We're working right now on… in Stebbins, we're working on now wind to heat.
+
+322
+00:49:52.370 --> 00:50:06.819
+Anna Sattler: That should be done soon for St. Michael's water and sewer projects, because, you know, water and sewer is huge, and when you're… when all of your pipes are built above ground, and it's super cold, and you're using
+
+323
+00:50:06.820 --> 00:50:15.129
+Anna Sattler: you know, 30,000 gallons a month of diesel to keep those pipes from freezing. Having recovered heat.
+
+324
+00:50:15.180 --> 00:50:32.799
+Anna Sattler: or wind to heat from the power plant or wind turbines is so beneficial for these communities. Helps to, you know, lower their water and sewer bills, or it can. I mean, we don't dictate that, we just like to be able to provide it, but
+
+325
+00:50:32.800 --> 00:50:41.990
+Anna Sattler: I wanted to note Stebbins and St. Michael because they're unique in that Stebbins contributed
+
+326
+00:50:43.400 --> 00:50:55.069
+Anna Sattler: Stebbins contributed $680,000, and St. Michael contributed $700,000 towards that.
+
+327
+00:50:55.210 --> 00:51:02.659
+Anna Sattler: It ended up being, like, $10.5 million project to install that… that… that 900 kilowatt turbine.
+
+328
+00:51:02.760 --> 00:51:14.090
+Anna Sattler: And now, that turbine reduces diesel consumption by 105,000 gallons a year.
+
+329
+00:51:14.520 --> 00:51:16.280
+Anna Sattler: And,
+
+330
+00:51:16.830 --> 00:51:25.740
+Anna Sattler: When you're looking at, you know, a delivered price of fuel for us, we, you know, we buy 9 million gallons
+
+331
+00:51:25.820 --> 00:51:43.060
+Anna Sattler: Of… of diesel a year, so our… our rate is, you know, about $3, $4 in… $3.5 dollars or so in… in Stebbins, where the community, when they order their fuel, they're, you know, they're paying probably $5 or $6.
+
+332
+00:51:43.120 --> 00:51:47.200
+Anna Sattler: dollars a gallon for gas and diesel.
+
+333
+00:51:48.230 --> 00:51:54.610
+Anna Sattler: But it's saving the community… both communities, a ton of money, and
+
+334
+00:51:55.950 --> 00:52:11.630
+Anna Sattler: Yeah, so, I mean, those are… that's one really good example, but that's how we have to work within every one of our communities. And then, because the pots of money have gotten smaller, we ended up, you know, getting money from
+
+335
+00:52:11.630 --> 00:52:17.370
+Anna Sattler: DOE, Department of Energy, the Denali Commission, which is, a federal
+
+336
+00:52:17.710 --> 00:52:22.619
+Anna Sattler: Organization in the state that, has invested
+
+337
+00:52:23.040 --> 00:52:29.419
+Anna Sattler: over $300 million worth of energy-related projects over the decades.
+
+338
+00:52:29.940 --> 00:52:33.199
+Anna Sattler: And they continued to do so. And then…
+
+339
+00:52:33.240 --> 00:52:51.600
+Anna Sattler: we actually had some FEMA money from another, community that we were able to, forrest Button, our… the manager of… of special projects and… and… and Key Accounts, was able to… to, use in Stebbins.
+
+340
+00:52:51.770 --> 00:52:59.170
+Anna Sattler: For… for the VIN project, to be able to come up with that $10.5 million. Anyway…
+
+341
+00:52:59.310 --> 00:53:15.069
+Anna Sattler: And then we… we just keep in communication. We want to… we address local concerns. They have everyday things, like a tilt… a leaning pole, you know, unscheduled outages,
+
+342
+00:53:15.160 --> 00:53:23.120
+Anna Sattler: You know, their meter bases on their home are all frozen over with, you know, salt and stuff.
+
+343
+00:53:23.150 --> 00:53:37.399
+Anna Sattler: We're just always addressing local concerns like that, and then, you know, and always working on renewable energy projects, and being able to integrate those kinds of things so that we're meeting their goals.
+
+344
+00:53:37.470 --> 00:53:54.000
+Anna Sattler: But we're also meeting AVAC goals, so just a lot of community collaboration is the bottom line, and… and that's with all three governing entities in each community, and then the, you know, the wider regional, leaderships,
+
+345
+00:53:54.640 --> 00:53:57.350
+Anna Sattler: In the… in those particular regions.
+
+346
+00:54:00.400 --> 00:54:02.490
+Jodi Burshia: That is… that is amazing.
+
+347
+00:54:02.580 --> 00:54:20.410
+Jodi Burshia: That is, I mean, you were able to talk about so many different examples, and definitely this one about… that you most recently talked about. It's really important thinking about people's roles and, you know, their… they might not, you know, they might not know how much money this is really saving them.
+
+348
+00:54:20.470 --> 00:54:33.860
+Jodi Burshia: I mean, but they also might know, but it's just, you know, it's really important thinking about… about all of that, and thinking about those… those definite impacts, and sort of… and sort of, like, what that means, you know, like,
+
+349
+00:54:34.320 --> 00:54:40.699
+Jodi Burshia: like, like, initially, immediately, and then, like, what it means down the road, and so that is, that is really important information.
+
+350
+00:54:40.910 --> 00:54:47.360
+Jodi Burshia: So, speaking of that, what do you think the impact of COVID was? And so, as we're thinking about, like.
+
+351
+00:54:47.600 --> 00:54:59.869
+Jodi Burshia: how this global pandemic impacted so many, you know, almost everyone, you know, and… but they impacted people in different ways, and so I know that there was that,
+
+352
+00:54:59.920 --> 00:55:13.869
+Jodi Burshia: that saying or something, like, well, everybody experienced COVID, correct, everybody did experience COVID, but we experienced it differently. I remember, like, when those things happened, like, what we had to do in the classroom and all of that, but I'm sure that, like.
+
+353
+00:55:14.510 --> 00:55:22.020
+Jodi Burshia: your corporation handled this, you know, differently in thinking about all those different impacts of COVID. Like, what did that do?
+
+354
+00:55:23.270 --> 00:55:24.100
+Anna Sattler: Yo.
+
+355
+00:55:25.480 --> 00:55:29.680
+Anna Sattler: Well, a lot of our community is completely locked down.
+
+356
+00:55:30.740 --> 00:55:40.380
+Anna Sattler: There was no going in and out of them. We were… AVAC employees were considered essential employees, so we could travel.
+
+357
+00:55:40.740 --> 00:55:42.469
+Anna Sattler: But…
+
+358
+00:55:42.940 --> 00:55:58.660
+Anna Sattler: We had to adapt, and we had to listen individually to each community, because, you know, once… once our guys came out there with their 5, 800 pounds of gear and, you know, food and everything else that they need.
+
+359
+00:55:58.730 --> 00:56:06.070
+Anna Sattler: They, you know, were often required to just go to the power plant and not do anything else.
+
+360
+00:56:06.420 --> 00:56:10.770
+Anna Sattler: and then, of course,
+
+361
+00:56:12.850 --> 00:56:18.440
+Anna Sattler: Because our… because of the fragility of… of,
+
+362
+00:56:18.760 --> 00:56:28.069
+Anna Sattler: of just doing business in rural Alaska and transportation specifically, transportation costs went way up during the pandemic.
+
+363
+00:56:30.800 --> 00:56:38.999
+Anna Sattler: you know, because now everyone was home. Just like in the lower 48, you know, you read those articles about how Amazon and… and,
+
+364
+00:56:39.560 --> 00:56:43.010
+Anna Sattler: Walmart and, you know, other online,
+
+365
+00:56:43.100 --> 00:56:49.589
+Anna Sattler: shopping just went through the roof. Same thing happened in Alaska, but when you're sharing
+
+366
+00:56:49.670 --> 00:57:07.420
+Anna Sattler: you know, the same single-engine or twin-engine airplane, for freight, for all of… and for passenger service, with… combined… with all of that stuff, it really made a difference in how our guys traveled to address,
+
+367
+00:57:08.320 --> 00:57:16.589
+Anna Sattler: you know, power outages or address, routine maintenance and stuff. So we leaned heavily,
+
+368
+00:57:16.720 --> 00:57:22.539
+Anna Sattler: On… on… on, our communities, you know,
+
+369
+00:57:23.270 --> 00:57:41.650
+Anna Sattler: for support and to be flexible, and for safety protocols and stuff. I do want to note one thing. It was… what was really, really cool is that our regional, federally compacted health facilities got together
+
+370
+00:57:41.910 --> 00:57:51.059
+Anna Sattler: And… and got the vaccine out regionally super quick. I was the first employee at AVAC to get the vaccine.
+
+371
+00:57:51.180 --> 00:57:59.390
+Anna Sattler: Because it was available to Alaska Native people before it was available anywhere else.
+
+372
+00:58:01.710 --> 00:58:21.249
+Anna Sattler: And that happened in each and every single one of our villages. It was really cool. I have to say that that was… that was probably the coolest thing out of it, but, you know, there was… we really had to adapt. Our communication had to adapt. We, you know, have a lot of…
+
+373
+00:58:21.250 --> 00:58:27.180
+Anna Sattler: We do remote, We can remotely connect and remotely disconnect.
+
+374
+00:58:27.350 --> 00:58:36.049
+Anna Sattler: We had to enhance that ability. We had to, you know, have safety protocols.
+
+375
+00:58:36.170 --> 00:58:40.859
+Anna Sattler: you know, for COVID travel and those kinds of things.
+
+376
+00:58:41.100 --> 00:58:43.440
+Anna Sattler: yeah.
+
+377
+00:58:44.390 --> 00:58:51.930
+Anna Sattler: I mean, it increased operating costs due to travel restrictions, and so…
+
+378
+00:58:53.750 --> 00:58:57.659
+Anna Sattler: It took a lot of effort to… to adjust to that.
+
+379
+00:58:57.770 --> 00:59:00.610
+Anna Sattler: But AVAC did it so seamlessly, I think.
+
+380
+00:59:02.080 --> 00:59:04.030
+Jodi Burshia: That's huge, that's important.
+
+381
+00:59:04.530 --> 00:59:19.759
+Jodi Burshia: Wow. And that is… you're right, Anna, that is really cool about, you know, that Alaska Natives were the first ones to receive the vaccine, you know, that's important. That, you know, much of that should have happened, you know, in that same way, say, with, like, the Navajo Nation.
+
+382
+00:59:19.760 --> 00:59:25.010
+Jodi Burshia: Like, it didn't happen in that same way, and trying to figure out, well.
+
+383
+00:59:25.370 --> 00:59:41.089
+Jodi Burshia: I don't know when they actually received the vaccine, but they… dealing with, like, all of the systemic issues that were happening with, like, these multi-generations being within one house, those were ongoing challenges that, like, they weren't prepared to work with.
+
+384
+00:59:41.180 --> 00:59:51.169
+Jodi Burshia: And so, we're like, well, you… we were put in these positions, and so it's just sort of like, okay, how best are we going to, like, work with this? And so…
+
+385
+00:59:51.340 --> 00:59:53.800
+Jodi Burshia: It definitely exposed a lot of things.
+
+386
+00:59:54.310 --> 01:00:04.259
+Anna Sattler: Can I ask just a clarifying question, then? So, Does… does your tribe… Did they federally compact health?
+
+387
+01:00:04.630 --> 01:00:07.769
+Anna Sattler: So they run the… they run the health…
+
+388
+01:00:08.790 --> 01:00:12.860
+Anna Sattler: All your medical stuff? Or who runs your medical stuff?
+
+389
+01:00:13.350 --> 01:00:24.240
+Jodi Burshia: Sort of. Well, with… in some cases, there's… well, we… locally, we have the Laguna Acoma Clinic, which is close by, but that is a federally recognized,
+
+390
+01:00:24.630 --> 01:00:40.850
+Jodi Burshia: I think they collaborate with IHS, and IHS, that's really limited, so none of it is owned by the… well, like, I think a really small percentage is owned by the tribe. I'm not sure about the actual percentage of it.
+
+391
+01:00:40.850 --> 01:00:49.000
+Jodi Burshia: And so, that's really limited, but now it's closed, and so people need to go into, like, say if they're in Laguna.
+
+392
+01:00:49.000 --> 01:01:01.249
+Jodi Burshia: They need to travel to 45 miles or so, to go into Albuquerque to get healthcare. And so, if something is serious, and if there's, like, a medical emergency, there's not, like.
+
+393
+01:01:01.900 --> 01:01:17.239
+Jodi Burshia: adequate 911 services. There are some, but there's not, like, adequate ones. So it's an ongoing challenge, you know, just trying to think about what is allowable, say, for, like, the Navajo tribe, and then, like, what's allowable for, like, the Laguna tribe.
+
+394
+01:01:17.250 --> 01:01:33.870
+Jodi Burshia: And, and I feel, more connected to the Laguna tribe because I'm here, and I'm, and there's many Laguna members that are… that are here that are close by, and, like, Laguna's close, but going over to the Navajo Nation, it's, they have a whole set of different challenges, for sure.
+
+395
+01:01:34.850 --> 01:01:49.359
+Anna Sattler: So, I know this isn't part of this deal, but if you… if you ever wanted a sidebar conversation about health, the way that Alaska federally compacted our health facilities, I mean.
+
+396
+01:01:49.580 --> 01:01:58.309
+Anna Sattler: The clinics, the sub-regional clinics, the, regional hospitals that are providing
+
+397
+01:01:58.390 --> 01:02:15.399
+Anna Sattler: beyond primary care, they're providing secondary, tertiary, they're providing everything, and then the… when you go into Anchorage, when you go to the Alaska Native Tribal Health Consortium, ANTHC, or Alaska Native Medical Center, South Central Foundation.
+
+398
+01:02:15.500 --> 01:02:24.089
+Anna Sattler: We have the best medical and high… and the best credentialed providers in the state.
+
+399
+01:02:24.540 --> 01:02:40.629
+Anna Sattler: Alaska Regional Hospital, Providence, they… they all are like this to… to… to all of our health facilities. I know that's so off-topic, but I just love learning about how Lower 48 does it. I think
+
+400
+01:02:41.100 --> 01:02:42.949
+Anna Sattler: I mean, you guys… it…
+
+401
+01:02:43.170 --> 01:02:58.760
+Anna Sattler: I know that we're behind in so many things, but this is one area where, like, we… I know that the health officials work with your… with all of the tribes in the lower 48. They would love to… to tell you how they did it.
+
+402
+01:02:58.890 --> 01:03:16.289
+Anna Sattler: Because our care is insane. It is the best ever. And, you know, I saw… my dad's… my dad's in Nebraska, and his… his wife is Indigenous, his wife is… Maria's, you know, they've been married for, like, 40 years or something, but
+
+403
+01:03:17.180 --> 01:03:21.679
+Anna Sattler: She said that when they… she goes to the hospital, she goes, like.
+
+404
+01:03:22.830 --> 01:03:33.809
+Anna Sattler: to North Dakota, I guess? I don't know, I don't remember what that hospital is, but Maria said that it… that big hospital is the size of a village clinic.
+
+405
+01:03:34.010 --> 01:03:34.800
+Jodi Burshia: Mmm.
+
+406
+01:03:35.820 --> 01:03:36.930
+Jodi Burshia: Wow.
+
+407
+01:03:36.930 --> 01:03:44.530
+Anna Sattler: I mean, yeah, it's insane. I couldn't… yeah, anyway… I really hope that
+
+408
+01:03:45.380 --> 01:03:52.620
+Anna Sattler: Yeah, I know it's so off-topic, but that's one of the things that we, all of us Indigenous people, need.
+
+409
+01:03:53.020 --> 01:04:09.470
+Jodi Burshia: Absolutely, it's so true. And it's really not that off-topic. I think it's… I mean, it's definitely relevant to, like, the role of the organizations, and then the roles that the people play in thinking about what they're going to do, and then how they're doing it, and who the services are for.
+
+410
+01:04:09.470 --> 01:04:15.460
+Jodi Burshia: So that's definitely important information. There's so much that, like, we could learn from
+
+411
+01:04:15.640 --> 01:04:18.760
+Jodi Burshia: From the way that, you know, things are being done there, for sure.
+
+412
+01:04:20.030 --> 01:04:21.400
+Jodi Burshia: It's exciting
+
+413
+01:04:21.890 --> 01:04:31.350
+Jodi Burshia: And it's just, you know, thinking about all of these things, thinking about, you know, the roles that, like, these organizations… well, your organization plays, and then…
+
+414
+01:04:31.550 --> 01:04:36.060
+Jodi Burshia: It's not, you know, places, you know, isn't an adequate word, because
+
+415
+01:04:36.130 --> 01:04:53.559
+Jodi Burshia: you know, they have a significant role in the community. Like, your work is important. I mean, as people look to you, they're looking to you as a community and tribal leader as well, and thinking about, like, what they can do next, you know, what they need to do.
+
+416
+01:04:53.580 --> 01:04:59.380
+Jodi Burshia: And it's really exciting thinking about, where things are going. So how do you envision
+
+417
+01:04:59.610 --> 01:05:03.800
+Jodi Burshia: you know, you're… you're cooperative for the future. Like, how do you think…
+
+418
+01:05:04.580 --> 01:05:12.850
+Jodi Burshia: things are going to, like… should they stay the same? Should they… are they going to grow in different ways that you can anticipate? What do you think about… for the future?
+
+419
+01:05:13.290 --> 01:05:23.370
+Anna Sattler: Yeah, I mean, I think we… I talked a little bit about this earlier, but it, you know, things are changing, and we're all going to have to adapt.
+
+420
+01:05:23.500 --> 01:05:31.060
+Anna Sattler: AVAC, but each and every one of our members, member owners in each and every one of our villages.
+
+421
+01:05:31.490 --> 01:05:39.440
+Anna Sattler: The funding decline is a real thing, and it's a critical, critical threat.
+
+422
+01:05:39.570 --> 01:05:48.180
+Anna Sattler: to how we do business for everything from delivering electricity to delivering, you know,
+
+423
+01:05:48.480 --> 01:05:52.000
+Anna Sattler: Food, groceries, everything is changing.
+
+424
+01:05:52.150 --> 01:05:59.140
+Anna Sattler: And, and, you know, the, the federal subsidies to get, bypass mail.
+
+425
+01:05:59.440 --> 01:06:14.629
+Anna Sattler: which includes, you know, groceries, and, you know, it can often include, like, every single piece of 2x4, or nail, or everything that gets into a community. All of that funding
+
+426
+01:06:14.630 --> 01:06:23.700
+Anna Sattler: is in jeopardy. It's being talked about now. What… and then, combined with, everything melting.
+
+427
+01:06:24.470 --> 01:06:36.330
+Anna Sattler: what is that going to look like for our communities? What… what is that going to look like for AVAC? There are a handfuls of communities that have been trying to… to move.
+
+428
+01:06:36.420 --> 01:06:42.290
+Anna Sattler: And they've been doing that. NewTalk is one. It… they… they're sinking.
+
+429
+01:06:42.290 --> 01:07:04.319
+Anna Sattler: So they… they have moved to Michtowvak, which means fresh water, but I call it newer talk, because I just like to be funny. It's not one of our communities, but there's example after example of that, where new school had to be constructed, a new power plant, all the homes had to be, constructed and moved. And those… that is
+
+430
+01:07:04.360 --> 01:07:22.339
+Anna Sattler: hundreds and hundreds and hundreds of millions of dollars worth of infrastructure. Kivalina, Shishmarath, Shakhtulik, Nunapichak. I mean, there's example after example after example of communities that,
+
+431
+01:07:22.870 --> 01:07:36.539
+Anna Sattler: you know, their, their, shorelines are eroding, their, the land that they're sitting on is no longer there. And, you know, like, Kivalina is a good example.
+
+432
+01:07:37.130 --> 01:07:41.410
+Anna Sattler: They're right on the Bering Sea, and… and… no.
+
+433
+01:07:41.640 --> 01:07:47.199
+Anna Sattler: Kivalina is not on the Bering Sea. Let me make sure that I have this right. Kivalina is…
+
+434
+01:07:51.100 --> 01:07:53.629
+Anna Sattler: Bering… it's not on the Bering Sea.
+
+435
+01:07:55.800 --> 01:07:59.710
+Anna Sattler: Chuck Cheese C. I wanted to make sure that I had that right.
+
+436
+01:08:01.030 --> 01:08:17.300
+Anna Sattler: But it's located on a barrier reef, like several of those communities are, and so there's a lagoon side, and then the Chukchi Sea side, and you have the storms that I was talking about for Kotzebue, Kivalina, and those communities.
+
+437
+01:08:17.300 --> 01:08:23.930
+Anna Sattler: Where they had to evacuate, and the runways are underwater, homes are underwater.
+
+438
+01:08:23.930 --> 01:08:31.580
+Anna Sattler: the whole community is underwater. Those, I mean.
+
+439
+01:08:32.010 --> 01:08:36.719
+Anna Sattler: those are real things that are happening, and Kivalina, they built a…
+
+440
+01:08:37.330 --> 01:08:53.180
+Anna Sattler: I think it's an 8-mile evacuation road, and the new school is out there. That… that was hundreds and hundreds and hundreds of millions of dollars to do. We built an inner tie out there, we got funding to build an inner tie out there.
+
+441
+01:08:53.380 --> 01:08:54.220
+Anna Sattler: But…
+
+442
+01:08:54.630 --> 01:09:11.920
+Anna Sattler: that's gonna… we're going… as a state, and as rural Alaskans, we're really gonna have to look at how we do business like that in the future, because there's not hundreds of million dollars to move, a couple of hundred people, you know.
+
+443
+01:09:12.399 --> 01:09:16.870
+Anna Sattler: to a different… to a different site.
+
+444
+01:09:17.170 --> 01:09:25.029
+Anna Sattler: there's operational impacts at AVAC that, you know, for logistics, that can… will continue to… to happen if…
+
+445
+01:09:25.050 --> 01:09:40.449
+Anna Sattler: Especially if the… the subsidy, you know, subsidies were to go away for… for delivering, you know, passengers and materials. That's… I keep getting interrupted. I should have muted everything, sorry.
+
+446
+01:09:42.779 --> 01:10:02.500
+Anna Sattler: So, and then, you know, that… that will impact how we do business, because everything, like, poles, you have to, you know, power poles, you have to put them in the ground, and if the… if it… and the existing ones that are all leaning… I just got a video the other day of… of some leaning poles, sort of leaning from
+
+447
+01:10:02.500 --> 01:10:06.160
+Anna Sattler: Like, the 10 o'clock position to the 2 o'clock position.
+
+448
+01:10:06.570 --> 01:10:12.480
+Anna Sattler: That's it, right? That's… that's how critical It's…
+
+449
+01:10:13.760 --> 01:10:27.189
+Anna Sattler: the permafrost is… and the… and the weather is changing. We have to… and that's not just an AVAC problem, that… that's a problem for everything that's in the community.
+
+450
+01:10:27.380 --> 01:10:32.249
+Anna Sattler: So, you know, resili… we need to focus on… on planning,
+
+451
+01:10:32.890 --> 01:10:42.320
+Anna Sattler: For resiliency, and for… and find different, you know, innovative ways to find funding, and all of that
+
+452
+01:10:43.010 --> 01:10:45.730
+Anna Sattler: Can't be done without
+
+453
+01:10:46.540 --> 01:11:04.919
+Anna Sattler: the community and AVAC and all of the other entities just working so tightly together to… to make sure that we're citing energy projects in the right places, so that we're looking out, you know, in the future.
+
+454
+01:11:05.420 --> 01:11:15.399
+Anna Sattler: 50 years, 100 years, to make sure that, you know, that… that we're citing things in a way that make the most sense and are the safest for the communities.
+
+455
+01:11:15.710 --> 01:11:24.550
+Anna Sattler: But it's, you know, it's something that Alaska Who is not used to
+
+456
+01:11:24.890 --> 01:11:31.409
+Anna Sattler: and Alaskans aren't used to, but it's something that we're all gonna have to start looking at, because
+
+457
+01:11:32.340 --> 01:11:41.880
+Anna Sattler: The combination of funding declines and climate threats, is, is, you know, forcing us to do business in different ways.
+
+458
+01:11:42.100 --> 01:11:52.629
+Anna Sattler: And, you know, maybe instead of moving a community, communities are going to have to merge with others, like we, you know, have done for
+
+459
+01:11:52.820 --> 01:11:55.090
+Anna Sattler: for millennia,
+
+460
+01:11:57.890 --> 01:12:13.200
+Anna Sattler: And, you know, I talk about that. I get pretty sensitive and very protective of our communities. The reason why we have these communities is because we were forced to go to school, you know, and forced to do those kinds of things.
+
+461
+01:12:13.200 --> 01:12:19.289
+Anna Sattler: So, I understand nobody wants to move, and it's real easy to, you know, to talk about.
+
+462
+01:12:20.170 --> 01:12:21.070
+Jodi Burshia: you know.
+
+463
+01:12:22.710 --> 01:12:32.330
+Anna Sattler: you know, suggesting that to other people, but if you're the person that people are suggesting that to, you'd be pretty offended. But…
+
+464
+01:12:34.140 --> 01:12:40.040
+Anna Sattler: we have to come up with different solutions on how we're going to do things. If your community is not going to be there.
+
+465
+01:12:40.040 --> 01:12:41.490
+Jodi Burshia: In 10 years.
+
+466
+01:12:41.940 --> 01:12:48.359
+Anna Sattler: What are we gonna do? What does that mean for all of the infrastructure there? The existing infrastructure?
+
+467
+01:12:49.110 --> 01:12:49.750
+Jodi Burshia: Right.
+
+468
+01:12:50.820 --> 01:12:53.560
+Jodi Burshia: Absolutely, that is important.
+
+469
+01:12:53.640 --> 01:13:02.700
+Jodi Burshia: people… everyone needs to be thinking about that. You know, when you're talking about that, it reminds me of, like, the force removal that people had, you know, like, in places like Oklahoma.
+
+470
+01:13:02.760 --> 01:13:14.609
+Jodi Burshia: And then how people were working with the forced genocide during, like, the Pebble Revolt, like, the whole reason for the Pebble Revolt. And it's just amazing, you know, to think about, like, well.
+
+471
+01:13:14.750 --> 01:13:19.559
+Jodi Burshia: People were forced to do these different things, and this is where we are now.
+
+472
+01:13:19.820 --> 01:13:24.249
+Jodi Burshia: This is the situation that everybody needs to be aware of, you know.
+
+473
+01:13:24.360 --> 01:13:32.939
+Jodi Burshia: these changes, like you're mentioning, with, like, the poll going from, like, being at 10 o'clock going to 2 o'clock, and, like, that's a significant change that…
+
+474
+01:13:32.960 --> 01:13:46.670
+Jodi Burshia: People are not, you know, if they might see, like, Tundra, but they don't know how to, like, work with it, they don't know, like, they don't have the knowledge, the background knowledge to be able to, like, work with that the best way possible.
+
+475
+01:13:48.060 --> 01:13:55.339
+Jodi Burshia: That is some definite knowledge that you're sharing with us. And I really want to say thank you for taking the time.
+
+476
+01:13:55.480 --> 01:13:59.950
+Jodi Burshia: to… to meet with us, to impart so much knowledge and information. I'm…
+
+477
+01:14:00.040 --> 01:14:16.859
+Jodi Burshia: I've learned so much today, and I'm looking forward to, like, our group learning more, you know, about everything that you're sharing. Learning from your conversation and the things that you shared today, that's really beneficial. Were there things that we didn't talk about? Because I know that you mentioned that you have bullet points.
+
+478
+01:14:19.040 --> 01:14:21.560
+Jodi Burshia: Did we talk about the things she wanted to discuss?
+
+479
+01:14:22.030 --> 01:14:25.810
+Anna Sattler: Oh, just, let me look.
+
+480
+01:14:33.970 --> 01:14:40.069
+Anna Sattler: I don't… I don't think so. I think I've covered… I think we've covered sort of everything,
+
+481
+01:14:40.330 --> 01:14:46.439
+Anna Sattler: I'm really hoping that… I don't… are you gonna publish this somewhere?
+
+482
+01:14:46.440 --> 01:14:56.659
+Jodi Burshia: that's the hope, that the students will help, they will, you know, look at these different types of information, look at the different themes, you know, like, I'm gonna help them go through coding, and then,
+
+483
+01:14:56.990 --> 01:15:00.719
+Jodi Burshia: Looking at cleaning up the transcripts, cleaning up, you know, like, because
+
+484
+01:15:00.900 --> 01:15:11.869
+Jodi Burshia: I, you know, like, I stumbled across, like, some different words, and so they're gonna clean those things up, and then, they're gonna help with, like, the different things that… that need to be cleaned up. And then, yes, we will eventually publish.
+
+485
+01:15:12.210 --> 01:15:22.389
+Jodi Burshia: But we'll definitely keep you in, you know, in step in all the different ways, all the different times, you know, that we're going to, like, be looking at these things and all of that.
+
+486
+01:15:22.450 --> 01:15:36.300
+Jodi Burshia: And as part of that, if you're able to send me your address for a thank you gift, we certainly appreciate the time that you've taken, you know, to meet and to talk about these things, and…
+
+487
+01:15:36.640 --> 01:15:42.839
+Jodi Burshia: we… this is… this is huge, this is important information, and I'm… I'm so thankful.
+
+488
+01:15:43.630 --> 01:15:47.369
+Anna Sattler: Thank you! Yeah, I just wanted… I just…
+
+489
+01:15:47.550 --> 01:15:55.009
+Anna Sattler: I hope that if, before you publish, like, you, I can be included in the draft, just in case I, you know.
+
+490
+01:15:55.240 --> 01:16:01.030
+Anna Sattler: Just… just to clarify anything, or make sure that there's no wrong information.
+
+491
+01:16:01.350 --> 01:16:06.200
+Jodi Burshia: Oh, most definitely, and we'll send something back to you and say, is this what you wanted to say, and all of this.
+
+492
+01:16:07.170 --> 01:16:08.770
+Jodi Burshia: I'll make sure that I have that.
+
+493
+01:16:09.700 --> 01:16:19.499
+Anna Sattler: like, I'm sure that, you know, AVAC employees wouldn't be happy with, you know, me sharing our business about the, you know, leaning poles, but, you know, as a… as a…
+
+494
+01:16:19.540 --> 01:16:32.019
+Anna Sattler: As a villager and as a AVAC member, those are things that we really… that are real, everyday life, and we… and we do need to talk about them, because they are different.
+
+495
+01:16:34.200 --> 01:16:38.260
+Anna Sattler: It's different… we deal with really weird, different things.
+
+496
+01:16:39.870 --> 01:16:40.490
+Jodi Burshia: Exactly.
+
+497
+01:16:40.490 --> 01:16:43.490
+Anna Sattler: Anyway, thank you so much!
+
+498
+01:16:43.880 --> 01:16:48.269
+Jodi Burshia: Absolutely, and thank you, Dawaii, for taking the time. Appreciate it.
+
+499
+01:16:50.070 --> 01:16:56.179
+Jodi Burshia: And I will send this to you, and then if you can send me your mailing address, that'd be great. Even via email is perfect, and so…
+
+500
+01:16:56.180 --> 01:16:57.070
+Anna Sattler: Okay.
+
+501
+01:16:57.460 --> 01:16:58.259
+Jodi Burshia: That'd be wonderful.
+
+502
+01:16:58.260 --> 01:17:00.810
+Anna Sattler: Thank you. Bye, Pam. Pamela.
+
+503
+01:17:05.280 --> 01:17:08.919
+Pamela Standing: Sorry, I was on mute. Oh my gosh!
+
+504
+01:17:09.330 --> 01:17:25.229
+Pamela Standing: I'm… just really appreciate your time. And I'm going to be sending you a list of all of the U.S. Native-led cooperatives here, so that you can see where they're at. Even… there's even some more up in Alaska, you probably know about them.
+
+505
+01:17:25.350 --> 01:17:34.349
+Pamela Standing: But, I will send you that list. I'm also gonna send you some resources, of places for,
+
+506
+01:17:34.350 --> 01:17:48.849
+Pamela Standing: you know, to get help for other… for other types of funding in the lower 48. I don't know how much it'll help you up in Canada. I mean, up in Alaska, I'm sorry. And, but I… I'll get that information to you.
+
+507
+01:17:49.010 --> 01:17:55.909
+Pamela Standing: So, I'll… I'm working on the list to update it.
+
+508
+01:17:56.150 --> 01:18:14.390
+Pamela Standing: And, that way I'll have some contact information, website information, and then you can talk to these people, because you're not alone with what you're dealing with, with climate change. There's a group of women on Oneida Reservation. They have to grow the corn differently, their white corn.
+
+509
+01:18:14.570 --> 01:18:25.429
+Pamela Standing: Because they're getting flooded every year now, and their corn was just dying in the field because it was underwater. So now they're growing their corn up on mounds.
+
+510
+01:18:25.680 --> 01:18:40.969
+Pamela Standing: And, so that it's… the roots are protected from rotting in the wet soil. And so, there's just things happening. We're going to be interviewing an agricultural, group in Tohona Odom.
+
+511
+01:18:41.100 --> 01:18:54.610
+Pamela Standing: And they've been dealing with some things that they fought for water rights. And because of their co-op, they were able to protect their aquifer underneath their tribal lands, under their traditional territory.
+
+512
+01:18:54.790 --> 01:19:06.849
+Pamela Standing: And, they couldn't have done that without the government and the members working together. They unified their voices, and they… they… they won and beat Tucson, Arizona.
+
+513
+01:19:07.290 --> 01:19:16.610
+Pamela Standing: You know, so… and those are things we don't hear about enough in our communities, where, you know, we're always fighting Goliath. There's a group up in,
+
+514
+01:19:17.350 --> 01:19:21.479
+Pamela Standing: Wisconsin that is still trying to get
+
+515
+01:19:21.780 --> 01:19:25.230
+Pamela Standing: The oil pipelines removed from their land.
+
+516
+01:19:25.340 --> 01:19:33.670
+Pamela Standing: that they had told the pipeline people that they did not approve it, they wanted it gone. They've been fighting in court for 10 years.
+
+517
+01:19:33.880 --> 01:19:38.549
+Pamela Standing: And those pipelines are still there, and they haven't been maintained.
+
+518
+01:19:38.750 --> 01:19:48.220
+Pamela Standing: And so… and they're a huge waterway, you know, water on their land, you know, on their traditional territories, so there's just a lot of things going on, and…
+
+519
+01:19:48.340 --> 01:20:03.759
+Pamela Standing: I'm just… I'm so excited to hear the things that you're doing in your community, and, you know, maybe just somebody like us from down south, we, you know, our utilities here in Minnesota, they run 13 cents to 15 cents a kilowatt hour.
+
+520
+01:20:04.270 --> 01:20:04.770
+Pamela Standing: Yeah.
+
+521
+01:20:05.440 --> 01:20:24.550
+Pamela Standing: And so, you know, you hear about something like what up there, what you're paying for, you know, your cost of living, it's so different, but just because of the remoteness. But just… you just… I can just see, I can feel your beautiful spirit, and how much you love your community, and I'm glad they have somebody like you.
+
+522
+01:20:24.670 --> 01:20:34.979
+Pamela Standing: That's there, and that understands the ins and outs of working with, like, your village leadership and… and the community. So, Anna, it's been a pleasure meeting you.
+
+523
+01:20:35.570 --> 01:20:45.099
+Anna Sattler: It's a pleasure meeting you both, too. I want to… I have a little brag. My little sister was the first UPIC
+
+524
+01:20:45.590 --> 01:20:49.590
+Anna Sattler: and Indigenous person to get elected to Alaska's
+
+525
+01:20:49.720 --> 01:20:54.059
+Anna Sattler: congressional… U.S. congressional seat, Mary Peltola.
+
+526
+01:20:55.280 --> 01:20:55.810
+Pamela Standing: Oh…
+
+527
+01:20:56.910 --> 01:21:12.259
+Anna Sattler: And I just… I just have to brag, because I thought you guys might know who she was, or is. She lost… she lost this… this time, but who knows, she might… she'll probably run for something else. She's always been pretty political. Do you guys know who she is?
+
+528
+01:21:12.260 --> 01:21:12.920
+Pamela Standing: No!
+
+529
+01:21:12.920 --> 01:21:16.639
+Jodi Burshia: I've heard her name, but I don't know who her… I don't know her… who she is.
+
+530
+01:21:17.610 --> 01:21:18.070
+Pamela Standing: Yeah, I've.
+
+531
+01:21:18.070 --> 01:21:18.700
+Anna Sattler: No problem.
+
+532
+01:21:18.700 --> 01:21:27.790
+Pamela Standing: Brendawn, she's on the Danae Reservation, she's 74. She's running for, the Senate seat in Arizona.
+
+533
+01:21:28.140 --> 01:21:43.390
+Pamela Standing: I know! And I just… I look at her, and she's, like, 4'8", you know, this little tiny Dine woman, you know, and she raises all of her sheep, and she's just fierce. And her daughter is running again as a U.S. representative, in Arizona, so…
+
+534
+01:21:43.390 --> 01:21:48.220
+Pamela Standing: It's… we need that representation, and we're so far behind.
+
+535
+01:21:48.340 --> 01:21:51.070
+Pamela Standing: So, that's exciting!
+
+536
+01:21:51.930 --> 01:21:55.459
+Anna Sattler: Isn't Deb Holland from Arizona, or no?
+
+537
+01:21:55.940 --> 01:22:11.920
+Jodi Burshia: She's from the Laguna Pueblo, actually. And so we just… I just got a chance to see her last Monday, back during our feed day, so it was just great, because we were taking some photos, and if you want, I can send those to you as well. And so, it's just exciting. Yes, we need that representation for sure.
+
+538
+01:22:12.830 --> 01:22:15.869
+Anna Sattler: We love Deb Holland in Alaska.
+
+539
+01:22:17.860 --> 01:22:25.660
+Pamela Standing: She was great in the Department of Interior, oh my gosh. It's finally… we had somebody that understood what they were doing.
+
+540
+01:22:26.120 --> 01:22:27.140
+Jodi Burshia: Right. Jeez.
+
+541
+01:22:27.470 --> 01:22:28.930
+Pamela Standing: just crazy.
+
+542
+01:22:29.260 --> 01:22:31.230
+Pamela Standing: Well, thank you again.
+
+543
+01:22:31.600 --> 01:22:32.220
+Anna Sattler: Okay.
+
+544
+01:22:32.220 --> 01:22:34.640
+Pamela Standing: Alright, you have a beautiful weekend!
+
+545
+01:22:34.990 --> 01:22:36.430
+Anna Sattler: Okay, you guys too.
+
+546
+01:22:36.430 --> 01:22:49.909
+Pamela Standing: Okay, talk with you. I'll be sending you an email real soon, and then I have a gift that I've made, and we'll… and Jody has some things, and we'll send it up as a thank you to your, you know, to your organization and to you for your time.
+
+547
+01:22:50.340 --> 01:22:52.340
+Anna Sattler: Thank you, thank you!
+
+548
+01:22:52.500 --> 01:22:53.180
+Pamela Standing: Take care.
+
+549
+01:22:53.180 --> 01:22:53.590
+Jodi Burshia: Thank you.
+
+550
+01:22:53.590 --> 01:22:54.400
+Anna Sattler: Okay, bye.
+
+551
+01:22:54.400 --> 01:22:55.670
+Pamela Standing: Alright, bye-bye.
+
+552
+01:22:58.910 --> 01:23:01.779
+Pamela Standing: Did you want to talk to me, or are you feeling okay?
+
+553
+01:23:02.450 --> 01:23:05.339
+Jodi Burshia: I'm feeling good, let me, press the…
+
