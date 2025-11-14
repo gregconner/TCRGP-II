@@ -1,0 +1,249 @@
+================================================================================
+SURVEY QUESTION COVERAGE ANALYSIS
+TCRGP II Survey Questions (11/14/25) vs Original Interviews
+================================================================================
+
+
+================================================================================
+INTERVIEW: DM_RSF
+================================================================================
+
+Q1: Was the cooperative originally designed to support Tribal values and traditional systems?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal value, traditional system, cultural security
+
+Q2: Did the cooperative develop a marketing plan?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: marketing plan, market, brand
+
+Q3: Does the cooperative utilize website/social media marketing?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: website, social media, online, digital
+
+Q4: Did you design the cooperative only among your group members or did you have outside assistance?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: coop developer, cooperative developer, expert, steering committee
+
+Q5: Were you aware of standard cooperative development approaches? Did you use these?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: standard cooperative, cooperative development, cooperative model, cooperative business
+
+Q6: Have you had to settle major differences between the coop and the local community?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: conflict, differences, issue, challenge, problem
+
+Q7: Do you keep community and Tribal leadership engaged?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal leadership, leadership engaged, tribal council, chief
+
+Q8: Do you feel that your cooperative has been successful overall?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: success, successful, profit, growth, sustain
+
+Q9: Did COVID have a significant impact on your co-op?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: covid, pandemic, closure, virtual
+
+================================================================================
+INTERVIEW: RTZ
+================================================================================
+
+Q1: Was the cooperative originally designed to support Tribal values and traditional systems?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal value, traditional value, traditional teaching
+
+Q2: Did the cooperative develop a marketing plan?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: marketing plan, marketing department, market, advertis
+
+Q3: Does the cooperative utilize website/social media marketing?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: website, social media, facebook, online, digital
+
+Q4: Did you design the cooperative only among your group members or did you have outside assistance?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: cooperative developer, steering committee
+
+Q5: Were you aware of standard cooperative development approaches? Did you use these?
+  Answered: YES
+  Confidence: MEDIUM
+  Keywords found: cooperative development
+
+Q6: Have you had to settle major differences between the coop and the local community?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: issue, challenge, local community
+
+Q7: Do you keep community and Tribal leadership engaged?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal leadership, leadership engaged, governor, board meet, member engagement
+
+Q8: Do you feel that your cooperative has been successful overall?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: success, successful, profit, growth, sustain
+
+Q9: Did COVID have a significant impact on your co-op?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: covid, closure
+
+================================================================================
+INTERVIEW: Allottees
+================================================================================
+
+Q1: Was the cooperative originally designed to support Tribal values and traditional systems?
+  Answered: YES
+  Confidence: MEDIUM
+  Keywords found: tribal value, traditional system
+
+Q2: Did the cooperative develop a marketing plan?
+  Answered: YES
+  Confidence: MEDIUM
+  Keywords found: market
+
+Q3: Does the cooperative utilize website/social media marketing?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: website, social media, facebook, twitter, instagram
+
+Q4: Did you design the cooperative only among your group members or did you have outside assistance?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: consultant, technical assist, expert, steering committee
+
+Q5: Were you aware of standard cooperative development approaches? Did you use these?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: standard cooperative, cooperative development
+
+Q6: Have you had to settle major differences between the coop and the local community?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: conflict, differences, issue, challenge, problem
+
+Q7: Do you keep community and Tribal leadership engaged?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal leadership, board meet
+
+Q8: Do you feel that your cooperative has been successful overall?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: success, profit, growth, sustain
+
+Q9: Did COVID have a significant impact on your co-op?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: covid, zoom, virtual
+
+================================================================================
+INTERVIEW: ManyNations
+================================================================================
+
+Q1: Was the cooperative originally designed to support Tribal values and traditional systems?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal value, traditional system, indigenous value, cultural value
+
+Q2: Did the cooperative develop a marketing plan?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: marketing plan, market, advertis, brand
+
+Q3: Does the cooperative utilize website/social media marketing?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: website, social media
+
+Q4: Did you design the cooperative only among your group members or did you have outside assistance?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: expert, steering committee
+
+Q5: Were you aware of standard cooperative development approaches? Did you use these?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: standard cooperative, cooperative development, cooperative model, cooperative structure, cooperative business
+
+Q6: Have you had to settle major differences between the coop and the local community?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: differences, issue, challenge, problem, local community
+
+Q7: Do you keep community and Tribal leadership engaged?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: tribal leadership, community engaged, board meet
+
+Q8: Do you feel that your cooperative has been successful overall?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: success, working well, profit, growth, sustain
+
+Q9: Did COVID have a significant impact on your co-op?
+  Answered: YES
+  Confidence: HIGH
+  Keywords found: covid, zoom
+
+
+================================================================================
+SUMMARY: QUESTION COVERAGE ACROSS ALL INTERVIEWS
+================================================================================
+
+Question   DM/RSF       RTZ          Allottees    ManyNations 
+--------------------------------------------------------------------------------
+Q1         ✓✓           ✓✓           ✓            ✓✓           
+Q2         ✓✓           ✓✓           ✓            ✓✓           
+Q3         ✓✓           ✓✓           ✓✓           ✓✓           
+Q4         ✓✓           ✓✓           ✓✓           ✓✓           
+Q5         ✓✓           ✓            ✓✓           ✓✓           
+Q6         ✓✓           ✓✓           ✓✓           ✓✓           
+Q7         ✓✓           ✓✓           ✓✓           ✓✓           
+Q8         ✓✓           ✓✓           ✓✓           ✓✓           
+Q9         ✓✓           ✓✓           ✓✓           ✓✓           
+
+Legend: ✓✓ = HIGH confidence, ✓ = MEDIUM confidence, ✗ = Not answered
+
+
+================================================================================
+OVERALL STATISTICS
+================================================================================
+
+DM_RSF:
+  HIGH confidence answers: 9/9
+  MEDIUM confidence answers: 0/9
+  Not answered: 0/9
+  Coverage rate: 100.0%
+
+RTZ:
+  HIGH confidence answers: 8/9
+  MEDIUM confidence answers: 1/9
+  Not answered: 0/9
+  Coverage rate: 100.0%
+
+Allottees:
+  HIGH confidence answers: 7/9
+  MEDIUM confidence answers: 2/9
+  Not answered: 0/9
+  Coverage rate: 100.0%
+
+ManyNations:
+  HIGH confidence answers: 9/9
+  MEDIUM confidence answers: 0/9
+  Not answered: 0/9
+  Coverage rate: 100.0%
