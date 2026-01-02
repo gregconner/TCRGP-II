@@ -943,14 +943,38 @@ class DeIdentifier:
     
     def is_valid_name(self, name: str) -> bool:
         """Check if a string is a valid person name (not a phrase)."""
-        if not name or len(name.strip()) < 3:
+        if not name or len(name.strip()) < 2:
             return False
         
         name_lower = name.strip().lower()
         words = name.split()
         
-        # Must be 2-4 words (first name + last name, possibly middle)
-        if len(words) < 2 or len(words) > 4:
+        # NEW v1.16.0: Check database for name validation (works for single names too)
+        if self.use_database and self.db_conn:
+            try:
+                cursor = self.db_conn.cursor()
+                # Check if it's a known first name (single word)
+                if len(words) == 1:
+                    cursor.execute('SELECT COUNT(*) FROM common_first_names WHERE name = ?', (name,))
+                    if cursor.fetchone()[0] > 0:
+                        return True
+                    cursor.execute('SELECT COUNT(*) FROM native_american_names WHERE first_name = ?', (name,))
+                    if cursor.fetchone()[0] > 0:
+                        return True
+                # Check if it's a known last name (check last word)
+                if len(words) >= 1:
+                    last_word = words[-1]
+                    cursor.execute('SELECT COUNT(*) FROM common_last_names WHERE name = ?', (last_word,))
+                    if cursor.fetchone()[0] > 0:
+                        return True
+                    cursor.execute('SELECT COUNT(*) FROM native_american_names WHERE last_name = ?', (last_word,))
+                    if cursor.fetchone()[0] > 0:
+                        return True
+            except Exception:
+                pass  # If database check fails, continue with regular validation
+        
+        # Must be 1-4 words (first name, or first name + last name, possibly middle)
+        if len(words) < 1 or len(words) > 4:
             return False
         
         # All words must start with capital letter (proper noun)
