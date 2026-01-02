@@ -1112,31 +1112,50 @@ class DeIdentifier:
                     extracted_names.add(name)  # Track both
                     self.name_detector.add_name(name_normalized, "last_name_in_dialogue")
         
-        # METHOD 1.6: Extract first names in dialogue (not just speaker labels) - IMPROVED v1.10.0
-        # Common first names that appear alone in dialogue (case-insensitive matching)
-        # EXPANDED v1.10.0: Added Vicki, Danae, Perry, Pamela, Chris, Dave, Valentino, Ho-Chunk, Diffin, Alatada
-        common_first_names_list = r'Gabriel|Miranda|Danae|Vicki|Joy|Pamela|Amy|Perry|Ricardo|Duran|Lea|Michelena|Anna|Jodi|Pam|Richard|Dave|Sam|Chris|Barry|Roberto|Rufus|Valentino|Nelson|Rich|Diffin|Parks|Alatada|Richardson|Ho-Chunk|Ho-Chump'
+        # METHOD 1.6: Extract first names in dialogue (not just speaker labels) - IMPROVED v1.16.0
+        # NEW v1.16.0: Load common first names from database instead of hardcoding
+        common_first_names = []
+        if self.use_database and self.db_conn:
+            try:
+                cursor = self.db_conn.cursor()
+                # Get common first names from database (top 200)
+                cursor.execute('SELECT name FROM common_first_names ORDER BY frequency_rank LIMIT 200')
+                db_names = [row[0] for row in cursor.fetchall()]
+                cursor.execute('SELECT DISTINCT first_name FROM native_american_names WHERE first_name IS NOT NULL')
+                native_names = [row[0] for row in cursor.fetchall()]
+                common_first_names = db_names + native_names
+            except Exception:
+                pass
+        
+        # Fallback to a small hardcoded list if database not available (for basic functionality)
+        if not common_first_names:
+            common_first_names = ['Gabriel', 'Miranda', 'Joy', 'Pamela', 'Amy', 'Ricardo', 'Duran', 
+                                  'Lea', 'Michelena', 'Anna', 'Jodi', 'Pam', 'Richard', 'Sam', 'Barry', 
+                                  'Roberto', 'Rufus', 'Nelson', 'Rich', 'Richardson']
+        
+        # Create regex pattern from list
+        common_first_names_pattern = '|'.join(re.escape(name) for name in common_first_names)
         
         first_name_in_dialogue_patterns = [
             # Pattern 1: Name followed by verb
-            r'\b(' + common_first_names_list + r')\s+(?:said|asked|told|mentioned|explained|stated|has|had|was|is|will|would|does|did|can|could|and|or|,)',
+            r'\b(' + common_first_names_pattern + r')\s+(?:said|asked|told|mentioned|explained|stated|has|had|was|is|will|would|does|did|can|could|and|or|,)',
             # Pattern 2: After greeting
-            r'\b(?:Sorry,|Hi,|Hello,|Hey,)\s+(' + common_first_names_list + r')',
+            r'\b(?:Sorry,|Hi,|Hello,|Hey,)\s+(' + common_first_names_pattern + r')',
             # Pattern 3: Names in quotes or after "called", "named", "introduced as"
             r'\b(?:called|named|introduced as|known as)\s+["\']?([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)["\']?',
             r'["\']([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)["\']',  # Names in quotes
             # Pattern 4: Single names after punctuation (period, comma, colon)
-            r'[.,:;]\s+(' + common_first_names_list + r')\s+(?:and|or|but|so|then|when|where|who|what|how|why)',
+            r'[.,:;]\s+(' + common_first_names_pattern + r')\s+(?:and|or|but|so|then|when|where|who|what|how|why)',
             # Pattern 5: Single names at start of sentences (capitalized)
-            r'(?:^|\.\s+)(' + common_first_names_list + r')\s+(?:is|was|are|were|has|had|will|would|can|could|should|may|might)',
+            r'(?:^|\.\s+)(' + common_first_names_pattern + r')\s+(?:is|was|are|were|has|had|will|would|can|could|should|may|might)',
             # NEW v1.8.0: Pattern 6: Single names after "with", "and", "or" (common in dialogue)
-            r'\b(?:with|and|or)\s+(' + common_first_names_list + r')(?:\s|,|\.|$)',
+            r'\b(?:with|and|or)\s+(' + common_first_names_pattern + r')(?:\s|,|\.|$)',
             # NEW v1.8.0: Pattern 7: Single names after "there's", "there is", "here's" (case-insensitive)
-            r'\b(?:there\'s|there is|here\'s|here is)\s+(' + common_first_names_list + r')(?:\s|,|\.|$)',
+            r'\b(?:there\'s|there is|here\'s|here is)\s+(' + common_first_names_pattern + r')(?:\s|,|\.|$)',
             # NEW v1.8.0: Pattern 8: Single names before "who", "that", "which"
-            r'\b(' + common_first_names_list + r')\s+(?:who|that|which)\s+',
+            r'\b(' + common_first_names_pattern + r')\s+(?:who|that|which)\s+',
             # NEW v1.8.0: Pattern 9: Single names after "contact", "call", "email"
-            r'\b(?:contact|call|email|reach)\s+(' + common_first_names_list + r')(?:\s|,|\.|$)',
+            r'\b(?:contact|call|email|reach)\s+(' + common_first_names_pattern + r')(?:\s|,|\.|$)',
         ]
         for pattern in first_name_in_dialogue_patterns:
             matches = re.finditer(pattern, filtered_text, re.IGNORECASE | re.MULTILINE)  # Use filtered_text
