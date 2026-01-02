@@ -20,6 +20,10 @@
   - Use live updating (e.g., \r, sys.stdout.write, or similar) so it's always visible
 - DO NOT ignore or delay implementing explicit user requests.
 
+## Persistence - CRITICAL
+- Do NOT stop work early. Continue until the user’s request is fully completed unless there is a clear blocker (e.g., missing permissions, missing files, sandbox restriction, or a required external dependency/service is unavailable).
+- If a blocker occurs, clearly state the blocker and immediately attempt the best available workaround.
+
 ## Version Management
 - Always work with specific version numbers. Use the VERSION file to track current version.
 - Use descriptive filenames with version numbers (e.g., ConnerFrac_v0.1.X.jl, deidentify_and_tag_transcripts_v1.X.X.py).
