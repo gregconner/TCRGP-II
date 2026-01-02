@@ -1,0 +1,34 @@
+# ============================================================================
+# Cursor indexing exclusions (RAM / privacy)
+# ============================================================================
+# Cursor can consume huge RAM when it indexes large binary files (DOCX/PDF)
+# or rapidly changing output directories. These are still available to scripts,
+# just excluded from Cursor's code intelligence/indexer.
+#
+# Keep this file committed so the whole project stays stable.
+
+# Raw transcripts (PII + large docx)
+older transcripts/
+newer transcripts/
+*.docx
+
+# Iteration outputs (generated; may include mapping files)
+iteration_outputs/
+
+# De-id mapping files can be sensitive and add noise
+*_mapping.json
+processing_summary.json
+
+# Generated logs/status
+*.log
+*.pid
+*status*.json
+
+# Common caches/venvs
+__pycache__/
+.venv/
+venv/
+env/
+download_cache/
+
+
