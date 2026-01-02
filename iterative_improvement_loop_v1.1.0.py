@@ -186,7 +186,7 @@ def main():
     print(f"\nFound {len(transcript_files)} new transcript(s) to process")
     
     # Initialize - UPDATED v1.1.0 to use latest version
-    cleaner_version = "1.10.0"
+    cleaner_version = "1.11.0"
     grader_version = "1.0.0"
     iteration = 0
     previous_scores = []
