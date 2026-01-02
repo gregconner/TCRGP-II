@@ -1511,9 +1511,14 @@ class DeIdentifier:
                     self.mapping["persons"][name] = found_code
             
             if found_code:
-                # Replace all case variants of this name
-                pattern = r'\b' + re.escape(name) + r'\b'
-                deidentified = re.sub(pattern, found_code, deidentified, flags=re.IGNORECASE)
+                # CRITICAL v1.13.0: More aggressive replacement - handle all contexts
+                # Replace all case variants with flexible word boundaries
+                patterns = [
+                    r'\b' + re.escape(name) + r'\b',  # Standard word boundary
+                    r'(?<![A-Za-z])' + re.escape(name) + r'(?![A-Za-z])',  # Flexible boundary
+                ]
+                for pattern in patterns:
+                    deidentified = re.sub(pattern, found_code, deidentified, flags=re.IGNORECASE)
         
         # NEW v1.12.0: Replace false positives that shouldn't be in the text
         # These should have been filtered, but if they're still there, remove them
