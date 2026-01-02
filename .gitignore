@@ -1,0 +1,97 @@
+# ============================================================================
+# PRIVACY AND SECURITY: RAW TRANSCRIPTS WITH IDENTIFIABLE DATA
+# ============================================================================
+# NEVER commit raw transcripts with identifiable information
+# Cleaned/de-identified transcripts ARE allowed (see below)
+
+# Raw transcript directories (contain identifiable data)
+older transcripts/
+newer transcripts/
+
+# Raw transcript files in root directory (with identifiable data)
+# These are the original transcripts before cleaning/de-identification
+Interview with DM, RSF.txt
+Interview with RTZ Leadership.txt
+allottees.txt
+manynations.txt
+alaska_interview.txt
+earth_sky_interview.txt
+twu_interview.txt
+
+# Mapping files (contain de-identification codes - keep private!)
+*_mapping.json
+processing_summary.json
+
+# ============================================================================
+# ALLOWED: CLEANED/DE-IDENTIFIED TRANSCRIPTS
+# ============================================================================
+# De-identified transcripts are OK to commit (names/locations replaced with codes)
+# These are in: deidentified_transcripts/
+# Pattern: *_deidentified.txt
+# 
+# Note: If you want to exclude deidentified_transcripts/ entirely, uncomment:
+# deidentified_transcripts/
+
+# ============================================================================
+# DATA FILES (May contain sensitive information)
+# ============================================================================
+# Keep data files local - only commit analysis outputs
+
+# CSV files with raw interview data (if they contain identifiable info)
+*interview*.csv
+*normalized*interview*.csv
+*evidence*interview*.csv
+
+# Keep only analysis matrices (de-identified)
+# conner_human_readable_matrix*.csv - KEEP (de-identified)
+# claude-*.csv - KEEP (de-identified)
+
+# ============================================================================
+# PYTHON ENVIRONMENT
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# ============================================================================
+# IDE AND EDITOR FILES
+# ============================================================================
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================================
+# TEMPORARY AND OUTPUT FILES
+# ============================================================================
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# ============================================================================
+# NOTES
+# ============================================================================
+# Files that ARE safe to commit:
+# - Python scripts (.py)
+# - Documentation files (*README*.txt, *DOCUMENTATION*.txt)
+# - Cleaned/de-identified transcripts (*_deidentified.txt)
+# - Analysis outputs (matrices, reports) - if de-identified
+# - White paper PDFs (if de-identified)
+# - Configuration files (VERSION, etc.)
+
+# Files that are NEVER safe to commit:
+# - Raw transcripts (*.txt, *.docx in older transcripts/, newer transcripts/)
+# - Mapping files (*_mapping.json) - can re-identify de-identified data
+# - Any file containing actual names, locations, or sensitive data

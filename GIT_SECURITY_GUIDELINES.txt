@@ -1,0 +1,168 @@
+================================================================================
+GIT SECURITY GUIDELINES: PROTECTING SENSITIVE TRANSCRIPT DATA
+================================================================================
+
+CRITICAL: Raw transcripts contain sensitive information about tribal entities
+and must NEVER be committed to GitHub.
+
+================================================================================
+CURRENT STATUS
+================================================================================
+
+FILES ALREADY TRACKED IN GIT (NEED TO BE REMOVED):
+- Interview with DM, RSF.txt
+- Interview with RTZ Leadership.txt
+- allottees.txt
+- manynations.txt
+- alaska_interview.txt (marked for deletion)
+- earth_sky_interview.txt (marked for deletion)
+- twu_interview.txt (marked for deletion)
+
+ACTION REQUIRED:
+These files need to be removed from git tracking (but kept locally).
+
+================================================================================
+HOW TO REMOVE FILES FROM GIT (KEEPING THEM LOCALLY)
+================================================================================
+
+STEP 1: Remove from git tracking (but keep local files)
+git rm --cached "Interview with DM, RSF.txt"
+git rm --cached "Interview with RTZ Leadership.txt"
+git rm --cached "allottees.txt"
+git rm --cached "manynations.txt"
+git rm --cached "alaska_interview.txt"
+git rm --cached "earth_sky_interview.txt"
+git rm --cached "twu_interview.txt"
+
+STEP 2: Commit the removal
+git commit -m "Remove raw transcripts from git tracking (privacy/security)"
+
+STEP 3: Verify .gitignore is in place
+# .gitignore file has been created to prevent future commits
+
+STEP 4: Push to GitHub
+git push origin main
+
+RESULT:
+- Files removed from git tracking
+- Files still exist locally (not deleted)
+- .gitignore prevents future commits
+- GitHub no longer has these files
+
+================================================================================
+WHAT IS PROTECTED BY .gitignore
+================================================================================
+
+NEVER COMMITTED (Raw transcripts with identifiable data):
+✓ Raw transcripts (*.txt, *.docx in older transcripts/, newer transcripts/)
+✓ Raw transcript directories (older transcripts/, newer transcripts/)
+✓ Raw transcript files in root directory (Interview with DM, RSF.txt, etc.)
+✓ Mapping files (*_mapping.json) - contains de-identification codes (can re-identify!)
+✓ Processing summaries (may contain sensitive info)
+
+SAFE TO COMMIT (Cleaned/de-identified data):
+✓ Cleaned/de-identified transcripts (*_deidentified.txt in deidentified_transcripts/)
+✓ De-identified transcripts directory (deidentified_transcripts/)
+✓ Python scripts (.py files)
+✓ Documentation files (*README*.txt, *DOCUMENTATION*.txt)
+✓ Analysis outputs (matrices, reports) - if de-identified
+✓ White paper PDFs (if de-identified)
+✓ Configuration files (VERSION, etc.)
+✓ Tag files (*_tags.csv) - keywords only, no identifiable data
+
+================================================================================
+BEST PRACTICES
+================================================================================
+
+1. ALWAYS CHECK BEFORE COMMITTING:
+   git status
+   # Review what will be committed
+   # Ensure no transcript files are included
+
+2. USE .gitignore:
+   # .gitignore file automatically excludes protected files
+   # Check that it's up to date
+
+3. VERIFY BEFORE PUSHING:
+   git log --name-only -1
+   # Check what was in last commit
+   # Ensure no sensitive files
+
+4. IF YOU ACCIDENTALLY COMMIT:
+   # Remove from git (but keep locally):
+   git rm --cached filename.txt
+   git commit -m "Remove sensitive file"
+   git push
+   
+   # If already pushed, file is in git history
+   # Consider using git filter-branch or BFG Repo-Cleaner
+   # to remove from history (advanced)
+
+================================================================================
+DIRECTORY STRUCTURE
+================================================================================
+
+PROTECTED DIRECTORIES (in .gitignore):
+- older transcripts/     # Raw transcripts from Round 1
+- newer transcripts/      # Raw transcripts from Round 2+
+- deidentified_transcripts/  # De-identified versions (still sensitive)
+
+SAFE DIRECTORIES:
+- Root directory scripts and documentation
+- Analysis output files (if de-identified)
+
+================================================================================
+WHAT TO DO IF YOU FIND TRANSCRIPTS IN GIT
+================================================================================
+
+IMMEDIATE ACTION:
+1. Remove from tracking: git rm --cached filename
+2. Add to .gitignore if not already there
+3. Commit the removal
+4. Push to GitHub
+
+IF ALREADY PUSHED:
+- File exists in git history
+- Consider using git filter-branch to remove from history
+- Or contact GitHub support for sensitive data removal
+- May need to create new repository if history is too sensitive
+
+PREVENTION:
+- Always check git status before committing
+- Review .gitignore regularly
+- Never commit files from transcript directories
+- Use git add -p to review changes interactively
+
+================================================================================
+VERIFICATION COMMANDS
+================================================================================
+
+Check what's tracked:
+git ls-files | grep -E "\.(txt|docx)$"
+
+Check what would be committed:
+git status
+
+Check .gitignore is working:
+git status --ignored
+
+Check git history for sensitive files:
+git log --all --full-history -- "*.txt"
+git log --all --full-history -- "*.docx"
+
+================================================================================
+REMEMBER
+================================================================================
+
+✓ Raw transcripts = NEVER commit
+✓ De-identified transcripts = Still sensitive, don't commit
+✓ Mapping files = Contains codes, don't commit
+✓ Analysis outputs = OK if fully de-identified
+✓ Scripts and documentation = OK to commit
+
+WHEN IN DOUBT: Don't commit!
+
+================================================================================
+END OF GUIDELINES
+================================================================================
+

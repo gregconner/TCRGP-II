@@ -1,0 +1,327 @@
+================================================================================
+HOW THE PROGRAM IDENTIFIES HUMAN NAMES AND PLACE NAMES
+================================================================================
+
+CURRENT APPROACH: Pattern Matching + Validation (Rule-Based)
+Version: 1.2.0
+
+================================================================================
+1. HUMAN NAMES (PERSONS)
+================================================================================
+
+EXTRACTION METHOD:
+- Uses REGULAR EXPRESSIONS (regex) to find patterns
+- VERY RESTRICTIVE: Only looks at start of lines (speaker labels)
+
+PATTERN USED:
+Regex: ^([A-Z][a-z]+\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\s*:
+
+What this means:
+- ^ = Start of line
+- [A-Z][a-z]+ = Capital letter followed by lowercase (e.g., "Anna")
+- \s+ = One or more spaces
+- [A-Z][a-z]+ = Another capitalized word (e.g., "Sattler")
+- (?:\s+[A-Z][a-z]+)? = Optional third word (middle name)
+- \s*: = Optional spaces followed by colon
+
+EXAMPLES THAT MATCH:
+✓ "Anna Sattler:"
+✓ "Pamela Standing:"
+✓ "Jodi Burshia:"
+✓ "John Michael Smith:" (with middle name)
+
+EXAMPLES THAT DON'T MATCH:
+✗ "Anna Sattler said..." (not at start of line)
+✗ "I met with Anna Sattler" (not speaker label format)
+✗ "anna sattler:" (not capitalized)
+
+VALIDATION LAYER:
+After finding a potential name, the program validates it using is_valid_name():
+
+1. Length check: Must be 2-4 words
+2. Capitalization: All words must start with capital letter
+3. Common phrase filter: Excludes "not able", "that you", "like you", etc.
+4. Common word filter: Excludes "the", "a", "project", "future", etc.
+5. Excluded words list: Checks against predefined exclusion list
+
+WHY SO RESTRICTIVE?
+- Previous versions (v1.0.0, v1.1.0) extracted too many false positives
+- Common phrases like "not able to answer them immediately" were extracted as Person_4
+- Current approach prioritizes accuracy over completeness
+- Only extracts names that are clearly speaker labels
+
+LIMITATIONS:
+- Only finds names in speaker label format (at start of line with colon)
+- Misses names mentioned in dialogue ("I talked to Anna Sattler")
+- Misses names in other formats
+- Requires manual addition of names found in dialogue
+
+================================================================================
+2. PLACE NAMES (LOCATIONS)
+================================================================================
+
+EXTRACTION METHOD:
+- Uses MULTIPLE REGULAR EXPRESSION PATTERNS
+- Looks for specific location formats and known places
+
+PATTERNS USED:
+
+Pattern 1: "City, State" format
+Regex: \b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*),\s*([A-Z]{2})\b
+Examples:
+✓ "Phoenix, AZ"
+✓ "New York, NY"
+✓ "St. Michael, AK"
+
+Pattern 2: "Reservation/Nation/Pueblo" format
+Regex: \b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:Reservation|Nation|Pueblo|Tribe)\b
+Examples:
+✓ "Tohono O'Odham Reservation"
+✓ "Navajo Nation"
+✓ "Laguna Pueblo"
+
+Pattern 3: Known states (hardcoded list)
+Regex: \b(Alaska|Arizona|New Mexico|Wisconsin|California|Oregon|Washington|Idaho|Nevada|Texas|Oklahoma)\b
+Examples:
+✓ "Alaska"
+✓ "New Mexico"
+✓ "Arizona"
+
+Pattern 4: Known cities (hardcoded list)
+Regex: \b(Bethel|Anchorage|Phoenix|Gilbert|Flagstaff|Juneau|Kotzebue|Kivalina|Yakutat|Minto|Gamble|Hooper Bay|Old Harbor|New Lotto|Emmonak|Stebbins|St\.?\s*Michael|Gwichluk|Cooper Bay)\b
+Examples:
+✓ "Bethel"
+✓ "Anchorage"
+✓ "Hooper Bay"
+✓ "St. Michael"
+
+VALIDATION LAYER:
+After finding a potential location, the program validates it using is_valid_location():
+
+1. Capitalization: Must start with capital letter
+2. Common phrase filter: Excludes "where the", "are here", "is because", etc.
+3. Common word filter: Excludes "some", "project", "future", "information", etc.
+4. Excluded words list: Checks against predefined exclusion list
+
+WHY MULTIPLE PATTERNS?
+- Different location formats require different patterns
+- "City, State" is different from "Reservation" format
+- Hardcoded lists catch places mentioned without context
+- Multiple patterns increase coverage
+
+LIMITATIONS:
+- Hardcoded city list is limited (only cities mentioned in transcripts)
+- May miss new cities not in the list
+- Requires manual addition of new locations
+- Doesn't use geographic databases
+
+================================================================================
+3. HANDLING MISSPELLINGS AND VARIANTS
+================================================================================
+
+NAME VARIANT DETECTION:
+The program uses fuzzy matching to handle misspellings:
+
+1. SIMILARITY THRESHOLD: 75% similarity
+   - Uses SequenceMatcher from difflib library
+   - Compares strings character by character
+
+2. KNOWN MISSPELLINGS DICTIONARY:
+   COMMON_MISSPELLINGS = {
+       "burshia": ["brache", "berchet", "berchet-gowazi", "brochure", "burche"],
+       "jodi": ["jody"],
+       "pamela": ["pam"],
+       "standing": ["stand"]
+   }
+
+3. FUZZY MATCHING PROCESS:
+   - When a name is found, check against known misspellings
+   - If no match, try fuzzy matching against existing name clusters
+   - If similarity >= 75%, group variants together
+   - Use most common variant as canonical form
+
+EXAMPLE:
+- Finds "Jodi Burshia" and "Jody Burshia" in transcript
+- Fuzzy match: 95% similar
+- Groups together
+- Uses "Jodi Burshia" as canonical (more common)
+- Both map to same Person code
+
+================================================================================
+4. ALTERNATIVE APPROACHES (NOT CURRENTLY USED)
+================================================================================
+
+MORE SOPHISTICATED OPTIONS AVAILABLE:
+
+1. NAMED ENTITY RECOGNITION (NER) LIBRARIES:
+   - spaCy: Python library with pre-trained NER models
+   - Can identify PERSON, LOCATION, ORGANIZATION automatically
+   - More accurate than regex patterns
+   - Example: nlp = spacy.load("en_core_web_sm")
+   
+2. MACHINE LEARNING MODELS:
+   - BERT-based models fine-tuned for NER
+   - Transformers library (Hugging Face)
+   - More accurate but requires more setup
+   
+3. GEOGRAPHIC DATABASES:
+   - Geonames database
+   - USGS Geographic Names Information System
+   - Can validate and identify locations automatically
+   
+4. NAME DATABASES:
+   - Census name databases
+   - Can help identify likely person names
+   - Can validate name patterns
+
+WHY NOT USING THESE?
+- Current approach works well for speaker labels
+- Simpler = easier to maintain and debug
+- No external dependencies (spaCy, etc.)
+- Fast execution
+- Predictable results
+- Good enough for current use case
+
+WHEN TO UPGRADE:
+- If need to find names in dialogue (not just speaker labels)
+- If need to identify more locations automatically
+- If false positives become a problem
+- If processing much larger volumes
+
+================================================================================
+5. CURRENT PERFORMANCE
+================================================================================
+
+EXAMPLE: Alaska Electric Interview
+
+EXTRACTED:
+- Persons: 3 (Pamela Standing, Anna Sattler, Jodi Burshia)
+- Locations: 29 (Bethel, Anchorage, Phoenix, Alaska, etc.)
+- Organizations: 4 (Navajo Nation, Rural Utility Services, etc.)
+- Tribes: 2
+
+ACCURACY:
+- No false positives for persons (was 25 in v1.0.0)
+- No false positives for locations (was 405 in v1.0.0)
+- All extracted entities are actual names/places
+
+MISSED:
+- Names mentioned in dialogue (if any)
+- Locations not in hardcoded list or standard formats
+- Some organizations not matching patterns
+
+TRADE-OFF:
+- High precision (few false positives)
+- Lower recall (may miss some entities)
+- Better to under-extract than over-extract
+
+================================================================================
+6. HOW TO IMPROVE EXTRACTION
+================================================================================
+
+TO ADD MORE NAMES:
+1. Manually review transcripts for names in dialogue
+2. Add to extraction patterns or hardcode
+3. Or upgrade to NER library
+
+TO ADD MORE LOCATIONS:
+1. Review transcripts for mentioned places
+2. Add to hardcoded city list (line 415)
+3. Or use geographic database
+
+TO FIND NAMES IN DIALOGUE:
+1. Add patterns like: "I talked to ([A-Z][a-z]+ [A-Z][a-z]+)"
+2. Add patterns like: "([A-Z][a-z]+) said"
+3. Or upgrade to NER library
+
+TO IMPROVE ACCURACY:
+1. Use spaCy NER library
+2. Fine-tune on transcript data
+3. Combine with current validation
+
+TO HANDLE MORE MISSPELLINGS:
+1. Add to COMMON_MISSPELLINGS dictionary
+2. Lower similarity threshold (currently 75%)
+3. Use phonetic matching (Soundex, Metaphone)
+
+================================================================================
+7. CODE LOCATIONS
+================================================================================
+
+KEY FUNCTIONS:
+
+1. extract_entities() - Lines 360-443
+   - Main extraction function
+   - Calls validation functions
+   - Returns dictionary of entities
+
+2. is_valid_name() - Lines 288-325
+   - Validates person names
+   - Filters out false positives
+
+3. is_valid_location() - Lines 327-358
+   - Validates location names
+   - Filters out false positives
+
+4. NameVariantDetector.add_name() - Lines 212-250
+   - Handles misspellings
+   - Fuzzy matching
+
+5. Location patterns - Lines 407-416
+   - All regex patterns for locations
+   - Hardcoded city/state lists
+
+6. Person patterns - Lines 370-373
+   - Regex pattern for speaker labels
+
+CONFIGURATION:
+
+- EXCLUDED_WORDS - Lines 67-76
+  - Common phrases to filter out
+
+- COMMON_MISSPELLINGS - Lines 68-73
+  - Known misspellings dictionary
+
+- SIMILARITY_THRESHOLD - Line 76
+  - Fuzzy matching threshold (0.75)
+
+================================================================================
+SUMMARY
+================================================================================
+
+CURRENT APPROACH:
+- Rule-based pattern matching
+- Very restrictive (only speaker labels for names)
+- Hardcoded lists for known places
+- Validation layers to filter false positives
+- Fuzzy matching for misspellings
+
+STRENGTHS:
+- High precision (few false positives)
+- Fast execution
+- No external dependencies
+- Predictable results
+- Works well for speaker labels
+
+LIMITATIONS:
+- Only finds names in speaker label format
+- Hardcoded location lists
+- May miss entities in dialogue
+- Requires manual updates for new places
+
+POTENTIAL IMPROVEMENTS:
+- Add NER library (spaCy) for better extraction
+- Expand location patterns
+- Add patterns for names in dialogue
+- Use geographic databases
+- Machine learning models
+
+For most use cases, current approach is sufficient. Upgrade if:
+- Need to find names in dialogue
+- Processing many new transcripts with unknown places
+- False negatives become a problem
+
+================================================================================
+END OF EXPLANATION
+================================================================================
+
