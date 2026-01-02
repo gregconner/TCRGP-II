@@ -1442,7 +1442,7 @@ class DeIdentifier:
         # This catches names that weren't extracted but should be replaced
         known_names_to_replace = {
             'Vicki', 'Danae', 'Perry', 'Pamela', 'Chris', 'Dave', 'Valentino', 
-            'Diffin', 'Alatada', 'Ho-Chunk', 'Ho-Chump', 'Covid', 'COVID-19'
+            'Diffin', 'Alatada', 'Ho-Chunk', 'Ho-Chump'
         }
         # Find codes for these names if they exist in mapping
         for name in known_names_to_replace:
@@ -1450,9 +1450,25 @@ class DeIdentifier:
             # Check if this name or a variant is in the mapping
             found_code = None
             for orig, code in person_items:
-                if orig.lower() == name_lower or name_lower in orig.lower() or orig.lower() in name_lower:
+                orig_lower = orig.lower()
+                if orig_lower == name_lower or name_lower in orig_lower or orig_lower in name_lower:
                     found_code = code
                     break
+            
+            # If not found in mapping, create a new code for it (it should have been extracted)
+            if not found_code:
+                # Check if it's in entities but not mapped yet
+                if any(name.lower() == e.lower() for e in self.mapping["persons"].keys()):
+                    # It's in mapping, find it
+                    for orig, code in person_items:
+                        if orig.lower() == name_lower:
+                            found_code = code
+                            break
+                else:
+                    # Create a new code for this name
+                    self.person_counter += 1
+                    found_code = f"Person_{self.person_counter}"
+                    self.mapping["persons"][name] = found_code
             
             if found_code:
                 # Replace all case variants of this name
