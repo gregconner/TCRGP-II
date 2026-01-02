@@ -848,9 +848,6 @@ def download_epa_tribes_data() -> List[Dict]:
                 
                 print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
                 print(f"    ✓ Includes: tribal names, reservations, locations, states, regions")
-                    current_name = tribe.get('currentName', '')
-                    epa_tribal_id = tribe.get('epaTribalInternalId')
-                    bia_code = tribe.get('currentBIATribalCode')
                     
                     # Get detailed information to extract ALL data
                     if epa_tribal_id:
