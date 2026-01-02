@@ -1091,12 +1091,13 @@ class DeIdentifier:
                     extracted_names.add(name)
                     self.name_detector.add_name(name, "speaker_label")
         
-        # METHOD 1.5: Extract last names mentioned alone (e.g., "Andrews said") - IMPROVED v1.11.0
-        # CRITICAL: Added all remaining names: Diffin, Alatada, Ho-Chunk
+        # METHOD 1.5: Extract last names mentioned alone (e.g., "Andrews said") - IMPROVED v1.16.0
+        # NEW v1.16.0: Use generic pattern - database validation will filter false positives
+        # Pattern matches capitalized words followed by verbs (generic approach)
         last_name_patterns = [
-            r'\b(Andrews|Sattler|Burshia|Standing|Zeise|Ariza|Sekiros|Webster|Kimmerer|Ho-Chunk|Ho-Chump|Lesson|Umaha|Richardson|Diffin|Parks|Alatada)\s+(?:said|asked|told|mentioned|explained|stated|has|had|was|is|will|would|does|did|can|could)',
-            r'\b(?:Mr\.|Ms\.|Mrs\.|Dr\.)\s+(Andrews|Sattler|Burshia|Standing|Zeise|Ariza|Sekiros|Webster|Kimmerer)',
-            r'\b(Andrews|Sattler|Burshia|Standing|Zeise|Ariza|Sekiros|Webster|Kimmerer)\s+(?:and|or|,)',
+            r'\b([A-Z][a-z]+)\s+(?:said|asked|told|mentioned|explained|stated|has|had|was|is|will|would|does|did|can|could)',
+            r'\b(?:Mr\.|Ms\.|Mrs\.|Dr\.)\s+([A-Z][a-z]+)',
+            r'\b([A-Z][a-z]+)\s+(?:and|or|,)',
         ]
         for pattern in last_name_patterns:
             matches = re.finditer(pattern, filtered_text, re.IGNORECASE)  # Use filtered_text
@@ -1104,7 +1105,8 @@ class DeIdentifier:
                 name = match.group(1).strip()
                 # Normalize case - NEW v1.8.0
                 name_normalized = name[0].upper() + name[1:].lower() if len(name) > 1 else name.upper()
-                if name_normalized not in extracted_names and name not in extracted_names:
+                # NEW v1.16.0: Validate against database (check if it's a known last name)
+                if self.is_valid_name(name_normalized) and name_normalized not in extracted_names and name not in extracted_names:
                     entities["persons"].append(name_normalized)
                     extracted_names.add(name_normalized)
                     extracted_names.add(name)  # Track both
