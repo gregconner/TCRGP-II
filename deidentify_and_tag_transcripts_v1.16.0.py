@@ -725,7 +725,7 @@ class NameVariantDetector:
 class DeIdentifier:
     """Handles de-identification of transcripts."""
     
-    def __init__(self, use_spacy: bool = True):
+    def __init__(self, use_spacy: bool = True, use_database: bool = True):
         self.person_counter = 0
         self.org_counter = 0
         self.location_counter = 0
@@ -739,6 +739,22 @@ class DeIdentifier:
         }
         self.name_detector = NameVariantDetector()
         self.speaker_roles = {}  # Track which Person codes are interviewers vs interviewees
+        
+        # NEW v1.16.0: Load name and location database
+        self.db_conn = None
+        self.use_database = use_database
+        if use_database:
+            try:
+                import sqlite3
+                db_path = Path(__file__).parent / "name_location_database.db"
+                if db_path.exists():
+                    self.db_conn = sqlite3.connect(str(db_path))
+                    print(f"  ✓ Name/location database loaded ({db_path})")
+                else:
+                    print(f"  ⚠ Database not found at {db_path} - run build_name_location_database.py")
+            except Exception as e:
+                print(f"  ⚠ Could not load database: {e}")
+                self.use_database = False
         
         # Initialize spaCy if available - IMPROVED v1.9.0 with GPU support
         self.nlp = None
@@ -973,6 +989,21 @@ class DeIdentifier:
         
         loc_lower = loc.lower()
         words = loc.split()
+        
+        # NEW v1.16.0: Check database for location validation
+        if self.use_database and self.db_conn:
+            try:
+                cursor = self.db_conn.cursor()
+                # Check if it's a known place name
+                cursor.execute('SELECT COUNT(*) FROM place_names WHERE name = ?', (loc,))
+                if cursor.fetchone()[0] > 0:
+                    return True
+                # Also check case-insensitive
+                cursor.execute('SELECT COUNT(*) FROM place_names WHERE LOWER(name) = ?', (loc_lower,))
+                if cursor.fetchone()[0] > 0:
+                    return True
+            except Exception:
+                pass  # If database check fails, continue with regular validation
         
         # Must start with capital letter (unless spaCy identified it)
         if not self.use_spacy:
