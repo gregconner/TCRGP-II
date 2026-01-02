@@ -415,8 +415,8 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Mescalero Apache Reservation", "reservation", "Apache", "New Mexico"),
     ]
     
-    # Great Plains Reservations
-    plains_tribal_places = [
+        # Great Plains Reservations
+        plains_tribal_places = [
         ("Pine Ridge Reservation", "reservation", "Lakota", "South Dakota"),
         ("Standing Rock Reservation", "reservation", "Lakota", "South Dakota"),
         ("Standing Rock Reservation", "reservation", "Lakota", "North Dakota"),
@@ -530,19 +530,19 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Babakiri District", "district", None, None),
     ]
     
-    all_tribal_places = (southwest_tribal_places + plains_tribal_places + 
-                         great_lakes_tribal_places + northwest_tribal_places + 
-                         oklahoma_tribal_places + alaska_tribal_places + 
-                         other_tribal_places + tribal_districts)
-    
-    for name, ptype, tribe, state in all_tribal_places:
-        places.append({
-            'name': name,
-            'type': ptype,
-            'tribe': tribe,
-            'state': state,
-            'source': 'comprehensive_tribal_places'
-        })
+        all_tribal_places = (southwest_tribal_places + plains_tribal_places + 
+                             great_lakes_tribal_places + northwest_tribal_places + 
+                             oklahoma_tribal_places + alaska_tribal_places + 
+                             other_tribal_places + tribal_districts)
+        
+        for name, ptype, tribe, state in all_tribal_places:
+            places.append({
+                'name': name,
+                'type': ptype,
+                'tribe': tribe,
+                'state': state,
+                'source': 'comprehensive_tribal_places'
+            })
     
     return places
 
