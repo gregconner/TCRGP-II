@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-De-identify and Tag Transcripts for Research v1.15.0
+De-identify and Tag Transcripts for Research v1.16.0
 
 MAJOR FIXES (v1.11.0):
 - CRITICAL: Fixed remaining PII extraction (Vicki, Danae, Perry, Pamela, Chris, Dave, Valentino, Ho-Chunk, Diffin, Alatada)
@@ -1237,41 +1237,8 @@ class DeIdentifier:
                     entities["tribes"].append(tribe)
                     extracted_tribes.add(tribe)
         
-        # NEW v1.15.0: ULTRA-AGGRESSIVE extraction - force-extract ALL known names
-        # This ensures ALL remaining names are extracted even if patterns didn't catch them
-        known_names_to_extract = ['Vicki', 'Danae', 'Perry', 'Pamela', 'Chris', 'Dave', 'Valentino', 
-                                  'Diffin', 'Alatada', 'Ho-Chunk', 'Ho-Chump']
-        
-        for name in known_names_to_extract:
-            name_variants = [name, name.lower(), name.upper(), name.capitalize(), name.title()]
-            if '-' in name:
-                parts = name.split('-')
-                name_variants.append('-'.join([p.capitalize() for p in parts]))
-                name_variants.append('-'.join([p.upper() for p in parts]))
-            
-            # CRITICAL v1.15.0: Check if ANY variant appears in text - force extract if found
-            found_in_text = False
-            for variant in name_variants:
-                # Use flexible pattern to catch in all contexts
-                pattern = r'(?<![A-Za-z])' + re.escape(variant) + r'(?![A-Za-z])'
-                if re.search(pattern, text, re.IGNORECASE):
-                    found_in_text = True
-                    break
-            
-            if found_in_text:
-                # Check if it's not a false positive
-                name_lower = name.lower()
-                if name_lower not in ['covid', 'covid-19', 'covid19']:  # COVID is a false positive
-                    if name not in extracted_names:
-                        # Normalize to title case
-                        if '-' in name:
-                            name_normalized = '-'.join([p.capitalize() for p in name.split('-')])
-                        else:
-                            name_normalized = name.title()
-                        entities["persons"].append(name_normalized)
-                        extracted_names.add(name_normalized)
-                        extracted_names.add(name)
-                        self.name_detector.add_name(name_normalized, "known_name")
+        # REMOVED v1.16.0: Hardcoded name extraction - code is now fully generic
+        # The extraction patterns above should catch all names generically
         
         # REMOVED v1.16.0: Hardcoded location extraction - location patterns above should catch all locations generically
         
