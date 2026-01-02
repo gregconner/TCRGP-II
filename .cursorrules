@@ -5,6 +5,11 @@
 - If a command needs to be run, execute it immediately without asking for permission.
 - The user should never be prompted to run commands manually.
 
+## Code Quality and Performance
+- NEVER put waits (sleep, time.sleep, delays) in loops when you can set and look for flags instead.
+- Use event flags, completion signals, or status checks rather than polling with sleep().
+- Prefer async/await patterns or event-driven approaches over blocking waits.
+
 ## Version Management
 - Always work with specific version numbers. Use the VERSION file to track current version.
 - Use descriptive filenames with version numbers (e.g., ConnerFrac_v0.1.X.jl, deidentify_and_tag_transcripts_v1.X.X.py).
