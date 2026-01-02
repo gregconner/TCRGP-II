@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-De-identify and Tag Transcripts for Research v1.10.0
+De-identify and Tag Transcripts for Research v1.11.0
 
-MAJOR FIXES (v1.10.0):
+MAJOR FIXES (v1.11.0):
 - CRITICAL: Fixed remaining PII extraction (Vicki, Danae, Perry, Pamela, Chris, Dave, Valentino, Ho-Chunk, Diffin, Alatada)
 - CRITICAL: Enhanced false positive filtering (COVID-19, Oneidas, Anishinaabe, Ungwehue, Instagram, Twitter, Youtube, Nelson Mandela, Xyz, timestamps)
 - CRITICAL: Improved tagging coverage from 16-45% to 90%+ (sentence-level tagging, context tagging, dialogue tagging)
@@ -845,12 +845,20 @@ class DeIdentifier:
                     if any(fp in ent_lower for fp in FALSE_POSITIVE_PERSONS):
                         continue
                     
-                    # Exclude if contains common non-name words - IMPROVED v1.9.0
-                    if any(word in ent_lower for word in ["messenger", "bay", "harbor", "cheese", "instagram", "twitter", "youtube", "covid", "covid-19", "umaha", "lesson", "jack-o", "lantern"]):
+                    # Exclude if contains common non-name words - IMPROVED v1.11.0
+                    if any(word in ent_lower for word in ["messenger", "bay", "harbor", "cheese", "instagram", "twitter", "youtube", "covid", "covid-19", "umaha", "lesson", "jack-o", "lantern", "oneidas", "anishinaabe", "ungwehue", "xyz"]):
                         continue
                     
-                    # NEW v1.9.0: Exclude if it's a timestamp pattern
-                    if re.match(r'^\d{2}:\d{2}', ent_text):
+                    # NEW v1.11.0: Exclude "Nelson" unless it's "Nelson Mandela" (historical figure)
+                    if ent_lower == "nelson" and "mandela" not in chunk[max(0, ent.start_char-20):ent.end_char+20].lower():
+                        continue
+                    
+                    # NEW v1.11.0: Exclude timestamps (00:21:16, 00:57:34, etc.)
+                    if re.match(r'^\d{2}:\d{2}(?::\d{2})?', ent_text):
+                        continue
+                    
+                    # NEW v1.11.0: Exclude COVID-19 variants
+                    if ent_lower in ["covid", "covid-19", "covid19", "coronavirus"]:
                         continue
                     
                     # Must look like a name - RELAXED v1.9.0 to allow single names in context
