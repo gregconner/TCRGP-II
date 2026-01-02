@@ -572,19 +572,89 @@ def download_epa_tribes_data() -> List[Dict]:
     """Download from EPA Tribes Names Service.
     
     EPA provides a Tribes Names Service with up-to-date information on
-    federally recognized tribes.
+    federally recognized tribes. This is a PUBLIC API - no authentication required!
+    
+    API Documentation: https://www.epa.gov/data/tribes-names-service
+    Swagger UI: https://cdxapi.epa.gov/oms-tribes-rest-services/swagger-ui/index.html
     """
     places = []
     
     try:
         print("  Attempting to download from EPA Tribes Names Service...")
-        # EPA Tribes Names Service API
-        # URL: https://www.epa.gov/data/tribes-names-service
-        # This requires API access, but we can note it as an option
-        print("    → EPA Tribes Names Service available at: https://www.epa.gov/data/tribes-names-service")
-        print("    → Requires API access for programmatic downloads")
+        print("    API: https://cdxapi.epa.gov/oms-tribes-rest-services/api/v1/tribes")
+        print("    (Public API - no authentication required)")
+        
+        # EPA Tribes Names Service API endpoints
+        base_url = "https://cdxapi.epa.gov/oms-tribes-rest-services/api/v1"
+        
+        # Get all tribes (basic data)
+        tribes_url = f"{base_url}/tribes"
+        
+        print(f"    Fetching all tribes...")
+        with urllib.request.urlopen(tribes_url, timeout=60) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            
+            if isinstance(data, list):
+                print(f"    ✓ Got {len(data)} tribes from EPA")
+                
+                for tribe in data:
+                    current_name = tribe.get('currentName', '')
+                    epa_tribal_id = tribe.get('epaTribalInternalId')
+                    bia_code = tribe.get('currentBIATribalCode')
+                    state_info = None
+                    
+                    # Get detailed information to extract location/state
+                    if epa_tribal_id:
+                        try:
+                            details_url = f"{base_url}/tribeDetails/{epa_tribal_id}"
+                            with urllib.request.urlopen(details_url, timeout=30) as details_response:
+                                details_data = json.loads(details_response.read().decode('utf-8'))
+                                if isinstance(details_data, list) and len(details_data) > 0:
+                                    details = details_data[0]
+                                    # Extract state from EPA locations
+                                    epa_locations = details.get('epaLocations', [])
+                                    if epa_locations:
+                                        state_info = epa_locations[0].get('stateName', '')
+                                        
+                                        # Also get all historical names and locations
+                                        names = details.get('names', [])
+                                        for name_entry in names:
+                                            name = name_entry.get('name', '')
+                                            if name and name not in [p['name'] for p in places]:
+                                                places.append({
+                                                    'name': name,
+                                                    'type': 'tribe',
+                                                    'tribe': current_name,
+                                                    'state': state_info,
+                                                    'source': 'epa_tribes_service'
+                                                })
+                        except Exception as e:
+                            # If detailed lookup fails, use basic info
+                            pass
+                    
+                    # Add current name
+                    if current_name:
+                        places.append({
+                            'name': current_name,
+                            'type': 'tribe',
+                            'tribe': current_name,
+                            'state': state_info,
+                            'source': 'epa_tribes_service'
+                        })
+                    
+                    if len(places) % 100 == 0:
+                        print(f"      Processed {len(places)} tribal names...")
+                
+                print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
+            else:
+                print(f"    ⚠ Unexpected response format")
+                
+    except urllib.error.URLError as e:
+        print(f"    ⚠ Could not access EPA Tribes Names Service: {e}")
     except Exception as e:
-        print(f"    ⚠ EPA error: {e}")
+        print(f"    ⚠ Error accessing EPA Tribes Names Service: {e}")
+        import traceback
+        traceback.print_exc()
     
     return places
 
@@ -606,14 +676,13 @@ def download_datagov_tribes() -> List[Dict]:
     return places
 
 def download_alternative_sources() -> List[Dict]:
-    """Try alternative sources for tribal place names."""
+    """Try alternative sources for tribal place names.
+    
+    Note: EPA Tribes Names Service is already called separately, so we skip it here.
+    """
     places = []
     
-    print("  Trying alternative sources...")
-    
-    # Try EPA
-    epa_places = download_epa_tribes_data()
-    places.extend(epa_places)
+    print("  Trying other alternative sources...")
     
     # Try Data.gov
     datagov_places = download_datagov_tribes()
@@ -674,8 +743,15 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
         print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
         all_places.extend(datagov_places)
     
+    # Try EPA Tribes Names Service (PUBLIC API - no auth required!)
+    print("\n6. Downloading from EPA Tribes Names Service (PUBLIC API)...")
+    epa_places = download_epa_tribes_data()
+    if epa_places:
+        print(f"  ✓ Got {len(epa_places)} places from EPA Tribes Names Service")
+        all_places.extend(epa_places)
+    
     # Try other alternative sources
-    print("\n6. Trying other alternative sources (EPA, etc.)...")
+    print("\n7. Trying other alternative sources...")
     alt_places = download_alternative_sources()
     if alt_places:
         print(f"  ✓ Got {len(alt_places)} places from alternative sources")
