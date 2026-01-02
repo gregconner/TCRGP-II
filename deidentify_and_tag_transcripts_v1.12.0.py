@@ -1106,7 +1106,7 @@ class DeIdentifier:
             r'\b(?:contact|call|email|reach)\s+(' + common_first_names_list + r')(?:\s|,|\.|$)',
         ]
         for pattern in first_name_in_dialogue_patterns:
-            matches = re.finditer(pattern, text, re.IGNORECASE | re.MULTILINE)
+            matches = re.finditer(pattern, filtered_text, re.IGNORECASE | re.MULTILINE)  # Use filtered_text
             for match in matches:
                 name = match.group(1).strip()
                 name_lower = name.lower()
@@ -1182,8 +1182,10 @@ class DeIdentifier:
             r'\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:Reservation|Nation|Pueblo|Tribe)\b',
             # Known cities/states (Alaska, Arizona, New Mexico, etc.)
             r'\b(Alaska|Arizona|New Mexico|Wisconsin|California|Oregon|Washington|Idaho|Nevada|Texas|Oklahoma)\b',
-            # Specific city names mentioned in context (Bethel, Anchorage, etc.)
-            r'\b(Bethel|Anchorage|Phoenix|Gilbert|Flagstaff|Juneau|Kotzebue|Kivalina|Yakutat|Minto|Gamble|Hooper Bay|Old Harbor|New Lotto|Emmonak|Stebbins|St\.?\s*Michael|Gwichluk|Cooper Bay)\b',
+            # Specific city names mentioned in context (Bethel, Anchorage, etc.) - EXPANDED v1.12.0
+            r'\b(Bethel|Anchorage|Phoenix|Gilbert|Flagstaff|Juneau|Kotzebue|Kivalina|Yakutat|Minto|Gamble|Hooper Bay|Old Harbor|New Lotto|Emmonak|Stebbins|St\.?\s*Michael|Gwichluk|Cooper Bay|CNA)\b',
+            # NEW v1.12.0: Babakiri District (with optional "the" prefix) - CRITICAL FIX
+            r'\b(the\s+)?Babakiri\s+District\b',
             # Additional locations found in grading (v1.7.0)
             r'\b(Madeline Island|Spirit Lake|Waltz Hill|Cheyenne River|Turtle Island|White River|San Javier|Hilla River|Sioux City)\b',
             # United States variations
