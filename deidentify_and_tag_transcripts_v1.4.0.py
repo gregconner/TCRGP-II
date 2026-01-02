@@ -33,11 +33,17 @@ IMPROVEMENTS OVER v1.0.0:
 This program automatically:
 1. De-identifies transcripts by replacing names, locations, and sensitive data with codes
 2. Handles misspellings and name variants using fuzzy matching + spaCy context
-3. Tags research-relevant keywords and concepts
-4. Extracts quantitative metrics
+3. Tags research-relevant keywords and concepts with context-aware precision
+4. Extracts quantitative metrics (with significance filtering)
 5. Generates mapping files for traceability
 6. Formats with citation system: speaker letters, verse numbers, page numbers
 7. Creates timestamp conversion table for precise citation
+
+TAGGING IMPROVEMENTS (v1.4.0):
+- Context-aware rules for broad terms (job, problem, issue, help, year)
+- Negative patterns exclude irrelevant contexts ("no problem", "huge job")
+- Significance filtering for metrics (dollar amounts >= $1000)
+- Better phrase matching for compound concepts
 
 REQUIREMENTS:
 - python-docx (for DOCX files)
@@ -1014,39 +1020,131 @@ class DeIdentifier:
 # ============================================================================
 
 class KeywordTagger:
-    """Tags research-relevant keywords in text."""
+    """Tags research-relevant keywords in text with context-aware precision."""
     
     def __init__(self):
         self.tags = defaultdict(list)
         self.line_tags = defaultdict(list)  # Tags by line number
         
+        # Negative patterns to exclude irrelevant contexts
+        self.negative_patterns = {
+            'job': [r'no\s+job', r'huge\s+job', r'big\s+job', r'hard\s+job', r'good\s+job'],
+            'problem': [r'no\s+problem', r'not\s+a\s+problem'],
+            'issue': [r'no\s+issue', r'not\s+an\s+issue'],
+            'help': [r'can\'t\s+help', r'couldn\'t\s+help'],
+            'year': [r'this\s+year', r'next\s+year', r'last\s+year', r'every\s+year'],
+        }
+        
+        # Context-aware patterns (require specific context)
+        self.context_patterns = {
+            'job': [
+                (r'\b(my|their|our|his|her|the)\s+job\s+(is|was|to|of)', 'CATEGORY_Employment'),
+                (r'\bjob\s+(title|description|duties|responsibilities|role)', 'CATEGORY_Employment'),
+                (r'\b(employee|staff|worker)\s+job', 'CATEGORY_Employment'),
+            ],
+            'problem': [
+                (r'\b(solve|address|fix|resolve|deal\s+with|face|have|encounter)\s+(a|the|this|that)\s+problem', 'CATEGORY_Risk'),
+                (r'\bproblem\s+(with|in|of|facing|encountered)', 'CATEGORY_Risk'),
+            ],
+            'issue': [
+                (r'\b(face|address|deal\s+with|have|encounter|identify)\s+(a|an|the|this|that)\s+issue', 'CATEGORY_Risk'),
+                (r'\bissue\s+(with|in|of|facing|encountered|regarding)', 'CATEGORY_Risk'),
+            ],
+            'help': [
+                (r'\b(need|get|receive|provide|offer|give|seek)\s+help\s+(with|from|to|for)', 'QUESTION_Q4_OutsideAssistance'),
+                (r'\bhelp\s+(with|from|to|for|in)', 'QUESTION_Q4_OutsideAssistance'),
+            ],
+            'year': [
+                (r'\b(founded|established|started|began|created|incorporated)\s+(in\s+)?(\d{4})', 'CATEGORY_Timeline'),
+                (r'\b(since|from)\s+(\d{4})', 'CATEGORY_Timeline'),
+                (r'\b(\d{4})\s+(was|is|marked|saw)', 'CATEGORY_Timeline'),
+            ],
+        }
+    
+    def _is_negative_context(self, text: str, keyword: str) -> bool:
+        """Check if text contains negative patterns that should exclude this match."""
+        if keyword.lower() not in self.negative_patterns:
+            return False
+        text_lower = text.lower()
+        for pattern in self.negative_patterns[keyword.lower()]:
+            if re.search(pattern, text_lower, re.IGNORECASE):
+                return True
+        return False
+    
+    def _check_context_patterns(self, line: str, keyword: str) -> List[Tuple[str, str]]:
+        """Check if line matches context-aware patterns for a keyword."""
+        matches = []
+        if keyword.lower() not in self.context_patterns:
+            return matches
+        
+        for pattern, tag in self.context_patterns[keyword.lower()]:
+            if re.search(pattern, line, re.IGNORECASE):
+                # Extract the matched text
+                match_obj = re.search(pattern, line, re.IGNORECASE)
+                if match_obj:
+                    matches.append((match_obj.group(), tag))
+        return matches
+    
     def tag_text(self, text: str) -> Dict[str, List[Tuple[int, str, str]]]:
         """
-        Tag text with research keywords.
+        Tag text with research keywords using context-aware precision.
         Returns: {tag_category: [(line_num, matched_text, context)]}
         """
         lines = text.split('\n')
         all_tags = defaultdict(list)
         
-        # Tag by research category
+        # Broad terms that need context-aware handling
+        context_aware_keywords = {
+            'job': 'CATEGORY_Employment',
+            'problem': 'CATEGORY_Risk',
+            'issue': 'CATEGORY_Risk',
+            'help': 'QUESTION_Q4_OutsideAssistance',
+            'year': 'CATEGORY_Timeline',
+        }
+        
+        # Tag by research category (with context-aware handling for broad terms)
         for category, keywords in RESEARCH_CATEGORIES.items():
             for keyword in keywords:
-                pattern = r'\b' + re.escape(keyword) + r'\b'
-                for line_num, line in enumerate(lines, 1):
-                    matches = re.finditer(pattern, line, re.IGNORECASE)
-                    for match in matches:
-                        context = line[max(0, match.start()-50):match.end()+50]
-                        all_tags[f"CATEGORY_{category}"].append((line_num, match.group(), context))
+                keyword_lower = keyword.lower()
+                
+                # Skip broad terms - handle them separately with context patterns
+                if keyword_lower in context_aware_keywords:
+                    # Use context-aware patterns
+                    for line_num, line in enumerate(lines, 1):
+                        context_matches = self._check_context_patterns(line, keyword_lower)
+                        for matched_text, tag in context_matches:
+                            context = line[max(0, line.lower().find(matched_text.lower())-50):
+                                         line.lower().find(matched_text.lower())+len(matched_text)+50]
+                            all_tags[tag].append((line_num, matched_text, context))
+                else:
+                    # Regular pattern matching
+                    pattern = r'\b' + re.escape(keyword) + r'\b'
+                    for line_num, line in enumerate(lines, 1):
+                        matches = re.finditer(pattern, line, re.IGNORECASE)
+                        for match in matches:
+                            # Check for negative context
+                            context_window = line[max(0, match.start()-30):match.end()+30]
+                            if not self._is_negative_context(context_window, keyword):
+                                context = line[max(0, match.start()-50):match.end()+50]
+                                all_tags[f"CATEGORY_{category}"].append((line_num, match.group(), context))
         
         # Tag by survey question
         for q_tag, keywords in SURVEY_QUESTION_TAGS.items():
             for keyword in keywords:
+                keyword_lower = keyword.lower()
+                
+                # Skip if already handled by context patterns
+                if keyword_lower in context_aware_keywords:
+                    continue
+                
                 pattern = r'\b' + re.escape(keyword) + r'\b'
                 for line_num, line in enumerate(lines, 1):
                     matches = re.finditer(pattern, line, re.IGNORECASE)
                     for match in matches:
-                        context = line[max(0, match.start()-50):match.end()+50]
-                        all_tags[f"QUESTION_{q_tag}"].append((line_num, match.group(), context))
+                        context_window = line[max(0, match.start()-30):match.end()+30]
+                        if not self._is_negative_context(context_window, keyword):
+                            context = line[max(0, match.start()-50):match.end()+50]
+                            all_tags[f"QUESTION_{q_tag}"].append((line_num, match.group(), context))
         
         # Tag Indigenous-specific terms
         for term in INDIGENOUS_TERMS:
@@ -1057,20 +1155,31 @@ class KeywordTagger:
                     context = line[max(0, match.start()-50):match.end()+50]
                     all_tags["INDIGENOUS_TERM"].append((line_num, match.group(), context))
         
-        # Extract quantitative metrics
+        # Extract quantitative metrics with significance filtering
         metric_patterns = [
-            (r'\b(\d+)\s+members?\b', 'METRIC_Members'),
-            (r'\b(\d+)\s+employees?\b', 'METRIC_Employees'),
-            (r'\b(\d+)\s+partners?\b', 'METRIC_Partners'),
-            (r'\b(\d+)\s+grants?\b', 'METRIC_Grants'),
-            (r'\b(\d{4})\b', 'METRIC_Year'),
-            (r'\$(\d+(?:,\d+)*(?:\.\d+)?)', 'METRIC_DollarAmount'),
+            (r'\b(\d+)\s+members?\b', 'METRIC_Members', None),
+            (r'\b(\d+)\s+employees?\b', 'METRIC_Employees', None),
+            (r'\b(\d+)\s+partners?\b', 'METRIC_Partners', None),
+            (r'\b(\d+)\s+grants?\b', 'METRIC_Grants', None),
+            (r'\b(19|20)\d{2}\b', 'METRIC_Year', None),  # Only years 1900-2099
+            (r'\$(\d+(?:,\d+)*(?:\.\d+)?)', 'METRIC_DollarAmount', 1000),  # Filter: >= $1000
         ]
         
-        for pattern, tag in metric_patterns:
+        for pattern, tag, min_value in metric_patterns:
             for line_num, line in enumerate(lines, 1):
                 matches = re.finditer(pattern, line, re.IGNORECASE)
                 for match in matches:
+                    # Filter by significance for dollar amounts
+                    if min_value is not None and tag == 'METRIC_DollarAmount':
+                        try:
+                            # Extract numeric value
+                            value_str = match.group(1).replace(',', '')
+                            value = float(value_str)
+                            if value < min_value:
+                                continue  # Skip small amounts
+                        except (ValueError, AttributeError):
+                            pass  # Keep if can't parse
+                    
                     context = line[max(0, match.start()-50):match.end()+50]
                     all_tags[tag].append((line_num, match.group(), context))
         
