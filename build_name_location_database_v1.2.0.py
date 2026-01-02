@@ -348,9 +348,6 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
     1. Attempts to download from USGS GNIS (2M+ features)
     2. Attempts to download from BIA sources
     3. Falls back to comprehensive curated list
-    
-    For maximum coverage, run download_tribal_places_from_sources.py separately
-    to download the full GNIS National File.
     """
     places = []
     
@@ -359,25 +356,35 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         print("    NOTE: There are THOUSANDS of tribal place names in the US")
         print("    Attempting to download from public sources...")
         
-        # Try to download from GNIS (this will be comprehensive)
+        # Try to use the downloader script programmatically (no manual commands needed).
+        # This will pull from high-yield authoritative sources (Census TIGER AIANNH/AITSN, EPA Tribes API)
+        # and then we still add our curated baseline as a safety net.
         try:
-            print("    Attempting to download from USGS GNIS...")
-            # Import the download function
-            import sys
             download_script = Path(__file__).parent / "download_tribal_places_from_sources.py"
             if download_script.exists():
-                # Try to use it
-                print("    → Found download script - will use comprehensive download")
-                # For now, we'll use the curated list and recommend running the download script
-                print("    → For THOUSANDS of places, run: python3 download_tribal_places_from_sources.py")
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("tribal_downloader", download_script)
+                tribal_downloader = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(tribal_downloader)
+                print("    ✓ Found tribal downloader script; running in FAST mode")
+                downloaded = tribal_downloader.download_comprehensive_tribal_place_list(mode="fast", year=2023)
+                for p in downloaded:
+                    # Normalize fields to this builder's schema.
+                    places.append({
+                        "name": p.get("name"),
+                        "type": p.get("type", "unknown"),
+                        "tribe": p.get("tribe"),
+                        "state": p.get("state"),
+                        "source": p.get("source", "download_tribal_places_from_sources"),
+                    })
+                print(f"    ✓ Downloaded {len(downloaded)} tribal place rows (pre-dedup)")
             else:
-                print("    → Download script not found - using curated list")
+                print("    ⚠ Tribal downloader script not found; continuing with curated baseline")
         except Exception as e:
-            print(f"    ⚠ Could not use download script: {e}")
+            print(f"    ⚠ Could not run tribal downloader script; continuing with curated baseline: {e}")
         
         # Comprehensive hardcoded list as fallback/starting point
         # This ensures we have at least well-known places
-        # But the user should run download_tribal_places_from_sources.py for full coverage
         
         # Southwest Pueblos and Reservations
         southwest_tribal_places = [

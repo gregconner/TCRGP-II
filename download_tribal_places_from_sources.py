@@ -20,12 +20,42 @@ import json
 import time
 import sys
 import signal
+import argparse
 from pathlib import Path
 from typing import List, Dict
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 DB_PATH = Path(__file__).parent / "name_location_database.db"
+
+def _start_per_second_progress_timer(on_tick):
+    """Start a per-second SIGALRM ticker (no sleeps, no threads).
+
+    Returns the previous SIGALRM handler so the caller can restore it.
+    """
+    try:
+        prev = signal.getsignal(signal.SIGALRM)
+        def _handler(signum, frame):
+            try:
+                on_tick()
+            except Exception:
+                pass
+        signal.signal(signal.SIGALRM, _handler)
+        signal.setitimer(signal.ITIMER_REAL, 1, 1)
+        return prev
+    except Exception:
+        return None
+
+def _stop_per_second_progress_timer(prev_handler):
+    try:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+    except Exception:
+        pass
+    if prev_handler is not None:
+        try:
+            signal.signal(signal.SIGALRM, prev_handler)
+        except Exception:
+            pass
 
 def _fast_urlopen(req_or_url, timeout_s: float, attempts: int = 2):
     """Fast-fail network helper.
@@ -90,44 +120,100 @@ def _parse_dbf_records(dbf_bytes: bytes) -> List[Dict[str, str]]:
         records.append(row)
     return records
 
-def download_census_tiger_aiannh(year: int = 2023) -> List[Dict]:
-    """Download AIANNH (American Indian/Alaska Native/Native Hawaiian Areas) names from Census TIGER/Line.
+def download_census_tiger_layer(year: int, layer: str, out_type: str) -> List[Dict]:
+    """Download a TIGER/Line layer zip and extract NAME/NAMELSAD from the DBF.
 
-    This is a reliable way to get **thousands** of tribal area / reservation style place names without GNIS.
+    Uses a per-second SIGALRM progress ticker so the display continues even during slow reads.
     """
     places: List[Dict] = []
+    layer_upper = layer.upper()
+    layer_lower = layer.lower()
+    url = f"https://www2.census.gov/geo/tiger/TIGER{year}/{layer_upper}/tl_{year}_us_{layer_lower}.zip"
+    print(f"  Downloading Census TIGER {layer_upper}: {url}")
+
+    downloaded = 0
+    total_bytes = None
+    start = time.time()
+    done = False
+
+    def _tick():
+        nonlocal downloaded, total_bytes, start, done
+        if done:
+            return
+        elapsed = max(time.time() - start, 1e-6)
+        speed = downloaded / elapsed
+        if total_bytes:
+            pct = (downloaded / total_bytes) * 100
+            msg = (f"    ⏬ TIGER {layer_upper}: {pct:5.1f}% | "
+                   f"{downloaded/1024/1024:8.1f}MB / {total_bytes/1024/1024:8.1f}MB | "
+                   f"{speed/1024/1024:5.2f} MB/s")
+        else:
+            msg = (f"    ⏬ TIGER {layer_upper}: {downloaded/1024/1024:8.1f}MB | "
+                   f"{speed/1024/1024:5.2f} MB/s")
+        if sys.stdout.isatty():
+            sys.stdout.write("\r" + msg + "        ")
+        else:
+            sys.stdout.write(msg + "\n")
+        sys.stdout.flush()
+
+    prev = _start_per_second_progress_timer(_tick)
     try:
-        url = f"https://www2.census.gov/geo/tiger/TIGER{year}/AIANNH/tl_{year}_us_aiannh.zip"
-        print(f"  Downloading Census TIGER AIANNH: {url}")
-
         req = urllib.request.Request(url, headers={"User-Agent": "TCRGP-II-Downloader/1.0"})
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            data = resp.read()
+        with _fast_urlopen(req, timeout_s=30, attempts=2) as resp:
+            cl = resp.headers.get("Content-Length")
+            total_bytes = int(cl) if cl and cl.isdigit() else None
+            buf = io.BytesIO()
+            while True:
+                chunk = resp.read(1024 * 256)
+                if not chunk:
+                    break
+                buf.write(chunk)
+                downloaded += len(chunk)
+            data = buf.getvalue()
+    except Exception as e:
+        done = True
+        _stop_per_second_progress_timer(prev)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+        print(f"  ⚠ Could not download {layer_upper}: {e}")
+        return places
+    finally:
+        done = True
+        _stop_per_second_progress_timer(prev)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
 
+    try:
         import zipfile
         with zipfile.ZipFile(io.BytesIO(data)) as zf:
             dbf_name = next((n for n in zf.namelist() if n.lower().endswith(".dbf")), None)
             if not dbf_name:
-                print("  ⚠ AIANNH zip missing .dbf; cannot parse names")
+                print(f"  ⚠ {layer_upper} zip missing .dbf; cannot parse names")
                 return places
             dbf_bytes = zf.read(dbf_name)
 
         rows = _parse_dbf_records(dbf_bytes)
-        # Common fields: NAME, NAMELSAD, LSAD, AIANNHNS, GEOID
         for r in rows:
             name = (r.get("NAME") or "").strip()
             namelsad = (r.get("NAMELSAD") or "").strip()
-            lsad = (r.get("LSAD") or "").strip()
             geoid = (r.get("GEOID") or "").strip()
             if name:
-                places.append({"name": name, "type": "aiannh", "state": None, "tribe": None, "source": f"census_tiger_aiannh_{year}", "id": geoid})
+                places.append({"name": name, "type": out_type, "state": None, "tribe": None, "source": f"census_tiger_{layer_lower}_{year}", "id": geoid})
             if namelsad and namelsad.lower() != name.lower():
-                places.append({"name": namelsad, "type": "aiannh", "state": None, "tribe": None, "source": f"census_tiger_aiannh_{year}", "id": geoid})
+                places.append({"name": namelsad, "type": out_type, "state": None, "tribe": None, "source": f"census_tiger_{layer_lower}_{year}", "id": geoid})
 
-        print(f"  ✓ Extracted {len(places)} AIANNH names from Census TIGER")
+        print(f"  ✓ Extracted {len(places)} {layer_upper} names from Census TIGER")
     except Exception as e:
-        print(f"  ⚠ Could not download/parse Census AIANNH: {e}")
+        print(f"  ⚠ Could not parse TIGER {layer_upper}: {e}")
     return places
+
+def download_census_tiger_aiannh(year: int = 2023) -> List[Dict]:
+    """AIANNH (American Indian/Alaska Native/Native Hawaiian Areas) names from TIGER/Line."""
+    return download_census_tiger_layer(year=year, layer="AIANNH", out_type="aiannh")
+
+def download_census_tiger_aitsn(year: int = 2023) -> List[Dict]:
+    """AITSN (American Indian Tribal Subdivisions) names from TIGER/Line (when available)."""
+    return download_census_tiger_layer(year=year, layer="AITSN", out_type="tribal_subdivision")
 
 def download_gnis_ftp() -> List[Dict]:
     """Try downloading from GNIS FTP server or alternative direct URLs."""
@@ -312,11 +398,28 @@ def download_datagov_gnis() -> List[Dict]:
         ]
 
         package = None
-        def _is_gnisish(pkg: dict) -> bool:
+        def _score_gnis_package(pkg: dict) -> int:
             title = (pkg.get("title") or "").lower()
             name = (pkg.get("name") or "").lower()
             notes = (pkg.get("notes") or "").lower()
-            return ("gnis" in title) or ("gnis" in name) or ("geographic names information system" in title) or ("geographic names information system" in notes)
+            org_title = ((pkg.get("organization") or {}).get("title") or "").lower()
+            score = 0
+            # Strong positives: the actual USGS GNIS "Downloadable Data Collection" package
+            if "downloadable data collection" in title or "downloadable data collection" in notes:
+                score += 8
+            if "geographic names information system" in title or "geographic names information system" in notes:
+                score += 6
+            if "gnis" in title or "gnis" in name:
+                score += 2
+            if "nationalfile" in title or "nationalfile" in notes:
+                score += 8
+            # Prefer USGS org if present (helps avoid state geohub “GNIS” datasets)
+            if "geological survey" in org_title or "usgs" in org_title:
+                score += 6
+            # Penalize obvious state/local portal datasets
+            if any(s in title for s in ["oregon", "geohub", "arcgis", "hubsite", "open data"]):
+                score -= 8
+            return score
 
         for q in preferred_queries:
             search_url = f"{ckan_base}/package_search?{urllib.parse.urlencode({'q': q, 'rows': 10})}"
@@ -324,10 +427,12 @@ def download_datagov_gnis() -> List[Dict]:
             with _fast_urlopen(search_url, timeout_s=10, attempts=2) as response:
                 data = json.loads(response.read().decode("utf-8"))
             results = data.get("result", {}).get("results", [])
-            # pick the first GNIS-looking result, otherwise skip this query
-            gnis_results = [r for r in results if _is_gnisish(r)]
-            if gnis_results:
-                package = gnis_results[0]
+            if not results:
+                continue
+            scored = sorted(((r, _score_gnis_package(r)) for r in results), key=lambda t: t[1], reverse=True)
+            best_pkg, best_score = scored[0]
+            if best_score >= 6:
+                package = best_pkg
                 break
 
         if not package:
@@ -346,7 +451,7 @@ def download_datagov_gnis() -> List[Dict]:
             print("    ⚠ GNIS package has no downloadable resources listed")
             return places
 
-        # Pick the best downloadable resource (prefer zip).
+        # Pick the best downloadable resource (prefer zip AND NationalFile-ish).
         best = None
         for r in resources:
             url = (r.get("url") or "").strip()
@@ -354,6 +459,9 @@ def download_datagov_gnis() -> List[Dict]:
             name = (r.get("name") or r.get("description") or "").lower()
             if not url:
                 continue
+            if ("nationalfile" in url.lower() or "nationalfile" in name) and (url.lower().endswith(".zip") or fmt == "zip" or "zip" in name):
+                best = r
+                break
             if url.lower().endswith(".zip") or fmt == "zip" or "zip" in name:
                 best = r
                 break
@@ -369,7 +477,7 @@ def download_datagov_gnis() -> List[Dict]:
         download_url = best.get("url").strip()
         print(f"    Downloading GNIS resource from Data.gov: {download_url}")
 
-        # Stream download with a progress monitor (no sleeps).
+        # Stream download with a per-second progress monitor (no sleeps).
         req = urllib.request.Request(download_url, headers={"User-Agent": "TCRGP-II-Downloader/1.0"})
         with _fast_urlopen(req, timeout_s=20, attempts=2) as response:
             total_bytes = response.headers.get("Content-Length")
@@ -378,38 +486,44 @@ def download_datagov_gnis() -> List[Dict]:
             buf = io.BytesIO()
             downloaded = 0
             start = time.time()
-            last_print = start
+            done = False
+
+            def _tick():
+                nonlocal downloaded, total_bytes, start, done
+                if done:
+                    return
+                elapsed = max(time.time() - start, 1e-6)
+                speed = downloaded / elapsed
+                if total_bytes:
+                    pct = (downloaded / total_bytes) * 100
+                    eta = int((total_bytes - downloaded) / max(speed, 1e-6))
+                    msg = (f"    ⏬ Downloading GNIS: {pct:5.1f}% | "
+                           f"{downloaded/1024/1024:8.1f}MB / {total_bytes/1024/1024:8.1f}MB | "
+                           f"{speed/1024/1024:5.2f} MB/s | ETA: {eta:4d}s")
+                else:
+                    msg = (f"    ⏬ Downloading GNIS: {downloaded/1024/1024:8.1f}MB | "
+                           f"{speed/1024/1024:5.2f} MB/s")
+                if sys.stdout.isatty():
+                    sys.stdout.write("\r" + msg + "        ")
+                else:
+                    sys.stdout.write(msg + "\n")
+                sys.stdout.flush()
+
+            prev = _start_per_second_progress_timer(_tick)
 
             # Fast-fail streaming: the urlopen timeout covers reads; no long-running waits.
-            while True:
-                chunk = response.read(1024 * 256)  # 256KB chunks
-                if not chunk:
-                    break
-                buf.write(chunk)
-                downloaded += len(chunk)
-
-                now = time.time()
-                if (now - last_print) >= 1.0:
-                    elapsed = max(now - start, 1e-6)
-                    speed = downloaded / elapsed
-                    if total_bytes:
-                        pct = (downloaded / total_bytes) * 100
-                        eta = int((total_bytes - downloaded) / max(speed, 1e-6))
-                        sys.stdout.write(
-                            f"\r    ⏬ Downloading GNIS: {pct:5.1f}% | "
-                            f"{downloaded/1024/1024:8.1f}MB / {total_bytes/1024/1024:8.1f}MB | "
-                            f"{speed/1024/1024:5.2f} MB/s | ETA: {eta:4d}s        "
-                        )
-                    else:
-                        sys.stdout.write(
-                            f"\r    ⏬ Downloading GNIS: {downloaded/1024/1024:8.1f}MB | "
-                            f"{speed/1024/1024:5.2f} MB/s        "
-                        )
-                    sys.stdout.flush()
-                    last_print = now
-
-            sys.stdout.write("\n")
-            sys.stdout.flush()
+            try:
+                while True:
+                    chunk = response.read(1024 * 256)  # 256KB chunks
+                    if not chunk:
+                        break
+                    buf.write(chunk)
+                    downloaded += len(chunk)
+            finally:
+                done = True
+                _stop_per_second_progress_timer(prev)
+                sys.stdout.write("\n")
+                sys.stdout.flush()
 
             data_bytes = buf.getvalue()
 
@@ -1196,7 +1310,7 @@ def download_alternative_sources() -> List[Dict]:
     
     return places
 
-def download_comprehensive_tribal_place_list() -> List[Dict]:
+def download_comprehensive_tribal_place_list(mode: str = "fast", year: int = 2023) -> List[Dict]:
     """Download comprehensive list from various sources.
     
     This function aggregates tribal place names from multiple sources
@@ -1204,65 +1318,73 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
     """
     all_places = []
 
-    # Try Data.gov FIRST (CKAN resources often stay available even when GNIS endpoints are flaky)
-    print("\n1. Downloading GNIS from Data.gov (CKAN resources)...")
-    datagov_places = download_datagov_gnis()
-    if datagov_places:
-        print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
-        all_places.extend(datagov_places)
+    mode = (mode or "fast").strip().lower()
+    if mode not in ("fast", "full"):
+        mode = "fast"
 
-    # Census TIGER AIANNH (thousands of tribal area place names)
-    print("\n2. Downloading Census TIGER AIANNH (tribal areas)...")
-    aiannh_places = download_census_tiger_aiannh(2023)
+    # Fast, high-yield sources FIRST (reliable + thousands of names)
+    print("\n1. Downloading Census TIGER AIANNH (tribal areas)...")
+    aiannh_places = download_census_tiger_aiannh(year)
     if aiannh_places:
         print(f"  ✓ Got {len(aiannh_places)} places from Census AIANNH")
         all_places.extend(aiannh_places)
 
-    # Then try GNIS-LD / National Map / GNIS direct (often down)
-    print("\n3. Attempting to download from GNIS-LD (Linked Data) service...")
-    gnis_ld_places = download_gnis_ld_sparql()
-    if gnis_ld_places:
-        print(f"  ✓ Got {len(gnis_ld_places)} places from GNIS-LD")
-        all_places.extend(gnis_ld_places)
+    print("\n2. Downloading Census TIGER AITSN (tribal subdivisions, if available)...")
+    aitsn_places = download_census_tiger_aitsn(year)
+    if aitsn_places:
+        print(f"  ✓ Got {len(aitsn_places)} places from Census AITSN")
+        all_places.extend(aitsn_places)
 
-    print("\n4. Attempting to download from The National Map Services...")
-    national_map_places = download_national_map_api()
-    if national_map_places:
-        print(f"  ✓ Got {len(national_map_places)} places from The National Map")
-        all_places.extend(national_map_places)
-
-    # Try original GNIS National File (may be down)
-    print("\n5. Attempting to download from USGS GNIS National File...")
-    gnis_places = download_gnis_national_file()
-    if gnis_places:
-        print(f"  ✓ Got {len(gnis_places)} places from GNIS")
-        all_places.extend(gnis_places)
-    else:
-        print("  → GNIS National File unavailable (server may be down)")
-    
     # Try EPA Tribes Names Service (PUBLIC API - no auth required!)
-    print("\n6. Downloading from EPA Tribes Names Service (PUBLIC API)...")
+    print("\n3. Downloading from EPA Tribes Names Service (PUBLIC API)...")
     epa_places = download_epa_tribes_data()
     if epa_places:
         print(f"  ✓ Got {len(epa_places)} places from EPA Tribes Names Service")
         all_places.extend(epa_places)
     
-    # Try other alternative sources
-    print("\n7. Trying other alternative sources...")
-    alt_places = download_alternative_sources()
-    if alt_places:
-        print(f"  ✓ Got {len(alt_places)} places from alternative sources")
-        all_places.extend(alt_places)
-    
     # Add comprehensive curated list as baseline
     # (This ensures we have at least well-known places even if downloads fail)
-    print("\n3. Adding comprehensive curated list from database builder...")
+    print("\n4. Adding comprehensive curated list from database builder...")
     curated_places = get_comprehensive_curated_tribal_places()
     if curated_places:
         print(f"  ✓ Got {len(curated_places)} places from curated list")
         all_places.extend(curated_places)
     else:
         print("  ⚠ Curated list is empty - this shouldn't happen")
+
+    if mode == "full":
+        # Then try GNIS-LD / National Map / GNIS direct (often down) and/or huge downloads
+        print("\n5. Downloading GNIS from Data.gov (CKAN resources; can be large)...")
+        datagov_places = download_datagov_gnis()
+        if datagov_places:
+            print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
+            all_places.extend(datagov_places)
+
+        print("\n6. Attempting to download from GNIS-LD (Linked Data) service...")
+        gnis_ld_places = download_gnis_ld_sparql()
+        if gnis_ld_places:
+            print(f"  ✓ Got {len(gnis_ld_places)} places from GNIS-LD")
+            all_places.extend(gnis_ld_places)
+
+        print("\n7. Attempting to download from The National Map Services...")
+        national_map_places = download_national_map_api()
+        if national_map_places:
+            print(f"  ✓ Got {len(national_map_places)} places from The National Map")
+            all_places.extend(national_map_places)
+
+        print("\n8. Attempting to download from USGS GNIS National File...")
+        gnis_places = download_gnis_national_file()
+        if gnis_places:
+            print(f"  ✓ Got {len(gnis_places)} places from GNIS")
+            all_places.extend(gnis_places)
+        else:
+            print("  → GNIS National File unavailable (server may be down)")
+
+        print("\n9. Trying other alternative sources...")
+        alt_places = download_alternative_sources()
+        if alt_places:
+            print(f"  ✓ Got {len(alt_places)} places from alternative sources")
+            all_places.extend(alt_places)
     
     # Remove duplicates
     seen = set()
@@ -1487,7 +1609,12 @@ if __name__ == "__main__":
     print("This may take several minutes...")
     print()
     
-    places = download_comprehensive_tribal_place_list()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["fast", "full"], default="fast", help="fast=reliable high-yield sources; full=try everything (can be slow)")
+    parser.add_argument("--year", type=int, default=2023, help="Census TIGER year")
+    args = parser.parse_args()
+
+    places = download_comprehensive_tribal_place_list(mode=args.mode, year=args.year)
     add_to_database(places)
     
     print(f"\n✓ Complete! Database now contains comprehensive tribal place names.")
