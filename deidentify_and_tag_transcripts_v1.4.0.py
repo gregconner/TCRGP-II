@@ -1156,12 +1156,13 @@ class KeywordTagger:
                     all_tags["INDIGENOUS_TERM"].append((line_num, match.group(), context))
         
         # Extract quantitative metrics with significance filtering
+        # Note: Years are handled by context patterns above, not here (more precise)
         metric_patterns = [
             (r'\b(\d+)\s+members?\b', 'METRIC_Members', None),
             (r'\b(\d+)\s+employees?\b', 'METRIC_Employees', None),
             (r'\b(\d+)\s+partners?\b', 'METRIC_Partners', None),
             (r'\b(\d+)\s+grants?\b', 'METRIC_Grants', None),
-            (r'\b(19|20)\d{2}\b', 'METRIC_Year', None),  # Only years 1900-2099
+            # Years removed - only use context patterns for timeline-related years
             (r'\$(\d+(?:,\d+)*(?:\.\d+)?)', 'METRIC_DollarAmount', 1000),  # Filter: >= $1000
         ]
         
@@ -1308,38 +1309,124 @@ def process_transcript(input_path: Path, output_dir: Path, use_spacy: bool = Tru
 
 def main():
     """Main execution function."""
+    parser = argparse.ArgumentParser(
+        description='De-identify and tag transcripts for research',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Process all files in default directory
+  python deidentify_and_tag_transcripts_v1.4.0.py
+  
+  # Process a single file
+  python deidentify_and_tag_transcripts_v1.4.0.py -i transcript.docx
+  
+  # Process directory with custom output
+  python deidentify_and_tag_transcripts_v1.4.0.py -i transcripts/ -o output/
+  
+  # Disable citation system
+  python deidentify_and_tag_transcripts_v1.4.0.py --no-citation
+  
+  # Custom page size
+  python deidentify_and_tag_transcripts_v1.4.0.py --lines-per-page 40
+        """
+    )
+    
+    parser.add_argument(
+        '-i', '--input',
+        type=str,
+        help='Input file or directory (default: "newer transcripts" directory)'
+    )
+    parser.add_argument(
+        '-o', '--output',
+        type=str,
+        help='Output directory (default: "deidentified_transcripts" directory)'
+    )
+    parser.add_argument(
+        '--no-citation',
+        action='store_true',
+        help='Disable citation system (speaker letters, verses, pages)'
+    )
+    parser.add_argument(
+        '--lines-per-page',
+        type=int,
+        default=DEFAULT_LINES_PER_PAGE,
+        help=f'Number of lines per page for pagination (default: {DEFAULT_LINES_PER_PAGE})'
+    )
+    parser.add_argument(
+        '--no-spacy',
+        action='store_true',
+        help='Disable spaCy NER (use regex patterns only)'
+    )
+    
+    args = parser.parse_args()
+    
     print("=" * 80)
     print("DE-IDENTIFY AND TAG TRANSCRIPTS v1.4.0")
     print("=" * 80)
     
     # Setup paths
     script_dir = Path(__file__).parent
-    input_dir = script_dir / "newer transcripts"
-    output_dir = script_dir / "deidentified_transcripts"
+    
+    if args.input:
+        input_path = Path(args.input)
+        if input_path.is_file():
+            # Single file
+            transcript_files = [input_path]
+            input_dir = input_path.parent
+        elif input_path.is_dir():
+            # Directory
+            input_dir = input_path
+            transcript_files = []
+            for ext in ['.docx', '.txt']:
+                transcript_files.extend(input_dir.glob(f"*{ext}"))
+        else:
+            print(f"\n❌ Error: Input path not found: {input_path}")
+            sys.exit(1)
+    else:
+        # Default: use "newer transcripts" directory
+        input_dir = script_dir / "newer transcripts"
+        if not input_dir.exists():
+            print(f"\n❌ Error: Input directory not found: {input_dir}")
+            print("   Please ensure 'newer transcripts' directory exists, or use -i to specify input.")
+            sys.exit(1)
+        transcript_files = []
+        for ext in ['.docx', '.txt']:
+            transcript_files.extend(input_dir.glob(f"*{ext}"))
+    
+    if args.output:
+        output_dir = Path(args.output)
+    else:
+        output_dir = script_dir / "deidentified_transcripts"
+    
     output_dir.mkdir(exist_ok=True)
-    
-    if not input_dir.exists():
-        print(f"\n❌ Error: Input directory not found: {input_dir}")
-        print("   Please ensure 'newer transcripts' directory exists.")
-        sys.exit(1)
-    
-    # Find transcript files
-    transcript_files = []
-    for ext in ['.docx', '.txt']:
-        transcript_files.extend(input_dir.glob(f"*{ext}"))
     
     if not transcript_files:
         print(f"\n❌ No transcript files found in {input_dir}")
         sys.exit(1)
     
     print(f"\nFound {len(transcript_files)} transcript file(s)")
-    print(f"Output directory: {output_dir}")
+    print(f"Input: {input_dir}")
+    print(f"Output: {output_dir}")
+    if args.no_citation:
+        print("Citation system: DISABLED")
+    else:
+        print(f"Citation system: ENABLED (lines per page: {args.lines_per_page})")
+    if args.no_spacy:
+        print("spaCy NER: DISABLED")
+    else:
+        print("spaCy NER: ENABLED")
     
     # Process each transcript
     summaries = []
     for transcript_file in sorted(transcript_files):
         try:
-            summary = process_transcript(transcript_file, output_dir, use_spacy=True)
+            summary = process_transcript(
+                transcript_file, 
+                output_dir, 
+                use_spacy=not args.no_spacy,
+                use_citation_system=not args.no_citation,
+                lines_per_page=args.lines_per_page
+            )
             if summary:
                 summaries.append(summary)
         except Exception as e:
