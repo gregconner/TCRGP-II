@@ -82,6 +82,9 @@ ENV/
 *.pid
 name_location_database.db-wal
 name_location_database.db-shm
+download_cache/
+build_db.log
+build_db.pid
 
 # ============================================================================
 # NOTES
