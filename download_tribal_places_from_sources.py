@@ -19,11 +19,10 @@ import gzip
 import json
 import time
 import sys
-import threading
+import signal
 from pathlib import Path
 from typing import List, Dict
 import re
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 DB_PATH = Path(__file__).parent / "name_location_database.db"
@@ -195,35 +194,153 @@ def download_datagov_gnis() -> List[Dict]:
     
     try:
         print("  Attempting to download from Data.gov...")
-        
-        # Data.gov has multiple GNIS datasets
-        # Try the Populated Places dataset
-        datagov_urls = [
-            "https://catalog.data.gov/dataset/gnis-populated-places",
-            "https://catalog.data.gov/dataset/geographic-names-information-system-gnis",
+        # Data.gov is CKAN-backed. We can programmatically discover resources and download the GNIS zip
+        # without requiring any API key.
+        ckan_base = "https://catalog.data.gov/api/3/action"
+
+        # Prefer the main GNIS package (USGS National Map downloadable collection).
+        # If this exact query fails, we fall back to a broader search.
+        preferred_queries = [
+            "geographic-names-information-system-gnis-usgs-national-map-downloadable-data-collection",
+            "\"Geographic Names Information System\" GNIS USGS National Map Downloadable Data Collection",
+            "GNIS USGS National Map Downloadable Data Collection",
+            "GNIS NationalFile.zip",
         ]
-        
-        # Data.gov provides API access via CKAN
-        # Try to get the resource download URL
-        ckan_api = "https://catalog.data.gov/api/3/action/package_search"
-        params = {
-            'q': 'GNIS',
-            'rows': 10
-        }
-        
-        url = f"{ckan_api}?{urllib.parse.urlencode(params)}"
-        print(f"    Querying Data.gov API...")
-        
-        with urllib.request.urlopen(url, timeout=60) as response:
-            data = json.loads(response.read().decode('utf-8'))
-            
-            if 'result' in data and 'results' in data['result']:
-                print(f"    ✓ Found {len(data['result']['results'])} GNIS datasets on Data.gov")
-                print(f"    → Visit https://catalog.data.gov/dataset?q=GNIS for manual download")
-                # Data.gov typically requires manual download or API key for bulk access
-                # We'll note this as an option
-            else:
-                print(f"    ⚠ Could not find GNIS datasets")
+
+        package = None
+        for q in preferred_queries:
+            search_url = f"{ckan_base}/package_search?{urllib.parse.urlencode({'q': q, 'rows': 5})}"
+            print(f"    Searching Data.gov CKAN for GNIS resources: {q}")
+            with urllib.request.urlopen(search_url, timeout=60) as response:
+                data = json.loads(response.read().decode("utf-8"))
+            results = data.get("result", {}).get("results", [])
+            if results:
+                package = results[0]
+                break
+
+        if not package:
+            print("    ⚠ Could not find GNIS packages on Data.gov via CKAN search")
+            return places
+
+        pkg_id = package.get("id") or package.get("name")
+        print(f"    ✓ Found GNIS package: {package.get('title', package.get('name', 'unknown'))}")
+
+        show_url = f"{ckan_base}/package_show?{urllib.parse.urlencode({'id': pkg_id})}"
+        with urllib.request.urlopen(show_url, timeout=60) as response:
+            show_data = json.loads(response.read().decode("utf-8"))
+
+        resources = show_data.get("result", {}).get("resources", [])
+        if not resources:
+            print("    ⚠ GNIS package has no downloadable resources listed")
+            return places
+
+        # Pick the best downloadable resource (prefer zip).
+        best = None
+        for r in resources:
+            url = (r.get("url") or "").strip()
+            fmt = (r.get("format") or "").strip().lower()
+            name = (r.get("name") or r.get("description") or "").lower()
+            if not url:
+                continue
+            if url.lower().endswith(".zip") or fmt == "zip" or "zip" in name:
+                best = r
+                break
+
+        if not best:
+            # Fallback: first resource with a URL
+            best = next((r for r in resources if (r.get("url") or "").strip()), None)
+
+        if not best:
+            print("    ⚠ GNIS package has no usable resource URLs")
+            return places
+
+        download_url = best.get("url").strip()
+        print(f"    Downloading GNIS resource from Data.gov: {download_url}")
+
+        # Stream download with a progress monitor (no sleeps).
+        req = urllib.request.Request(download_url, headers={"User-Agent": "TCRGP-II-Downloader/1.0"})
+        with urllib.request.urlopen(req, timeout=120) as response:
+            total_bytes = response.headers.get("Content-Length")
+            total_bytes = int(total_bytes) if total_bytes and total_bytes.isdigit() else None
+
+            buf = io.BytesIO()
+            downloaded = 0
+            start = time.time()
+            last_print = start
+
+            while True:
+                chunk = response.read(1024 * 256)  # 256KB chunks
+                if not chunk:
+                    break
+                buf.write(chunk)
+                downloaded += len(chunk)
+
+                now = time.time()
+                if (now - last_print) >= 1.0:
+                    elapsed = max(now - start, 1e-6)
+                    speed = downloaded / elapsed
+                    if total_bytes:
+                        pct = (downloaded / total_bytes) * 100
+                        eta = int((total_bytes - downloaded) / max(speed, 1e-6))
+                        sys.stdout.write(
+                            f"\r    ⏬ Downloading GNIS: {pct:5.1f}% | "
+                            f"{downloaded/1024/1024:8.1f}MB / {total_bytes/1024/1024:8.1f}MB | "
+                            f"{speed/1024/1024:5.2f} MB/s | ETA: {eta:4d}s        "
+                        )
+                    else:
+                        sys.stdout.write(
+                            f"\r    ⏬ Downloading GNIS: {downloaded/1024/1024:8.1f}MB | "
+                            f"{speed/1024/1024:5.2f} MB/s        "
+                        )
+                    sys.stdout.flush()
+                    last_print = now
+
+            sys.stdout.write("\n")
+            sys.stdout.flush()
+
+            data_bytes = buf.getvalue()
+
+        # If it's a zip, parse it; otherwise attempt to parse as text.
+        import zipfile
+        if data_bytes[:4] == b"PK\x03\x04":
+            with zipfile.ZipFile(io.BytesIO(data_bytes)) as zf:
+                txt_name = next((n for n in zf.namelist() if n.lower().endswith(".txt")), None)
+                if not txt_name:
+                    print("    ⚠ GNIS zip had no .txt file to parse")
+                    return places
+                content = zf.read(txt_name).decode("utf-8", errors="ignore")
+        else:
+            content = data_bytes.decode("utf-8", errors="ignore")
+
+        # GNIS format is pipe-delimited; filter for likely tribal places.
+        for line in content.split("\n"):
+            if not line.strip():
+                continue
+            parts = line.split("|")
+            if len(parts) < 4:
+                continue
+            feature_name = parts[1].strip()
+            feature_class = parts[2].strip()
+            state = parts[3].strip() if len(parts) > 3 else ""
+
+            if (
+                "reservation" in feature_name.lower()
+                or "pueblo" in feature_name.lower()
+                or "rancheria" in feature_name.lower()
+                or "tribal" in feature_name.lower()
+                or feature_class in ["R", "Reservation"]
+            ):
+                places.append(
+                    {
+                        "name": feature_name,
+                        "type": feature_class.lower().replace(" ", "_") if feature_class else "unknown",
+                        "state": state,
+                        "tribe": None,
+                        "source": "datagov_gnis",
+                    }
+                )
+
+        print(f"    ✓ Extracted {len(places)} likely tribal places from Data.gov GNIS resource")
                 
     except Exception as e:
         print(f"    ⚠ Error accessing Data.gov: {e}")
@@ -770,28 +887,31 @@ def download_epa_tribes_data() -> List[Dict]:
                     
                     return tribe_places
                 
-                # Parallel processing with REAL-TIME progress monitoring (updates every second)
+                # Parallel processing with REAL-TIME progress monitor (no sleeps, no threads)
                 completed = 0
-                last_update_time = start_time
-                
-                # Start a progress update thread
-                import threading
-                progress_lock = threading.Lock()
-                stop_progress = threading.Event()
-                
-                def progress_updater():
-                    """Update progress display every second while running."""
-                    while not stop_progress.is_set():
-                        time.sleep(1.0)  # Update every second
-                        if stop_progress.is_set():
-                            break
-                        
-                        with progress_lock:
-                            current_completed = completed
-                            current_places = len(places)
-                            current_elapsed = time.time() - start_time
-                        
-                        if current_completed > 0 and current_elapsed > 0:
+
+                # SIGALRM-based progress monitor: prints EVERY SECOND regardless of task completion.
+                progress_state = {
+                    "total": total_tribes,
+                    "completed": 0,
+                    "places": 0,
+                    "start_time": start_time,
+                }
+
+                def update_progress_display():
+                    """Update progress display on every completion.
+                    
+                    - If running in a real terminal (TTY): draw a live updating single-line monitor using \\r.
+                    - If stdout is being captured (logs / Cursor tool output): emit newline progress lines
+                      so updates are actually visible.
+                    """
+                    current_time = time.time()
+                    current_completed = completed
+                    current_places = len(places)
+                    current_elapsed = current_time - start_time
+
+                    if current_elapsed > 0:
+                        if current_completed > 0:
                             avg_time = current_elapsed / current_completed
                             remaining = total_tribes - current_completed
                             eta_seconds = avg_time * remaining
@@ -799,44 +919,107 @@ def download_epa_tribes_data() -> List[Dict]:
                             eta_sec = int(eta_seconds % 60)
                             progress_pct = (current_completed / total_tribes) * 100
                             speed = current_completed / current_elapsed
-                            elapsed_min = int(current_elapsed // 60)
-                            elapsed_sec = int(current_elapsed % 60)
-                            
-                            # ALWAYS VISIBLE PROGRESS - updates every second
-                            sys.stdout.write(f"\r    ⏳ PROGRESS: [{current_completed:4d}/{total_tribes}] "
-                                           f"({progress_pct:5.1f}%) | "
-                                           f"Places: {current_places:5d} | "
-                                           f"Speed: {speed:5.2f} tribes/sec | "
-                                           f"Elapsed: {elapsed_min:2d}m {elapsed_sec:2d}s | "
-                                           f"ETA: {eta_min:2d}m {eta_sec:2d}s        ")
+                        else:
+                            progress_pct = 0.0
+                            speed = 0.0
+                            eta_min = 0
+                            eta_sec = 0
+
+                        elapsed_min = int(current_elapsed // 60)
+                        elapsed_sec = int(current_elapsed % 60)
+
+                        progress_msg = (
+                            f"    ⏳ PROGRESS: [{current_completed:4d}/{total_tribes}] "
+                            f"({progress_pct:5.1f}%) | "
+                            f"Places: {current_places:5d} | "
+                            f"Speed: {speed:5.2f} tribes/sec | "
+                            f"Elapsed: {elapsed_min:2d}m {elapsed_sec:2d}s | "
+                            f"ETA: {eta_min:2d}m {eta_sec:2d}s"
+                        )
+
+                        if sys.stdout.isatty():
+                            sys.stdout.write("\r" + progress_msg + "        ")
                             sys.stdout.flush()
-                
-                # Start progress updater thread
-                progress_thread = threading.Thread(target=progress_updater, daemon=True)
-                progress_thread.start()
-                
+                        else:
+                            sys.stdout.write(progress_msg + "\n")
+                            sys.stdout.flush()
+                    else:
+                        start_msg = f"    ⏳ PROGRESS: [   0/{total_tribes}] (  0.0%) | Starting..."
+                        if sys.stdout.isatty():
+                            sys.stdout.write("\r" + start_msg + "        ")
+                            sys.stdout.flush()
+                        else:
+                            sys.stdout.write(start_msg + "\n")
+                            sys.stdout.flush()
+
+                def _progress_tick(_signum, _frame):
+                    """Emit progress once per second (no sleep)."""
+                    try:
+                        now = time.time()
+                        total = progress_state["total"]
+                        done = progress_state["completed"]
+                        places_n = progress_state["places"]
+                        elapsed = max(now - progress_state["start_time"], 1e-6)
+                        pct = (done / total) * 100 if total else 100.0
+                        speed = done / elapsed if elapsed > 0 else 0.0
+                        if done > 0:
+                            avg = elapsed / done
+                            eta = int(avg * max(total - done, 0))
+                        else:
+                            eta = 0
+                        eta_min, eta_sec = divmod(eta, 60)
+                        elapsed_min, elapsed_sec = divmod(int(elapsed), 60)
+
+                        msg = (
+                            f"    ⏳ PROGRESS: [{done:4d}/{total}] "
+                            f"({pct:5.1f}%) | "
+                            f"Places: {places_n:5d} | "
+                            f"Speed: {speed:5.2f} tribes/sec | "
+                            f"Elapsed: {elapsed_min:2d}m {elapsed_sec:2d}s | "
+                            f"ETA: {eta_min:2d}m {eta_sec:2d}s"
+                        )
+
+                        if sys.stdout.isatty():
+                            sys.stdout.write("\r" + msg + "        ")
+                        else:
+                            sys.stdout.write(msg + "\n")
+                        sys.stdout.flush()
+                    except Exception:
+                        return
+
+                prev_alarm_handler = signal.getsignal(signal.SIGALRM)
+                signal.signal(signal.SIGALRM, _progress_tick)
+                signal.setitimer(signal.ITIMER_REAL, 1.0, 1.0)
+
                 try:
                     with ThreadPoolExecutor(max_workers=10) as executor:
                         future_to_tribe = {executor.submit(fetch_tribe_details, tribe): tribe for tribe in data}
                         
                         for future in as_completed(future_to_tribe):
-                            with progress_lock:
-                                completed += 1
-                                try:
-                                    tribe_places = future.result()
-                                    for place in tribe_places:
-                                        name_lower = place['name'].lower().strip()
-                                        if name_lower not in seen_names:
-                                            seen_names.add(name_lower)
-                                            places.append(place)
-                                except Exception:
-                                    pass
+                            completed += 1
+                            try:
+                                tribe_places = future.result()
+                                for place in tribe_places:
+                                    name_lower = place['name'].lower().strip()
+                                    if name_lower not in seen_names:
+                                        seen_names.add(name_lower)
+                                        places.append(place)
+                            except Exception:
+                                pass
+                            
+                            # Update progress display immediately after each completion
+                            progress_state["completed"] = completed
+                            progress_state["places"] = len(places)
+                            update_progress_display()
                 
                 finally:
-                    # Stop progress updater
-                    stop_progress.set()
-                    progress_thread.join(timeout=2)
-                    
+                    # Stop per-second alarm updates
+                    try:
+                        signal.setitimer(signal.ITIMER_REAL, 0)
+                        signal.signal(signal.SIGALRM, prev_alarm_handler)
+                    except Exception:
+                        pass
+
                     # Final progress display
                     elapsed_total = time.time() - start_time
                     sys.stdout.write(f"\r    ✓ COMPLETE: [{total_tribes}/{total_tribes}] "
@@ -848,7 +1031,6 @@ def download_epa_tribes_data() -> List[Dict]:
                 
                 print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
                 print(f"    ✓ Includes: tribal names, reservations, locations, states, regions")
-                print(f"    ⚠ Unexpected response format")
                 
     except urllib.error.URLError as e:
         print(f"    ⚠ Could not access EPA Tribes Names Service: {e}")
@@ -907,27 +1089,27 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
     to create the most comprehensive list possible.
     """
     all_places = []
-    
-    # Try alternative GNIS sources first (more reliable)
-    print("\n1. Attempting to download from GNIS-LD (Linked Data) service...")
+
+    # Try Data.gov FIRST (CKAN resources often stay available even when GNIS endpoints are flaky)
+    print("\n1. Downloading GNIS from Data.gov (CKAN resources)...")
+    datagov_places = download_datagov_gnis()
+    if datagov_places:
+        print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
+        all_places.extend(datagov_places)
+
+    # Then try GNIS-LD / National Map / GNIS direct (often down)
+    print("\n2. Attempting to download from GNIS-LD (Linked Data) service...")
     gnis_ld_places = download_gnis_ld_sparql()
     if gnis_ld_places:
         print(f"  ✓ Got {len(gnis_ld_places)} places from GNIS-LD")
         all_places.extend(gnis_ld_places)
-    
-    print("\n2. Attempting to download from The National Map Services...")
+
+    print("\n3. Attempting to download from The National Map Services...")
     national_map_places = download_national_map_api()
     if national_map_places:
         print(f"  ✓ Got {len(national_map_places)} places from The National Map")
         all_places.extend(national_map_places)
-    
-    # Try GNIS FTP/alternative URLs
-    print("\n3. Attempting to download from GNIS FTP/alternative URLs...")
-    gnis_ftp_places = download_gnis_ftp()
-    if gnis_ftp_places:
-        print(f"  ✓ Got {len(gnis_ftp_places)} places from GNIS FTP")
-        all_places.extend(gnis_ftp_places)
-    
+
     # Try original GNIS National File (may be down)
     print("\n4. Attempting to download from USGS GNIS National File...")
     gnis_places = download_gnis_national_file()
@@ -937,22 +1119,15 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
     else:
         print("  → GNIS National File unavailable (server may be down)")
     
-    # Try Data.gov
-    print("\n5. Checking Data.gov for GNIS datasets...")
-    datagov_places = download_datagov_gnis()
-    if datagov_places:
-        print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
-        all_places.extend(datagov_places)
-    
     # Try EPA Tribes Names Service (PUBLIC API - no auth required!)
-    print("\n6. Downloading from EPA Tribes Names Service (PUBLIC API)...")
+    print("\n5. Downloading from EPA Tribes Names Service (PUBLIC API)...")
     epa_places = download_epa_tribes_data()
     if epa_places:
         print(f"  ✓ Got {len(epa_places)} places from EPA Tribes Names Service")
         all_places.extend(epa_places)
     
     # Try other alternative sources
-    print("\n7. Trying other alternative sources...")
+    print("\n6. Trying other alternative sources...")
     alt_places = download_alternative_sources()
     if alt_places:
         print(f"  ✓ Got {len(alt_places)} places from alternative sources")

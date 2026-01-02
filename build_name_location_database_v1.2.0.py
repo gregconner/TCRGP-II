@@ -437,8 +437,8 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Wind River Reservation", "reservation", "Shoshone/Arapaho", "Wyoming"),
     ]
     
-    # Great Lakes Reservations
-    great_lakes_tribal_places = [
+        # Great Lakes Reservations
+        great_lakes_tribal_places = [
         ("Red Lake Reservation", "reservation", "Ojibwe", "Minnesota"),
         ("White Earth Reservation", "reservation", "Ojibwe", "Minnesota"),
         ("Fond du Lac Reservation", "reservation", "Ojibwe", "Minnesota"),
@@ -465,9 +465,9 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Cayuga Nation", "reservation", "Cayuga", "New York"),
         ("Mohawk Nation", "reservation", "Mohawk", "New York"),
     ]
-    
-    # Northwest Reservations
-    northwest_tribal_places = [
+
+        # Northwest Reservations
+        northwest_tribal_places = [
         ("Yakama Reservation", "reservation", "Yakama", "Washington"),
         ("Colville Reservation", "reservation", "Colville", "Washington"),
         ("Quinault Reservation", "reservation", "Quinault", "Washington"),
@@ -482,9 +482,9 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Siletz Reservation", "reservation", "Siletz", "Oregon"),
         ("Klamath Reservation", "reservation", "Klamath", "Oregon"),
     ]
-    
-    # Oklahoma (many tribes relocated here)
-    oklahoma_tribal_places = [
+
+        # Oklahoma (many tribes relocated here)
+        oklahoma_tribal_places = [
         ("Cherokee Nation", "reservation", "Cherokee", "Oklahoma"),
         ("Choctaw Nation", "reservation", "Choctaw", "Oklahoma"),
         ("Chickasaw Nation", "reservation", "Chickasaw", "Oklahoma"),
@@ -504,9 +504,9 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Wichita and Affiliated Tribes", "reservation", "Wichita", "Oklahoma"),
         ("Cheyenne and Arapaho Tribes", "reservation", "Cheyenne/Arapaho", "Oklahoma"),
     ]
-    
-    # Alaska Native villages
-    alaska_tribal_places = [
+
+        # Alaska Native villages
+        alaska_tribal_places = [
         ("Bethel", "village", "Yup'ik", "Alaska"),
         ("Kotzebue", "village", "Inupiat", "Alaska"),
         ("Barrow", "village", "Inupiat", "Alaska"),
@@ -517,16 +517,16 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         ("Juneau", "village", "Tlingit", "Alaska"),
         ("Ketchikan", "village", "Tlingit", "Alaska"),
     ]
-    
-    # Other regions
-    other_tribal_places = [
+
+        # Other regions
+        other_tribal_places = [
         ("Lumbee Tribe", "reservation", "Lumbee", "North Carolina"),
         ("Eastern Band of Cherokee", "reservation", "Cherokee", "North Carolina"),
         ("Shinnecock Reservation", "reservation", "Shinnecock", "New York"),
     ]
-    
-    # Tribal districts (like Babakiri District)
-    tribal_districts = [
+
+        # Tribal districts (like Babakiri District)
+        tribal_districts = [
         ("Babakiri District", "district", None, None),
     ]
     
@@ -543,7 +543,10 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
                 'state': state,
                 'source': 'comprehensive_tribal_places'
             })
-    
+
+    except Exception as e:
+        print(f"  ⚠ Could not download comprehensive tribal places: {e}")
+
     return places
 
 def add_ambiguous_names():
