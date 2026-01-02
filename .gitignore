@@ -85,6 +85,8 @@ name_location_database.db-shm
 download_cache/
 build_db.log
 build_db.pid
+build_db_progress.json
+build_db_detail.log
 
 # ============================================================================
 # NOTES
