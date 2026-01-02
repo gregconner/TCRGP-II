@@ -1,0 +1,87 @@
+================================================================================
+CITATION SYSTEM IMPLEMENTATION v1.5.0
+Deterministic Speaker Letters + Verses + Pages + Timestamp Reference Table
+================================================================================
+
+Date: 2026-01-02
+Version: 1.5.0
+
+================================================================================
+SYSTEM OVERVIEW
+================================================================================
+
+This project uses a deterministic, hierarchical reference system to cite transcript
+content precisely and reproducibly across runs.
+
+COMPONENTS:
+1. Speaker Letters: A, B, C, … (deterministic assignment)
+2. Verse Numbers: Per speaker (A.1, A.2… B.1, B.2…)
+3. Page Numbers: Based on fixed line count (default 50 lines/page; configurable)
+4. Timestamp Table: Maps speaker.verse → timestamp (when timecoded source exists)
+
+PRIMARY FORMAT (shown in text):
+  [A.2] Interviewer: ...
+
+================================================================================
+DETERMINISM / STABILITY (WHAT CHANGED IN v1.5.0)
+================================================================================
+
+Speaker letters are assigned deterministically:
+  - Extract all `Person_#:` speaker codes present in the formatted transcript
+  - Sort by numeric order (Person_1, Person_2, Person_3, …)
+  - Assign letters in that order (A, B, C, …; beyond Z uses AA, AB, …)
+
+This prevents run-to-run drift caused by “first seen” ordering.
+
+================================================================================
+PROSE TRANSCRIPTS (NO EXPLICIT SPEAKER LABELS)
+================================================================================
+
+If a transcript contains no explicit `Person_#:` speaker lines after formatting,
+the system still produces a complete citation structure:
+
+  - Assign a default speaker “A” with role “Narrative”
+  - Number every non-empty line as a verse:
+      [A.1] Narrative: ...
+      [A.2] Narrative: ...
+
+This guarantees citations exist for any transcript format.
+
+================================================================================
+TIMESTAMPS
+================================================================================
+
+Supported:
+  - WEBVTT segments (preferred)
+  - Non-WEBVTT transcripts that have standalone timestamp lines (HH:MM:SS)
+
+Implementation rule:
+  - Extract timestamps from the ORIGINAL raw text first
+  - Then remove HH:MM:SS tokens from the processing text so timestamps do not
+    survive into the de-identified output or get mis-graded as residual PII
+
+The timestamp reference table always exists:
+  - timecoded transcripts: real timestamps per verse when possible
+  - prose transcripts: timestamp = N/A
+
+================================================================================
+OUTPUT
+================================================================================
+
+The final transcript ends with:
+
+================================================================================
+CITATION REFERENCE TABLE
+================================================================================
+Speaker.Verse | Timestamp | Speaker Role
+--------------|-----------|-------------
+A.1           | 00:00:01  | Interviewer
+A.2           | 00:00:12  | Interviewer
+B.1           | 00:00:22  | Interviewee
+...
+
+================================================================================
+END
+================================================================================
+
+
