@@ -1,0 +1,24 @@
+# Cursor Rules for TCRGP II Analysis Project
+
+## Command Execution
+- NEVER ask the user to run commands. Always execute commands directly using the run_terminal_cmd tool.
+- If a command needs to be run, execute it immediately without asking for permission.
+- The user should never be prompted to run commands manually.
+
+## Version Management
+- Always work with specific version numbers. Use the VERSION file to track current version.
+- Use descriptive filenames with version numbers (e.g., ConnerFrac_v0.1.X.jl, deidentify_and_tag_transcripts_v1.X.X.py).
+- Always increment the file version after changing the file.
+- Always add to git after version change.
+- Always add to GitHub after version change.
+
+## Code Quality
+- Add helpful comments explaining complex logic, especially for grid reduction algorithms.
+- Keep spelling and matching near 100%.
+- Improve tagging quality continuously.
+
+## File Management
+- Never save raw transcripts with identifiable data to GitHub.
+- Cleaned transcripts should be saved to GitHub.
+- Always use .gitignore to protect sensitive data.
+
