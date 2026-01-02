@@ -94,7 +94,7 @@ REQUIREMENTS:
 - python-docx (for DOCX files)
 - spacy (optional but recommended): pip install spacy && python -m spacy download en_core_web_md
 
-Version: 1.9.0
+Version: 1.9.0 (GPU support: CUDA + Metal/MPS)
 """
 
 import re
@@ -738,13 +738,26 @@ class DeIdentifier:
         self.use_gpu = False
         if use_spacy and SPACY_AVAILABLE:
             try:
-                # NEW v1.9.0: Try to use GPU if available
+                # NEW v1.9.0: Try to use GPU if available (CUDA or Metal/MPS)
                 try:
                     import torch
+                    gpu_available = False
+                    gpu_type = None
+                    
+                    # Check for CUDA (NVIDIA GPUs, Linux/Windows)
                     if torch.cuda.is_available():
+                        gpu_available = True
+                        gpu_type = "CUDA"
                         spacy.prefer_gpu()
                         self.use_gpu = True
-                        print("  ✓ GPU detected - using GPU acceleration for spaCy")
+                        print(f"  ✓ GPU detected ({gpu_type}) - using GPU acceleration for spaCy")
+                    # Check for Metal/MPS (Apple Silicon Macs)
+                    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+                        gpu_available = True
+                        gpu_type = "Metal (MPS)"
+                        spacy.prefer_gpu()
+                        self.use_gpu = True
+                        print(f"  ✓ GPU detected ({gpu_type}) - using GPU acceleration for spaCy")
                 except (ImportError, AttributeError):
                     pass  # No PyTorch or GPU not available
                 
