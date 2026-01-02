@@ -378,9 +378,9 @@ def download_tribal_reservations_comprehensive() -> List[dict]:
         # Comprehensive hardcoded list as fallback/starting point
         # This ensures we have at least well-known places
         # But the user should run download_tribal_places_from_sources.py for full coverage
-    
-    # Southwest Pueblos and Reservations
-    southwest_tribal_places = [
+        
+        # Southwest Pueblos and Reservations
+        southwest_tribal_places = [
         ("Navajo Nation", "reservation", "Navajo", "Arizona"),
         ("Navajo Nation", "reservation", "Navajo", "New Mexico"),
         ("Navajo Nation", "reservation", "Navajo", "Utah"),

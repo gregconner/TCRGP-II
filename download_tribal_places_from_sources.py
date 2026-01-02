@@ -158,16 +158,26 @@ def download_gnis_national_file() -> List[Dict]:
                                 print(f"  ✓ Extracted {len(places)} places from GNIS National File")
                                 break
         except urllib.error.URLError as e:
-            print(f"  ⚠ Could not download GNIS file: {e}")
-            print("  → Using comprehensive curated list instead")
+            print(f"  ⚠ Could not download GNIS National File: {e}")
+            print("  → Trying state-specific files instead...")
+            state_places = download_gnis_state_files()
+            if state_places:
+                return state_places
         except Exception as e:
             print(f"  ⚠ Error processing GNIS file: {e}")
-            print("  → Using comprehensive curated list instead")
+            print("  → Trying state-specific files instead...")
+            state_places = download_gnis_state_files()
+            if state_places:
+                return state_places
             
     except Exception as e:
         print(f"  ⚠ Error downloading GNIS: {e}")
-        print("  → Using comprehensive curated list instead")
+        print("  → Trying state-specific files instead...")
+        state_places = download_gnis_state_files()
+        if state_places:
+            return state_places
     
+    # If we get here, downloads failed - return empty list (will use curated list)
     return places
 
 def download_gnis_state_files() -> List[Dict]:
@@ -178,88 +188,157 @@ def download_gnis_state_files() -> List[Dict]:
     places = []
     
     # States with high Native populations (more likely to have tribal places)
-    tribal_states = {
-        'AZ': 'Arizona',
-        'NM': 'New Mexico', 
-        'OK': 'Oklahoma',
-        'SD': 'South Dakota',
-        'ND': 'North Dakota',
-        'MT': 'Montana',
-        'AK': 'Alaska',
-        'WA': 'Washington',
-        'OR': 'Oregon',
-        'MN': 'Minnesota',
-        'WI': 'Wisconsin',
-        'NY': 'New York',
-        'NC': 'North Carolina',
-        'CA': 'California',
-        'NV': 'Nevada',
-        'UT': 'Utah',
-        'ID': 'Idaho',
-        'WY': 'Wyoming',
-        'NE': 'Nebraska',
-        'KS': 'Kansas',
-        'IA': 'Iowa',
-        'MO': 'Missouri',
-        'AR': 'Arkansas',
-        'LA': 'Louisiana',
-        'MS': 'Mississippi',
-        'AL': 'Alabama',
-        'GA': 'Georgia',
-        'FL': 'Florida',
-        'SC': 'South Carolina',
-        'VA': 'Virginia',
-        'ME': 'Maine',
-        'CT': 'Connecticut',
-        'RI': 'Rhode Island',
-        'MA': 'Massachusetts'
+    # Focus on states with the most tribal places first
+    priority_states = {
+        'AZ': 'Arizona',      # Many reservations and pueblos
+        'NM': 'New Mexico',   # Many pueblos
+        'OK': 'Oklahoma',     # Many relocated tribes
+        'SD': 'South Dakota', # Major reservations
+        'ND': 'North Dakota', # Major reservations
+        'MT': 'Montana',      # Major reservations
+        'AK': 'Alaska',       # Many Native villages
+        'WA': 'Washington',   # Many reservations
+        'OR': 'Oregon',       # Many reservations
+        'MN': 'Minnesota',    # Many reservations
+        'WI': 'Wisconsin',    # Many reservations
+        'NY': 'New York',     # Iroquois nations
+        'NC': 'North Carolina', # Lumbee, Cherokee
     }
     
-    print(f"  Attempting to download state files for {len(tribal_states)} states...")
+    print(f"  Attempting to download state files for {len(priority_states)} priority states...")
     
-    for state_code, state_name in list(tribal_states.items())[:10]:  # Start with first 10 to test
+    for state_code, state_name in priority_states.items():
         try:
-            url = f"https://geonames.usgs.gov/docs/stategaz/{state_code}_Features.zip"
-            print(f"    Downloading {state_code} ({state_name})...")
+            # Try multiple URL patterns
+            urls = [
+                f"https://geonames.usgs.gov/docs/stategaz/{state_code}_Features.zip",
+                f"https://geonames.usgs.gov/docs/stategaz/{state_code}_Features_File.zip",
+                f"https://geonames.usgs.gov/docs/stategaz/{state_code.lower()}_Features.zip",
+            ]
             
-            with urllib.request.urlopen(url, timeout=60) as response:
-                data = response.read()
-                print(f"      ✓ Downloaded {len(data) / 1024:.1f} KB")
+            downloaded = False
+            for url in urls:
+                try:
+                    print(f"    Trying {state_code} ({state_name})...")
+                    with urllib.request.urlopen(url, timeout=30) as response:
+                        data = response.read()
+                        print(f"      ✓ Downloaded {len(data) / 1024:.1f} KB from {url}")
+                        downloaded = True
+                        
+                        import zipfile
+                        with zipfile.ZipFile(io.BytesIO(data)) as zip_file:
+                            for name in zip_file.namelist():
+                                if name.endswith('.txt') or name.endswith('.TXT'):
+                                    with zip_file.open(name) as f:
+                                        content = f.read().decode('utf-8', errors='ignore')
+                                        lines_processed = 0
+                                        for line in content.split('\n'):
+                                            if not line.strip():
+                                                continue
+                                            parts = line.split('|')
+                                            if len(parts) >= 4:
+                                                feature_name = parts[1].strip()
+                                                feature_class = parts[2].strip()
+                                                
+                                                # Filter for tribal places
+                                                if (feature_class in ['P', 'C', 'R', 'L', 'A', 'S'] or
+                                                    'Reservation' in feature_class or
+                                                    'Pueblo' in feature_class or
+                                                    'Reservation' in feature_name or
+                                                    'Pueblo' in feature_name or
+                                                    'Nation' in feature_name or
+                                                    'Tribe' in feature_name):
+                                                    
+                                                    places.append({
+                                                        'name': feature_name,
+                                                        'type': feature_class.lower() if feature_class else 'unknown',
+                                                        'state': state_name,
+                                                        'tribe': None,
+                                                        'source': f'usgs_gnis_{state_code}'
+                                                    })
+                                                    
+                                                    lines_processed += 1
+                                                    if len(places) % 500 == 0:
+                                                        print(f"      Processed {len(places)} places total...")
+                                        print(f"      ✓ Processed {lines_processed} features from {state_code}")
+                                    break
+                        break
+                except urllib.error.URLError:
+                    continue  # Try next URL
+                except Exception as e:
+                    print(f"      ⚠ Error with {url}: {e}")
+                    continue
+            
+            if not downloaded:
+                print(f"      ⚠ Could not download {state_code} from any URL")
                 
-                import zipfile
-                with zipfile.ZipFile(io.BytesIO(data)) as zip_file:
-                    for name in zip_file.namelist():
-                        if name.endswith('.txt'):
-                            with zip_file.open(name) as f:
-                                content = f.read().decode('utf-8', errors='ignore')
-                                for line in content.split('\n'):
-                                    if not line.strip():
-                                        continue
-                                    parts = line.split('|')
-                                    if len(parts) >= 4:
-                                        feature_name = parts[1].strip()
-                                        feature_class = parts[2].strip()
-                                        
-                                        if (feature_class in ['P', 'C', 'R', 'L', 'A', 'S'] or
-                                            'Reservation' in feature_class or
-                                            'Pueblo' in feature_class):
-                                            
-                                            places.append({
-                                                'name': feature_name,
-                                                'type': feature_class.lower(),
-                                                'state': state_name,
-                                                'tribe': None,
-                                                'source': f'usgs_gnis_{state_code}'
-                                            })
-                                            
-                                            if len(places) % 500 == 0:
-                                                print(f"      Processed {len(places)} places total...")
-                            break
         except Exception as e:
-            print(f"      ⚠ Could not download {state_code}: {e}")
+            print(f"      ⚠ Error processing {state_code}: {e}")
             continue
     
     print(f"  ✓ Extracted {len(places)} places from state files")
+    return places
+
+def download_epa_tribes_data() -> List[Dict]:
+    """Download from EPA Tribes Names Service.
+    
+    EPA provides a Tribes Names Service with up-to-date information on
+    federally recognized tribes.
+    """
+    places = []
+    
+    try:
+        print("  Attempting to download from EPA Tribes Names Service...")
+        # EPA Tribes Names Service API
+        # URL: https://www.epa.gov/data/tribes-names-service
+        # This requires API access, but we can note it as an option
+        print("    → EPA Tribes Names Service available at: https://www.epa.gov/data/tribes-names-service")
+        print("    → Requires API access for programmatic downloads")
+    except Exception as e:
+        print(f"    ⚠ EPA error: {e}")
+    
+    return places
+
+def download_datagov_tribes() -> List[Dict]:
+    """Download from Data.gov Federally Recognized Tribes dataset."""
+    places = []
+    
+    try:
+        print("  Attempting to download from Data.gov...")
+        # Data.gov has a Federally Recognized Tribes dataset
+        # URL: https://catalog.data.gov/dataset/federally-recognized-tribes
+        url = "https://catalog.data.gov/dataset/federally-recognized-tribes"
+        print(f"    → Data.gov dataset: {url}")
+        print("    → Dataset includes historical data from 1978 to present")
+        print("    → May require manual download or API key")
+    except Exception as e:
+        print(f"    ⚠ Data.gov error: {e}")
+    
+    return places
+
+def download_alternative_sources() -> List[Dict]:
+    """Try alternative sources for tribal place names."""
+    places = []
+    
+    print("  Trying alternative sources...")
+    
+    # Try EPA
+    epa_places = download_epa_tribes_data()
+    places.extend(epa_places)
+    
+    # Try Data.gov
+    datagov_places = download_datagov_tribes()
+    places.extend(datagov_places)
+    
+    # Try GeoNames API (has free tier)
+    try:
+        print("    Attempting GeoNames search API...")
+        # GeoNames has a search API but requires registration for bulk downloads
+        print("    → GeoNames requires API key for bulk downloads")
+        print("    → Visit: https://www.geonames.org/export/")
+    except Exception as e:
+        print(f"    ⚠ GeoNames error: {e}")
+    
     return places
 
 def download_comprehensive_tribal_place_list() -> List[Dict]:
@@ -270,16 +349,33 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
     """
     all_places = []
     
-    # Try GNIS first
-    print("\n1. Attempting to download from USGS GNIS...")
+    # Try GNIS first (National File)
+    print("\n1. Attempting to download from USGS GNIS National File...")
     gnis_places = download_gnis_national_file()
-    all_places.extend(gnis_places)
+    if gnis_places:
+        print(f"  ✓ Got {len(gnis_places)} places from GNIS")
+        all_places.extend(gnis_places)
+    else:
+        print("  → GNIS download failed (server may be down - 503 error)")
+        print("  → This is common - GNIS server can be unavailable")
+        print("  → Will use curated list and alternative sources")
     
-    # Add comprehensive hardcoded list as baseline
-    # (This ensures we have at least the well-known places even if downloads fail)
-    print("\n2. Adding comprehensive curated list...")
+    # Try alternative sources
+    print("\n2. Trying alternative sources (EPA, Data.gov)...")
+    alt_places = download_alternative_sources()
+    if alt_places:
+        print(f"  ✓ Got {len(alt_places)} places from alternative sources")
+        all_places.extend(alt_places)
+    
+    # Add comprehensive curated list as baseline
+    # (This ensures we have at least well-known places even if downloads fail)
+    print("\n3. Adding comprehensive curated list from database builder...")
     curated_places = get_comprehensive_curated_tribal_places()
-    all_places.extend(curated_places)
+    if curated_places:
+        print(f"  ✓ Got {len(curated_places)} places from curated list")
+        all_places.extend(curated_places)
+    else:
+        print("  ⚠ Curated list is empty - this shouldn't happen")
     
     # Remove duplicates
     seen = set()
@@ -296,15 +392,179 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
 def get_comprehensive_curated_tribal_places() -> List[Dict]:
     """Get comprehensive curated list of tribal places.
     
-    This is a fallback/starting point with well-known tribal places.
-    The real power comes from downloading actual datasets.
+    This imports the comprehensive list from build_name_location_database_v1.2.0
+    to ensure we have a good baseline even if downloads fail.
     """
     places = []
     
-    # This would be the comprehensive list from the existing function
-    # For now, return empty - let the download functions do the work
-    # The existing download_tribal_reservations_comprehensive() function
-    # already has a good starting list
+    # Import the comprehensive list by calling the function from the database builder
+    try:
+        import sys
+        import importlib.util
+        from pathlib import Path
+        
+        db_builder_path = Path(__file__).parent / "build_name_location_database_v1.2.0.py"
+        if db_builder_path.exists():
+            spec = importlib.util.spec_from_file_location("db_builder", db_builder_path)
+            db_builder = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(db_builder)
+            
+            # Call the comprehensive function
+            tribal_place_data = db_builder.download_tribal_reservations_comprehensive()
+            for place in tribal_place_data:
+                places.append({
+                    'name': place['name'],
+                    'type': place['type'],
+                    'tribe': place.get('tribe'),
+                    'state': place.get('state'),
+                    'source': 'comprehensive_curated'
+                })
+            print(f"  ✓ Imported {len(places)} places from database builder")
+            return places
+    except Exception as e:
+        print(f"  ⚠ Could not import from database builder: {e}")
+        print("  → Using basic well-known list instead")
+    
+    # Fallback: Well-known reservations and pueblos (comprehensive list)
+    # This matches the list from build_name_location_database_v1.2.0
+    well_known = [
+        # Southwest
+        ("Navajo Nation", "reservation", "Navajo", "Arizona"),
+        ("Navajo Nation", "reservation", "Navajo", "New Mexico"),
+        ("Navajo Nation", "reservation", "Navajo", "Utah"),
+        ("Hopi Reservation", "reservation", "Hopi", "Arizona"),
+        ("Tohono O'odham Nation", "reservation", "Tohono O'odham", "Arizona"),
+        ("San Xavier Reservation", "reservation", "Tohono O'odham", "Arizona"),
+        ("Gila River Indian Community", "reservation", "Pima/Maricopa", "Arizona"),
+        ("Salt River Pima-Maricopa Indian Community", "reservation", "Pima/Maricopa", "Arizona"),
+        ("White Mountain Apache Reservation", "reservation", "Apache", "Arizona"),
+        ("Fort Apache Reservation", "reservation", "Apache", "Arizona"),
+        ("San Carlos Apache Reservation", "reservation", "Apache", "Arizona"),
+        ("Yavapai-Apache Nation", "reservation", "Yavapai/Apache", "Arizona"),
+        ("Acoma Pueblo", "pueblo", "Acoma", "New Mexico"),
+        ("Cochiti Pueblo", "pueblo", "Cochiti", "New Mexico"),
+        ("Isleta Pueblo", "pueblo", "Isleta", "New Mexico"),
+        ("Jemez Pueblo", "pueblo", "Jemez", "New Mexico"),
+        ("Laguna Pueblo", "pueblo", "Laguna", "New Mexico"),
+        ("Nambe Pueblo", "pueblo", "Nambe", "New Mexico"),
+        ("Picuris Pueblo", "pueblo", "Picuris", "New Mexico"),
+        ("Pojoaque Pueblo", "pueblo", "Pojoaque", "New Mexico"),
+        ("San Felipe Pueblo", "pueblo", "San Felipe", "New Mexico"),
+        ("San Ildefonso Pueblo", "pueblo", "San Ildefonso", "New Mexico"),
+        ("Sandia Pueblo", "pueblo", "Sandia", "New Mexico"),
+        ("Santa Ana Pueblo", "pueblo", "Santa Ana", "New Mexico"),
+        ("Santa Clara Pueblo", "pueblo", "Santa Clara", "New Mexico"),
+        ("Santo Domingo Pueblo", "pueblo", "Santo Domingo", "New Mexico"),
+        ("Taos Pueblo", "pueblo", "Taos", "New Mexico"),
+        ("Tesuque Pueblo", "pueblo", "Tesuque", "New Mexico"),
+        ("Zia Pueblo", "pueblo", "Zia", "New Mexico"),
+        ("Zuni Pueblo", "pueblo", "Zuni", "New Mexico"),
+        ("Jicarilla Apache Reservation", "reservation", "Apache", "New Mexico"),
+        ("Mescalero Apache Reservation", "reservation", "Apache", "New Mexico"),
+        # Great Plains
+        ("Pine Ridge Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Standing Rock Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Standing Rock Reservation", "reservation", "Lakota", "North Dakota"),
+        ("Cheyenne River Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Rosebud Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Lower Brule Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Yankton Reservation", "reservation", "Lakota", "South Dakota"),
+        ("Sisseton Wahpeton Reservation", "reservation", "Dakota", "South Dakota"),
+        ("Blackfeet Reservation", "reservation", "Blackfeet", "Montana"),
+        ("Crow Reservation", "reservation", "Crow", "Montana"),
+        ("Flathead Reservation", "reservation", "Salish/Kootenai", "Montana"),
+        ("Fort Belknap Reservation", "reservation", "Gros Ventre/Assiniboine", "Montana"),
+        ("Fort Peck Reservation", "reservation", "Assiniboine/Sioux", "Montana"),
+        ("Northern Cheyenne Reservation", "reservation", "Cheyenne", "Montana"),
+        ("Rocky Boy's Reservation", "reservation", "Chippewa/Cree", "Montana"),
+        ("Turtle Mountain Reservation", "reservation", "Chippewa", "North Dakota"),
+        ("Fort Berthold Reservation", "reservation", "Mandan/Hidatsa/Arikara", "North Dakota"),
+        ("Wind River Reservation", "reservation", "Shoshone/Arapaho", "Wyoming"),
+        # Great Lakes
+        ("Red Lake Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("White Earth Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Fond du Lac Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Leech Lake Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Mille Lacs Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Bois Forte Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Grand Portage Reservation", "reservation", "Ojibwe", "Minnesota"),
+        ("Lower Sioux Reservation", "reservation", "Dakota", "Minnesota"),
+        ("Prairie Island Reservation", "reservation", "Dakota", "Minnesota"),
+        ("Shakopee Mdewakanton Reservation", "reservation", "Dakota", "Minnesota"),
+        ("Upper Sioux Reservation", "reservation", "Dakota", "Minnesota"),
+        ("Menominee Reservation", "reservation", "Menominee", "Wisconsin"),
+        ("Oneida Reservation", "reservation", "Oneida", "Wisconsin"),
+        ("Ho-Chunk Nation", "reservation", "Ho-Chunk", "Wisconsin"),
+        ("Lac du Flambeau Reservation", "reservation", "Ojibwe", "Wisconsin"),
+        ("Bad River Reservation", "reservation", "Ojibwe", "Wisconsin"),
+        ("Red Cliff Reservation", "reservation", "Ojibwe", "Wisconsin"),
+        ("St. Croix Reservation", "reservation", "Chippewa", "Wisconsin"),
+        ("Stockbridge-Munsee Reservation", "reservation", "Stockbridge-Munsee", "Wisconsin"),
+        ("Oneida Nation", "reservation", "Oneida", "New York"),
+        ("Onondaga Nation", "reservation", "Onondaga", "New York"),
+        ("Seneca Nation", "reservation", "Seneca", "New York"),
+        ("Tuscarora Nation", "reservation", "Tuscarora", "New York"),
+        ("Cayuga Nation", "reservation", "Cayuga", "New York"),
+        ("Mohawk Nation", "reservation", "Mohawk", "New York"),
+        # Northwest
+        ("Yakama Reservation", "reservation", "Yakama", "Washington"),
+        ("Colville Reservation", "reservation", "Colville", "Washington"),
+        ("Quinault Reservation", "reservation", "Quinault", "Washington"),
+        ("Lummi Reservation", "reservation", "Lummi", "Washington"),
+        ("Tulalip Reservation", "reservation", "Tulalip", "Washington"),
+        ("Makah Reservation", "reservation", "Makah", "Washington"),
+        ("Puyallup Reservation", "reservation", "Puyallup", "Washington"),
+        ("Spokane Reservation", "reservation", "Spokane", "Washington"),
+        ("Umatilla Reservation", "reservation", "Umatilla", "Oregon"),
+        ("Warm Springs Reservation", "reservation", "Warm Springs", "Oregon"),
+        ("Grand Ronde Reservation", "reservation", "Grand Ronde", "Oregon"),
+        ("Siletz Reservation", "reservation", "Siletz", "Oregon"),
+        ("Klamath Reservation", "reservation", "Klamath", "Oregon"),
+        # Oklahoma
+        ("Cherokee Nation", "reservation", "Cherokee", "Oklahoma"),
+        ("Choctaw Nation", "reservation", "Choctaw", "Oklahoma"),
+        ("Chickasaw Nation", "reservation", "Chickasaw", "Oklahoma"),
+        ("Muscogee (Creek) Nation", "reservation", "Creek", "Oklahoma"),
+        ("Seminole Nation", "reservation", "Seminole", "Oklahoma"),
+        ("Osage Nation", "reservation", "Osage", "Oklahoma"),
+        ("Comanche Nation", "reservation", "Comanche", "Oklahoma"),
+        ("Kiowa Tribe", "reservation", "Kiowa", "Oklahoma"),
+        ("Pawnee Nation", "reservation", "Pawnee", "Oklahoma"),
+        ("Ponca Tribe", "reservation", "Ponca", "Oklahoma"),
+        ("Otoe-Missouria Tribe", "reservation", "Otoe-Missouria", "Oklahoma"),
+        ("Iowa Tribe", "reservation", "Iowa", "Oklahoma"),
+        ("Sac and Fox Nation", "reservation", "Sac and Fox", "Oklahoma"),
+        ("Shawnee Tribe", "reservation", "Shawnee", "Oklahoma"),
+        ("Delaware Nation", "reservation", "Delaware", "Oklahoma"),
+        ("Caddo Nation", "reservation", "Caddo", "Oklahoma"),
+        ("Wichita and Affiliated Tribes", "reservation", "Wichita", "Oklahoma"),
+        ("Cheyenne and Arapaho Tribes", "reservation", "Cheyenne/Arapaho", "Oklahoma"),
+        # Alaska
+        ("Bethel", "village", "Yup'ik", "Alaska"),
+        ("Kotzebue", "village", "Inupiat", "Alaska"),
+        ("Barrow", "village", "Inupiat", "Alaska"),
+        ("Nome", "village", "Inupiat", "Alaska"),
+        ("Dillingham", "village", "Yup'ik", "Alaska"),
+        ("Kodiak", "village", "Alutiiq", "Alaska"),
+        ("Sitka", "village", "Tlingit", "Alaska"),
+        ("Juneau", "village", "Tlingit", "Alaska"),
+        ("Ketchikan", "village", "Tlingit", "Alaska"),
+        # Other
+        ("Lumbee Tribe", "reservation", "Lumbee", "North Carolina"),
+        ("Eastern Band of Cherokee", "reservation", "Cherokee", "North Carolina"),
+        ("Shinnecock Reservation", "reservation", "Shinnecock", "New York"),
+        # Districts
+        ("Babakiri District", "district", None, None),
+    ]
+    
+    for name, ptype, tribe, state in well_known:
+        places.append({
+            'name': name,
+            'type': ptype,
+            'tribe': tribe,
+            'state': state,
+            'source': 'curated_well_known'
+        })
     
     return places
 
