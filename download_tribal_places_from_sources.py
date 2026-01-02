@@ -846,13 +846,8 @@ def download_epa_tribes_data() -> List[Dict]:
                                    f"                    \n")
                     sys.stdout.flush()
                 
-                # Final status
-                elapsed_total = time.time() - start_time
-                print(f"\n    ✓ Completed in {int(elapsed_total//60)}m {int(elapsed_total%60)}s")
                 print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
-                
-                # OLD SEQUENTIAL CODE REMOVED - using parallel version above
-                for idx, tribe in enumerate(data):
+                print(f"    ✓ Includes: tribal names, reservations, locations, states, regions")
                     current_name = tribe.get('currentName', '')
                     epa_tribal_id = tribe.get('epaTribalInternalId')
                     bia_code = tribe.get('currentBIATribalCode')
