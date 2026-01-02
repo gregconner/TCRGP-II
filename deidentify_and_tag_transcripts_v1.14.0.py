@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-De-identify and Tag Transcripts for Research v1.11.0
+De-identify and Tag Transcripts for Research v1.14.0
 
 MAJOR FIXES (v1.11.0):
 - CRITICAL: Fixed remaining PII extraction (Vicki, Danae, Perry, Pamela, Chris, Dave, Valentino, Ho-Chunk, Diffin, Alatada)
