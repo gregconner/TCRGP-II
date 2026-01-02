@@ -1,0 +1,204 @@
+================================================================================
+TRANSCRIPT CLEANING GRADING RUBRIC v1.0.0
+Comprehensive Evaluation System for De-identification and Tagging Quality
+================================================================================
+
+PURPOSE:
+--------
+Evaluate the quality of cleaned/de-identified transcripts by comparing them
+to raw transcripts. Provides detailed grades and actionable improvement suggestions.
+
+INPUT:
+------
+- Raw transcript (original, with PII)
+- Cleaned transcript (de-identified output)
+
+OUTPUT:
+-------
+- Grades (A-F) for each category
+- Overall grade
+- Detailed suggestions for improvement
+- Quantitative metrics
+
+================================================================================
+GRADING CATEGORIES
+================================================================================
+
+1. DE-IDENTIFICATION COMPLETENESS (25 points)
+   Criteria:
+   - All person names replaced with codes
+   - All organization names replaced
+   - All location names replaced
+   - All tribe/nation names replaced
+   - Financial amounts de-identified
+   - Years de-identified (where appropriate)
+   - No PII remaining in text
+   
+   Grading:
+   - A (23-25): 0-2 PII items remaining
+   - B (20-22): 3-5 PII items remaining
+   - C (17-19): 6-10 PII items remaining
+   - D (14-16): 11-15 PII items remaining
+   - F (0-13): 16+ PII items remaining
+
+2. DE-IDENTIFICATION ACCURACY (20 points)
+   Criteria:
+   - Person codes map correctly (same person = same code)
+   - No false positives (common words not replaced)
+   - No over-de-identification (generic terms preserved)
+   - Misspellings handled correctly
+   - Name variants properly clustered
+   
+   Grading:
+   - A (18-20): <5% error rate
+   - B (16-17): 5-10% error rate
+   - C (14-15): 10-15% error rate
+   - D (12-13): 15-20% error rate
+   - F (0-11): >20% error rate
+
+3. FORMATTING QUALITY (15 points)
+   Criteria:
+   - Timestamps removed (if applicable)
+   - Clean dialogue format
+   - Proper speaker labels
+   - Readable structure
+   - No formatting artifacts
+   
+   Grading:
+   - A (14-15): Professional formatting, no artifacts
+   - B (12-13): Good formatting, minor artifacts
+   - C (10-11): Acceptable formatting, some artifacts
+   - D (8-9): Poor formatting, many artifacts
+   - F (0-7): Unreadable formatting
+
+4. CITATION SYSTEM (15 points)
+   Criteria:
+   - Speaker letters assigned (A, B, C...)
+   - Verse numbers per speaker (A.1, A.2...)
+   - Page numbers present
+   - Timestamp table at end
+   - Consistent formatting
+   
+   Grading:
+   - A (14-15): Complete citation system, perfect formatting
+   - B (12-13): Complete system, minor inconsistencies
+   - C (10-11): Mostly complete, some issues
+   - D (8-9): Incomplete system, many issues
+   - F (0-7): Citation system missing or broken
+
+5. KEYWORD TAGGING COMPLETENESS (10 points)
+   Criteria:
+   - Research categories tagged
+   - Survey questions tagged
+   - Indigenous terms tagged
+   - Metrics extracted
+   - Comprehensive coverage
+   
+   Grading:
+   - A (9-10): >90% of relevant content tagged
+   - B (8): 80-90% tagged
+   - C (7): 70-80% tagged
+   - D (6): 60-70% tagged
+   - F (0-5): <60% tagged
+
+6. KEYWORD TAGGING PRECISION (10 points)
+   Criteria:
+   - Context-aware tagging (no false positives)
+   - Appropriate tag categories
+   - No over-tagging
+   - No under-tagging
+   - Significance filtering working
+   
+   Grading:
+   - A (9-10): <5% false positive rate
+   - B (8): 5-10% false positive rate
+   - C (7): 10-15% false positive rate
+   - D (6): 15-20% false positive rate
+   - F (0-5): >20% false positive rate
+
+7. SPELLING AND NAME MATCHING (5 points)
+   Criteria:
+   - Misspellings corrected
+   - Name variants properly matched
+   - Fuzzy matching working correctly
+   - No duplicate person codes for same person
+   
+   Grading:
+   - A (5): Perfect matching, all variants caught
+   - B (4): Good matching, <5% missed
+   - C (3): Acceptable matching, 5-10% missed
+   - D (2): Poor matching, 10-15% missed
+   - F (0-1): >15% missed
+
+TOTAL: 100 points
+
+================================================================================
+GRADING ALGORITHM
+================================================================================
+
+1. EXTRACT ENTITIES FROM RAW TRANSCRIPT
+   - Use spaCy + regex to find all PII
+   - Create ground truth entity list
+   - Track name variants and misspellings
+
+2. CHECK DE-IDENTIFICATION IN CLEANED TRANSCRIPT
+   - Search for each entity in cleaned version
+   - Count remaining PII
+   - Verify codes are consistent
+
+3. EVALUATE FORMATTING
+   - Check for timestamps
+   - Verify dialogue structure
+   - Check for formatting artifacts
+
+4. EVALUATE CITATION SYSTEM
+   - Verify speaker letters
+   - Check verse numbering
+   - Verify page numbers
+   - Check timestamp table
+
+5. EVALUATE TAGGING
+   - Compare tags to ground truth
+   - Check for false positives
+   - Verify context-awareness
+   - Check metrics extraction
+
+6. GENERATE SUGGESTIONS
+   - List specific PII that wasn't de-identified
+   - Identify formatting issues
+   - Suggest tagging improvements
+   - Recommend algorithm changes
+
+================================================================================
+OUTPUT FORMAT
+================================================================================
+
+GRADING REPORT
+==============
+
+Transcript: [filename]
+Date: [date]
+Overall Grade: [A-F] ([score]/100)
+
+CATEGORY GRADES:
+----------------
+1. De-identification Completeness: [A-F] ([score]/25)
+2. De-identification Accuracy: [A-F] ([score]/20)
+3. Formatting Quality: [A-F] ([score]/15)
+4. Citation System: [A-F] ([score]/15)
+5. Keyword Tagging Completeness: [A-F] ([score]/10)
+6. Keyword Tagging Precision: [A-F] ([score]/10)
+7. Spelling and Name Matching: [A-F] ([score]/5)
+
+DETAILED FINDINGS:
+------------------
+[Specific issues found]
+
+SUGGESTIONS FOR IMPROVEMENT:
+----------------------------
+[Actionable recommendations]
+
+================================================================================
+END OF RUBRIC
+================================================================================
+

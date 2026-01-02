@@ -285,7 +285,8 @@ def parse_webvtt_with_timestamps(text: str) -> List[Dict[str, str]]:
 def format_with_citation_system(
     text: str, 
     speaker_mapping: Dict[str, str],
-    segments_with_timestamps: Optional[List[Dict[str, str]]] = None
+    segments_with_timestamps: Optional[List[Dict[str, str]]] = None,
+    lines_per_page: int = DEFAULT_LINES_PER_PAGE
 ) -> Tuple[str, Dict[str, Dict[str, str]]]:
     """
     Format text with citation system: speaker letters, verse numbers, page numbers.
@@ -921,7 +922,8 @@ class DeIdentifier:
                 self.mapping["tribes"][tribe] = f"Tribe_{self.tribe_counter}"
     
     def deidentify_text(self, text: str, remove_timestamps: bool = True, format_dialogue: bool = True, 
-                       use_citation_system: bool = True, segments_with_timestamps: Optional[List[Dict[str, str]]] = None) -> Tuple[str, Dict[str, Dict[str, str]]]:
+                       use_citation_system: bool = True, segments_with_timestamps: Optional[List[Dict[str, str]]] = None,
+                       lines_per_page: int = DEFAULT_LINES_PER_PAGE) -> Tuple[str, Dict[str, Dict[str, str]]]:
         """
         Replace identified entities with codes and clean format.
         Returns: (deidentified_text, timestamp_table)
