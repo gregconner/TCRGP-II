@@ -547,6 +547,9 @@ def download_common_names() -> tuple[List[str], List[str]]:
         "Long", "Ross", "Foster", "Jimenez"
     ]
     
+    # Combine SSA last names with additional common names
+    common_last = ssa_last + additional_last
+    
     # Remove duplicates while preserving order
     seen_first = set()
     unique_first = []
