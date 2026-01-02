@@ -12,14 +12,303 @@ Run this to populate the database with comprehensive tribal place name data.
 
 import sqlite3
 import urllib.request
+import urllib.parse
 import csv
 import io
 import gzip
+import json
 from pathlib import Path
 from typing import List, Dict
 import re
 
 DB_PATH = Path(__file__).parent / "name_location_database.db"
+
+def download_gnis_ftp() -> List[Dict]:
+    """Try downloading from GNIS FTP server or alternative direct URLs."""
+    places = []
+    
+    try:
+        print("  Attempting to download from GNIS FTP/alternative URLs...")
+        
+        # Try various GNIS download URLs
+        gnis_urls = [
+            # FTP-style URLs
+            "ftp://geonames.usgs.gov/pub/domestic/NationalFile.zip",
+            "ftp://geonames.usgs.gov/pub/domestic/NationalFile.txt",
+            # HTTP alternatives
+            "http://geonames.usgs.gov/docs/stategaz/NationalFile.zip",
+            "https://geonames.usgs.gov/docs/stategaz/NationalFile.zip",
+            # Alternative paths
+            "https://geonames.usgs.gov/pub/domestic/NationalFile.zip",
+            "http://geonames.usgs.gov/pub/domestic/NationalFile.zip",
+            # State files (smaller, more likely to work)
+            "https://geonames.usgs.gov/docs/stategaz/AZ_Features.zip",  # Arizona
+            "https://geonames.usgs.gov/docs/stategaz/NM_Features.zip",  # New Mexico
+        ]
+        
+        for url in gnis_urls:
+            try:
+                print(f"    Trying: {url}")
+                with urllib.request.urlopen(url, timeout=30) as response:
+                    data = response.read()
+                    print(f"      ✓ Downloaded {len(data) / 1024 / 1024:.1f} MB")
+                    
+                    # Process the file
+                    import zipfile
+                    with zipfile.ZipFile(io.BytesIO(data)) as zip_file:
+                        for name in zip_file.namelist():
+                            if name.endswith('.txt') or name.endswith('.TXT'):
+                                with zip_file.open(name) as f:
+                                    content = f.read().decode('utf-8', errors='ignore')
+                                    for line in content.split('\n'):
+                                        if not line.strip():
+                                            continue
+                                        parts = line.split('|')
+                                        if len(parts) >= 4:
+                                            feature_name = parts[1].strip()
+                                            feature_class = parts[2].strip()
+                                            state = parts[3].strip() if len(parts) > 3 else ""
+                                            
+                                            # Filter for tribal places
+                                            if (feature_class in ['P', 'C', 'R', 'L', 'A', 'S'] or
+                                                'Reservation' in feature_class or
+                                                'Pueblo' in feature_class or
+                                                'Reservation' in feature_name or
+                                                'Pueblo' in feature_name or
+                                                'Nation' in feature_name):
+                                                
+                                                places.append({
+                                                    'name': feature_name,
+                                                    'type': feature_class.lower() if feature_class else 'unknown',
+                                                    'state': state,
+                                                    'tribe': None,
+                                                    'source': 'gnis_ftp'
+                                                })
+                                                
+                                                if len(places) % 1000 == 0:
+                                                    print(f"      Processed {len(places)} places...")
+                                break
+                    print(f"    ✓ Extracted {len(places)} places from {url}")
+                    break  # Success, stop trying other URLs
+            except urllib.error.URLError:
+                continue  # Try next URL
+            except Exception as e:
+                print(f"      ⚠ Error with {url}: {e}")
+                continue
+        
+        if not places:
+            print("    ⚠ Could not download from any FTP/alternative URL")
+            
+    except Exception as e:
+        print(f"    ⚠ Error trying FTP/alternative URLs: {e}")
+    
+    return places
+
+def download_gnis_ld_sparql() -> List[Dict]:
+    """Download from GNIS-LD (Linked Data) service via SPARQL endpoint.
+    
+    GNIS-LD provides GNIS data in linked data format with a SPARQL endpoint.
+    URL: https://gnis-ld.org/
+    """
+    places = []
+    
+    try:
+        print("  Attempting to download from GNIS-LD (Linked Data) service...")
+        print("    URL: https://gnis-ld.org/")
+        
+        # GNIS-LD SPARQL endpoint
+        sparql_endpoint = "https://gnis-ld.org/sparql"
+        
+        # SPARQL query to get all populated places, reservations, and tribal features
+        # Focus on features that might be tribal places
+        query = """
+        PREFIX gnis: <https://geonames.org/ontology#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        
+        SELECT DISTINCT ?name ?type ?state WHERE {
+            ?feature gnis:name ?name .
+            ?feature gnis:featureClass ?type .
+            OPTIONAL { ?feature gnis:state ?state . }
+            FILTER (
+                ?type IN ("Populated Place", "Civil", "Reservation", "Locale", "Area", "Census") ||
+                CONTAINS(LCASE(?name), "reservation") ||
+                CONTAINS(LCASE(?name), "pueblo") ||
+                CONTAINS(LCASE(?name), "nation") ||
+                CONTAINS(LCASE(?name), "tribe")
+            )
+        }
+        LIMIT 50000
+        """
+        
+        # Encode query
+        params = {
+            'query': query,
+            'format': 'json'
+        }
+        url = f"{sparql_endpoint}?{urllib.parse.urlencode(params)}"
+        
+        print(f"    Querying SPARQL endpoint...")
+        with urllib.request.urlopen(url, timeout=120) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            
+            # Parse SPARQL JSON results
+            if 'results' in data and 'bindings' in data['results']:
+                for binding in data['results']['bindings']:
+                    name = binding.get('name', {}).get('value', '')
+                    ftype = binding.get('type', {}).get('value', 'unknown')
+                    state = binding.get('state', {}).get('value', '')
+                    
+                    if name:
+                        places.append({
+                            'name': name,
+                            'type': ftype.lower().replace(' ', '_'),
+                            'state': state,
+                            'tribe': None,
+                            'source': 'gnis_ld_sparql'
+                        })
+                        
+                        if len(places) % 1000 == 0:
+                            print(f"      Processed {len(places)} places...")
+                
+                print(f"    ✓ Got {len(places)} places from GNIS-LD")
+            else:
+                print(f"    ⚠ Unexpected response format")
+                
+    except urllib.error.URLError as e:
+        print(f"    ⚠ Could not access GNIS-LD: {e}")
+    except Exception as e:
+        print(f"    ⚠ Error querying GNIS-LD: {e}")
+    
+    return places
+
+def download_datagov_gnis() -> List[Dict]:
+    """Download GNIS data from Data.gov.
+    
+    Data.gov has GNIS datasets available for download.
+    """
+    places = []
+    
+    try:
+        print("  Attempting to download from Data.gov...")
+        
+        # Data.gov has multiple GNIS datasets
+        # Try the Populated Places dataset
+        datagov_urls = [
+            "https://catalog.data.gov/dataset/gnis-populated-places",
+            "https://catalog.data.gov/dataset/geographic-names-information-system-gnis",
+        ]
+        
+        # Data.gov provides API access via CKAN
+        # Try to get the resource download URL
+        ckan_api = "https://catalog.data.gov/api/3/action/package_search"
+        params = {
+            'q': 'GNIS',
+            'rows': 10
+        }
+        
+        url = f"{ckan_api}?{urllib.parse.urlencode(params)}"
+        print(f"    Querying Data.gov API...")
+        
+        with urllib.request.urlopen(url, timeout=60) as response:
+            data = json.loads(response.read().decode('utf-8'))
+            
+            if 'result' in data and 'results' in data['result']:
+                print(f"    ✓ Found {len(data['result']['results'])} GNIS datasets on Data.gov")
+                print(f"    → Visit https://catalog.data.gov/dataset?q=GNIS for manual download")
+                # Data.gov typically requires manual download or API key for bulk access
+                # We'll note this as an option
+            else:
+                print(f"    ⚠ Could not find GNIS datasets")
+                
+    except Exception as e:
+        print(f"    ⚠ Error accessing Data.gov: {e}")
+    
+    return places
+
+def download_national_map_api() -> List[Dict]:
+    """Download from The National Map Downloader/API.
+    
+    The National Map provides GNIS data through their downloader and services.
+    """
+    places = []
+    
+    try:
+        print("  Attempting to download from The National Map...")
+        
+        # The National Map has a downloader service
+        # For programmatic access, we can try their services endpoint
+        # Note: This may require area definition, so we'll try a general query
+        
+        # The National Map Services
+        # Try accessing GNIS names layer
+        # Note: URL format may vary, trying common patterns
+        services_urls = [
+            "https://services.nationalmap.gov/arcgis/rest/services/gnis/MapServer/0/query",
+            "https://services.nationalmap.gov/arcgis/rest/services/gnis_names/MapServer/0/query",
+            "http://services.nationalmap.gov/arcgis/rest/services/gnis/MapServer/0/query",
+        ]
+        
+        services_url = services_urls[0]  # Try first one
+        
+        # Query for all features (this might be limited)
+        params = {
+            'where': "1=1",  # Get all features
+            'outFields': 'FEATURE_NAME,FEATURE_CLASS,STATE_ALPHA',
+            'returnGeometry': 'false',
+            'f': 'json',
+            'returnCountOnly': 'false'
+        }
+        
+        # Try each URL
+        for services_url in services_urls:
+            try:
+                url = f"{services_url}?{urllib.parse.urlencode(params)}"
+                print(f"    Querying The National Map Services: {services_url}")
+                
+                with urllib.request.urlopen(url, timeout=120) as response:
+                    data = json.loads(response.read().decode('utf-8'))
+                    
+                    if 'features' in data:
+                        for feature in data['features']:
+                            attrs = feature.get('attributes', {})
+                            name = attrs.get('FEATURE_NAME', '')
+                            ftype = attrs.get('FEATURE_CLASS', 'unknown')
+                            state = attrs.get('STATE_ALPHA', '')
+                            
+                            # Filter for tribal places
+                            if name and (ftype in ['Populated Place', 'Civil', 'Reservation', 'Locale', 'Area', 'Census'] or
+                                         'reservation' in name.lower() or
+                                         'pueblo' in name.lower() or
+                                         'nation' in name.lower()):
+                                places.append({
+                                    'name': name,
+                                    'type': ftype.lower().replace(' ', '_'),
+                                    'state': state,
+                                    'tribe': None,
+                                    'source': 'national_map_services'
+                                })
+                                
+                                if len(places) % 1000 == 0:
+                                    print(f"      Processed {len(places)} places...")
+                        
+                        print(f"    ✓ Got {len(places)} places from The National Map")
+                        break  # Success
+                    else:
+                        print(f"    ⚠ Unexpected response format from {services_url}")
+            except urllib.error.URLError as e:
+                print(f"    ⚠ Could not access {services_url}: {e}")
+                continue  # Try next URL
+            except Exception as e:
+                print(f"    ⚠ Error accessing {services_url}: {e}")
+                continue  # Try next URL
+        
+        if not places:
+            print("    ⚠ Could not access The National Map from any URL")
+                
+    except Exception as e:
+        print(f"    ⚠ Error accessing The National Map: {e}")
+    
+    return places
 
 def download_gnis_national_file() -> List[Dict]:
     """Download and parse USGS GNIS National File.
@@ -349,19 +638,44 @@ def download_comprehensive_tribal_place_list() -> List[Dict]:
     """
     all_places = []
     
-    # Try GNIS first (National File)
-    print("\n1. Attempting to download from USGS GNIS National File...")
+    # Try alternative GNIS sources first (more reliable)
+    print("\n1. Attempting to download from GNIS-LD (Linked Data) service...")
+    gnis_ld_places = download_gnis_ld_sparql()
+    if gnis_ld_places:
+        print(f"  ✓ Got {len(gnis_ld_places)} places from GNIS-LD")
+        all_places.extend(gnis_ld_places)
+    
+    print("\n2. Attempting to download from The National Map Services...")
+    national_map_places = download_national_map_api()
+    if national_map_places:
+        print(f"  ✓ Got {len(national_map_places)} places from The National Map")
+        all_places.extend(national_map_places)
+    
+    # Try GNIS FTP/alternative URLs
+    print("\n3. Attempting to download from GNIS FTP/alternative URLs...")
+    gnis_ftp_places = download_gnis_ftp()
+    if gnis_ftp_places:
+        print(f"  ✓ Got {len(gnis_ftp_places)} places from GNIS FTP")
+        all_places.extend(gnis_ftp_places)
+    
+    # Try original GNIS National File (may be down)
+    print("\n4. Attempting to download from USGS GNIS National File...")
     gnis_places = download_gnis_national_file()
     if gnis_places:
         print(f"  ✓ Got {len(gnis_places)} places from GNIS")
         all_places.extend(gnis_places)
     else:
-        print("  → GNIS download failed (server may be down - 503 error)")
-        print("  → This is common - GNIS server can be unavailable")
-        print("  → Will use curated list and alternative sources")
+        print("  → GNIS National File unavailable (server may be down)")
     
-    # Try alternative sources
-    print("\n2. Trying alternative sources (EPA, Data.gov)...")
+    # Try Data.gov
+    print("\n5. Checking Data.gov for GNIS datasets...")
+    datagov_places = download_datagov_gnis()
+    if datagov_places:
+        print(f"  ✓ Got {len(datagov_places)} places from Data.gov")
+        all_places.extend(datagov_places)
+    
+    # Try other alternative sources
+    print("\n6. Trying other alternative sources (EPA, etc.)...")
     alt_places = download_alternative_sources()
     if alt_places:
         print(f"  ✓ Got {len(alt_places)} places from alternative sources")

@@ -2,7 +2,17 @@
 
 ## Current Status
 
-The automated download script attempts to download from USGS GNIS, but the server is currently returning 503 errors (Service Unavailable). This is common with government data servers.
+The automated download script now tries **ALL** alternative GNIS access methods:
+1. **GNIS-LD (Linked Data)** - SPARQL endpoint (currently timing out)
+2. **The National Map Services** - ArcGIS REST API (currently unavailable)
+3. **GNIS FTP/Alternative URLs** - Multiple URL patterns (all unavailable)
+4. **USGS GNIS National File** - Original source (503 errors)
+5. **Data.gov** - ✅ Found 10 GNIS datasets available!
+6. **EPA, GeoNames, etc.** - Other sources
+
+**Current Issue**: Most GNIS servers are currently down or timing out. This is common with government data servers.
+
+**Good News**: Data.gov API is working and found 10 GNIS datasets you can download manually!
 
 ## Manual Download Options
 
@@ -25,11 +35,18 @@ The automated download script attempts to download from USGS GNIS, but the serve
 3. **Download**: Federally recognized tribes data
 4. **Format**: Can be integrated into the database
 
-### Option 3: Data.gov Federally Recognized Tribes
+### Option 3: Data.gov GNIS Datasets (✅ WORKING!)
 
-1. **Visit**: https://catalog.data.gov/dataset/federally-recognized-tribes
-2. **Download**: CSV or JSON format
-3. **Process**: Can be imported into the database
+**The script found 10 GNIS datasets on Data.gov!**
+
+1. **Visit**: https://catalog.data.gov/dataset?q=GNIS
+2. **Download**: Available datasets include:
+   - GNIS Populated Places
+   - Geographic Names Information System (GNIS)
+   - And 8 more GNIS-related datasets
+3. **Process**: Download CSV/JSON and the script can process them
+
+**This is the most reliable option right now!**
 
 ### Option 4: GeoNames
 
