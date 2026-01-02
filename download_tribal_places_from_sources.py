@@ -26,6 +26,14 @@ def download_gnis_national_file() -> List[Dict]:
     
     The GNIS National File contains over 2 million geographic features.
     We'll filter for features likely to be tribal places.
+    
+    GNIS Feature Classes that are likely tribal places:
+    - Populated Place (P)
+    - Civil (C) 
+    - Reservation (R)
+    - Locale (L)
+    - Area (A)
+    - Census (S)
     """
     places = []
     
@@ -33,9 +41,16 @@ def download_gnis_national_file() -> List[Dict]:
         print("Downloading USGS GNIS National File...")
         print("  URL: https://geonames.usgs.gov/docs/stategaz/NationalFile.zip")
         print("  (This is a large file - may take several minutes)")
+        print("  The file contains over 2 million geographic features")
+        print("  We'll extract all features that might be tribal places")
         
-        # GNIS National File URL
+        # GNIS National File URL (official USGS source)
+        # Alternative: State files are smaller and can be downloaded individually
         url = "https://geonames.usgs.gov/docs/stategaz/NationalFile.zip"
+        
+        # Also try state-specific files which are smaller
+        # For tribal places, focus on states with high Native populations:
+        tribal_states = ["AZ", "NM", "OK", "SD", "ND", "MT", "AK", "WA", "OR", "MN", "WI", "NY", "NC"]
         
         # Download the file
         try:
@@ -79,23 +94,50 @@ def download_gnis_national_file() -> List[Dict]:
                                         state = parts[3].strip() if len(parts) > 3 else ""
                                         
                                         # Filter for likely tribal places
-                                        if feature_class in ['Populated Place', 'Civil', 'Reservation', 'Locale', 'Area', 'Census']:
+                                        # GNIS Feature Class codes: P=Populated Place, C=Civil, R=Reservation, L=Locale, A=Area, S=Census
+                                        feature_class_codes = ['P', 'C', 'R', 'L', 'A', 'S']
+                                        feature_class_names = ['Populated Place', 'Civil', 'Reservation', 'Locale', 'Area', 'Census']
+                                        
+                                        if (feature_class in feature_class_names or 
+                                            feature_class in feature_class_codes or
+                                            'Reservation' in feature_class or
+                                            'Pueblo' in feature_class or
+                                            'Village' in feature_class):
+                                            
                                             # Check if name might be tribal (heuristic)
                                             # Many tribal place names have specific patterns
                                             if (len(feature_name) > 2 and 
                                                 feature_name[0].isupper() and
                                                 not feature_name.lower() in ['the', 'a', 'an', 'and', 'or']):
                                                 
+                                                # Additional heuristics for tribal names:
+                                                # - Contains "Reservation", "Pueblo", "Nation", "Tribe"
+                                                # - Common tribal name patterns
+                                                is_likely_tribal = (
+                                                    'reservation' in feature_name.lower() or
+                                                    'pueblo' in feature_name.lower() or
+                                                    'nation' in feature_name.lower() or
+                                                    'tribe' in feature_name.lower() or
+                                                    'village' in feature_name.lower() or
+                                                    feature_class == 'R' or  # Reservation
+                                                    'Reservation' in feature_class
+                                                )
+                                                
                                                 places.append({
                                                     'name': feature_name,
-                                                    'type': feature_class.lower().replace(' ', '_'),
+                                                    'type': feature_class.lower().replace(' ', '_') if isinstance(feature_class, str) else 'unknown',
                                                     'state': state,
-                                                    'tribe': None,  # GNIS doesn't provide tribe info
+                                                    'tribe': None,  # GNIS doesn't provide tribe info directly
                                                     'source': 'usgs_gnis_national'
                                                 })
                                                 
                                                 if len(places) % 1000 == 0:
                                                     print(f"    Processed {len(places)} places...")
+                                                
+                                                # Stop at 50,000 to avoid memory issues (can be adjusted)
+                                                if len(places) >= 50000:
+                                                    print(f"    Reached 50,000 places - stopping (can increase limit if needed)")
+                                                    break
                                 
                                 # Process remaining buffer
                                 if buffer.strip():
@@ -126,6 +168,98 @@ def download_gnis_national_file() -> List[Dict]:
         print(f"  ⚠ Error downloading GNIS: {e}")
         print("  → Using comprehensive curated list instead")
     
+    return places
+
+def download_gnis_state_files() -> List[Dict]:
+    """Download GNIS state files for states with high Native populations.
+    
+    State files are smaller and more manageable than the full National File.
+    """
+    places = []
+    
+    # States with high Native populations (more likely to have tribal places)
+    tribal_states = {
+        'AZ': 'Arizona',
+        'NM': 'New Mexico', 
+        'OK': 'Oklahoma',
+        'SD': 'South Dakota',
+        'ND': 'North Dakota',
+        'MT': 'Montana',
+        'AK': 'Alaska',
+        'WA': 'Washington',
+        'OR': 'Oregon',
+        'MN': 'Minnesota',
+        'WI': 'Wisconsin',
+        'NY': 'New York',
+        'NC': 'North Carolina',
+        'CA': 'California',
+        'NV': 'Nevada',
+        'UT': 'Utah',
+        'ID': 'Idaho',
+        'WY': 'Wyoming',
+        'NE': 'Nebraska',
+        'KS': 'Kansas',
+        'IA': 'Iowa',
+        'MO': 'Missouri',
+        'AR': 'Arkansas',
+        'LA': 'Louisiana',
+        'MS': 'Mississippi',
+        'AL': 'Alabama',
+        'GA': 'Georgia',
+        'FL': 'Florida',
+        'SC': 'South Carolina',
+        'VA': 'Virginia',
+        'ME': 'Maine',
+        'CT': 'Connecticut',
+        'RI': 'Rhode Island',
+        'MA': 'Massachusetts'
+    }
+    
+    print(f"  Attempting to download state files for {len(tribal_states)} states...")
+    
+    for state_code, state_name in list(tribal_states.items())[:10]:  # Start with first 10 to test
+        try:
+            url = f"https://geonames.usgs.gov/docs/stategaz/{state_code}_Features.zip"
+            print(f"    Downloading {state_code} ({state_name})...")
+            
+            with urllib.request.urlopen(url, timeout=60) as response:
+                data = response.read()
+                print(f"      ✓ Downloaded {len(data) / 1024:.1f} KB")
+                
+                import zipfile
+                with zipfile.ZipFile(io.BytesIO(data)) as zip_file:
+                    for name in zip_file.namelist():
+                        if name.endswith('.txt'):
+                            with zip_file.open(name) as f:
+                                content = f.read().decode('utf-8', errors='ignore')
+                                for line in content.split('\n'):
+                                    if not line.strip():
+                                        continue
+                                    parts = line.split('|')
+                                    if len(parts) >= 4:
+                                        feature_name = parts[1].strip()
+                                        feature_class = parts[2].strip()
+                                        
+                                        if (feature_class in ['P', 'C', 'R', 'L', 'A', 'S'] or
+                                            'Reservation' in feature_class or
+                                            'Pueblo' in feature_class):
+                                            
+                                            places.append({
+                                                'name': feature_name,
+                                                'type': feature_class.lower(),
+                                                'state': state_name,
+                                                'tribe': None,
+                                                'source': f'usgs_gnis_{state_code}'
+                                            })
+                                            
+                                            if len(places) % 500 == 0:
+                                                print(f"      Processed {len(places)} places total...")
+                            break
+        except Exception as e:
+            print(f"      ⚠ Could not download {state_code}: {e}")
+            continue
+    
+    print(f"  ✓ Extracted {len(places)} places from state files")
     return places
 
 def download_comprehensive_tribal_place_list() -> List[Dict]:
