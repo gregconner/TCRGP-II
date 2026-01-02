@@ -158,7 +158,7 @@ SIMILARITY_THRESHOLD_LOW = 0.55  # For severe misspellings with context clues or
 SIMILARITY_THRESHOLD_FIRSTNAME = 0.50  # When first names match >=70%, use even lower threshold for last name
 
 # Citation system configuration
-LINES_PER_PAGE = 50  # Number of lines per page for pagination
+DEFAULT_LINES_PER_PAGE = 50  # Default number of lines per page for pagination
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -353,7 +353,7 @@ def format_with_citation_system(
             }
             
             # Check if we need a new page
-            if line_count > 0 and line_count % LINES_PER_PAGE == 0:
+            if line_count > 0 and line_count % lines_per_page == 0:
                 current_page += 1
                 formatted_lines.append(f"\nPage {current_page}\n")
             
@@ -364,7 +364,7 @@ def format_with_citation_system(
             # Keep non-dialogue lines as-is (but clean)
             if line and not re.match(r'^\d+$', line):  # Skip segment numbers
                 # Check if we need a new page
-                if line_count > 0 and line_count % LINES_PER_PAGE == 0:
+                if line_count > 0 and line_count % lines_per_page == 0:
                     current_page += 1
                     formatted_lines.append(f"\nPage {current_page}\n")
                 
@@ -1009,7 +1009,7 @@ class DeIdentifier:
                     speaker_mapping[code] = "Interviewee"
             
             if use_citation_system:
-                deidentified, timestamp_table = format_with_citation_system(deidentified, speaker_mapping, segments_with_timestamps)
+                deidentified, timestamp_table = format_with_citation_system(deidentified, speaker_mapping, segments_with_timestamps, lines_per_page)
             else:
                 deidentified = format_as_dialogue(deidentified, speaker_mapping)
         
@@ -1189,7 +1189,8 @@ class KeywordTagger:
 # MAIN PROCESSING FUNCTION
 # ============================================================================
 
-def process_transcript(input_path: Path, output_dir: Path, use_spacy: bool = True) -> Dict:
+def process_transcript(input_path: Path, output_dir: Path, use_spacy: bool = True, 
+                      use_citation_system: bool = True, lines_per_page: int = DEFAULT_LINES_PER_PAGE) -> Dict:
     """Process a single transcript file."""
     print(f"\nProcessing: {input_path.name}")
     
@@ -1229,13 +1230,17 @@ def process_transcript(input_path: Path, output_dir: Path, use_spacy: bool = Tru
     deidentifier.create_codes(entities)
     
     # De-identify text (with citation system)
-    print("  → De-identifying and formatting text with citation system...")
+    if use_citation_system:
+        print("  → De-identifying and formatting text with citation system...")
+    else:
+        print("  → De-identifying and formatting text...")
     deidentified_text, timestamp_table = deidentifier.deidentify_text(
         text, 
         remove_timestamps=True, 
         format_dialogue=True,
-        use_citation_system=True,
-        segments_with_timestamps=segments_with_timestamps
+        use_citation_system=use_citation_system,
+        segments_with_timestamps=segments_with_timestamps,
+        lines_per_page=lines_per_page
     )
     
     # Tag keywords (on original text for accuracy)
