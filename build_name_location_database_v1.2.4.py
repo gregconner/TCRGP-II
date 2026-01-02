@@ -22,7 +22,7 @@ import json
 import urllib.request
 import urllib.parse
 from pathlib import Path
-from typing import List, Set, Dict, Tuple
+from typing import List, Set, Dict, Tuple, Optional
 import re
 import time
 import csv
@@ -47,7 +47,7 @@ class OverallProgress:
         self.stage_name = "init"
         self.stage_weight = 0.0
         self.stage_done = 0
-        self.stage_total = None  # type: int|None
+        self.stage_total: Optional[int] = None
         self.stage_detail = ""
         self.completed_weight = 0.0
         self.start_t = time.time()
@@ -63,7 +63,7 @@ class OverallProgress:
         _stop_per_second_ticker(self._prev_alarm)
         self._prev_alarm = None
 
-    def next_stage(self, name: str, weight: float, total: int | None = None, detail: str = ""):
+    def next_stage(self, name: str, weight: float, total: Optional[int] = None, detail: str = ""):
         # finalize prior stage weight
         if self.stage_idx >= 0:
             self.completed_weight += self.stage_weight
@@ -75,7 +75,7 @@ class OverallProgress:
         self.stage_detail = detail
         self.stage_start_t = time.time()
 
-    def update(self, done: int | None = None, total: int | None = None, detail: str | None = None):
+    def update(self, done: Optional[int] = None, total: Optional[int] = None, detail: Optional[str] = None):
         if done is not None:
             self.stage_done = int(done)
         if total is not None:
