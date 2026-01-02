@@ -1,0 +1,195 @@
+================================================================================
+CITATION SYSTEM IMPLEMENTATION v1.4.0
+Hierarchical Reference System with Speaker Letters, Verses, Pages, and Timestamps
+================================================================================
+
+Date: 2026-01-01
+Version: 1.4.0
+
+================================================================================
+SYSTEM OVERVIEW
+================================================================================
+
+The citation system provides a hierarchical reference structure similar to
+Bible chapter:verse numbering, enabling precise citation of transcript content
+for research purposes.
+
+COMPONENTS:
+1. Speaker Letters: A, B, C, etc. (assigned to each unique speaker)
+2. Verse Numbers: Per speaker (A.1, A.2, A.3... B.1, B.2...)
+3. Page Numbers: Based on line count (50 lines per page, configurable)
+4. Line Numbers: User-countable within each verse (not shown in text)
+5. Timestamp Table: Maps speaker.verse → timestamp at end of document
+
+================================================================================
+CITATION FORMATS
+================================================================================
+
+PRIMARY FORMAT (shown in text):
+  [A.2] Interviewer: how you're such an advocate for your communities...
+
+CITATION OPTIONS:
+  - Simple:        [A.2]
+  - With page:    [Page 1, A.2]
+  - With line:    [A.2, line 15] (user counts lines within verse)
+  - Full:          [Page 1, A.2, line 15]
+  - With timestamp: See table at end: A.2 → 00:00:12
+
+EXAMPLE OUTPUT:
+---------------
+Page 1
+
+[A.1] Interviewer: And just thank you for taking the time to be with us so we can learn about the work that you do, and just a little bit of conversation I had with you. I was really excited about
+
+[A.2] Interviewer: how you're such an advocate for your communities, and so proud of your Location_35 culture. So, thank you for being with us.
+
+[B.1] Interviewee: Thank you.
+
+[B.2] Interviewee: So I just wanted to start off, by saying that I'm not a technical person.
+
+...
+
+Page 2
+
+[B.25] Interviewee: So, I mean, it's just, you know, it's massive. So,
+
+...
+
+================================================================================
+CITATION REFERENCE TABLE
+================================================================================
+
+At the end of each transcript, a table maps speaker.verse to timestamps:
+
+================================================================================
+CITATION REFERENCE TABLE
+================================================================================
+
+Speaker.Verse | Timestamp | Speaker Role
+--------------|-----------|-------------
+A.1           | 00:00:01  | Interviewer
+A.2           | 00:00:12  | Interviewer
+B.1           | 00:00:22  | Interviewee
+B.2           | 00:00:25  | Interviewee
+B.3           | 00:00:31  | Interviewee
+...
+
+This table enables:
+  - Precise timestamp lookup for any citation
+  - Verification of citations against original audio
+  - Cross-referencing between text and audio source
+
+================================================================================
+HOW IT WORKS
+================================================================================
+
+1. TIMESTAMP EXTRACTION
+   - Parses WEBVTT format from raw transcript
+   - Extracts timestamp for each segment
+   - Stores: timestamp + text content
+
+2. SPEAKER LETTER ASSIGNMENT
+   - First unique speaker = A
+   - Second unique speaker = B
+   - Continues alphabetically
+   - Maps Person_X codes to letters
+
+3. VERSE NUMBERING
+   - Each speaker turn = one verse
+   - Numbers reset for each new speaker
+   - A.1, A.2, A.3... then B.1, B.2, B.3...
+
+4. PAGE NUMBERING
+   - Counts lines (default: 50 lines per page)
+   - Inserts "Page N" at page breaks
+   - Configurable via LINES_PER_PAGE constant
+
+5. FORMATTING
+   - Shows only [Speaker.Verse] in text
+   - Format: "[A.2] Speaker: text"
+   - Clean, readable format
+
+6. TIMESTAMP TABLE GENERATION
+   - Maps each speaker.verse to its timestamp
+   - Includes speaker role
+   - Appended at end of document
+
+================================================================================
+CITATION EXAMPLES
+================================================================================
+
+In Research Paper:
+------------------
+"As one participant noted, 'we share a lot of traditional values' 
+(Alaska Electric Interview, A.403)."
+
+Or with more precision:
+"As one participant noted, 'we share a lot of traditional values' 
+(Alaska Electric Interview, Page 8, A.403, line 12)."
+
+Or with timestamp:
+"As one participant noted, 'we share a lot of traditional values' 
+(Alaska Electric Interview, A.403; see timestamp table: 00:12:34)."
+
+================================================================================
+ADVANTAGES
+================================================================================
+
+1. PRECISE CITATION
+   - Multiple levels of precision (verse, page, line)
+   - Like Bible chapter:verse system
+   - Familiar to academic researchers
+
+2. TIMESTAMP LINKAGE
+   - Links to original audio/video
+   - Enables verification
+   - Useful for qualitative research
+
+3. FLEXIBLE REFERENCING
+   - Simple: [A.2]
+   - Detailed: [Page 1, A.2, line 15]
+   - With timestamp: See table
+
+4. STABLE REFERENCES
+   - Speaker letters don't change
+   - Verse numbers are sequential
+   - Page numbers are consistent
+
+5. USER-FRIENDLY
+   - Easy to count lines within verses
+   - Clear format
+   - Table at end for lookup
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+
+Configuration:
+  - LINES_PER_PAGE = 50 (configurable)
+
+Functions:
+  - parse_webvtt_with_timestamps(): Extracts timestamps from WEBVTT
+  - format_with_citation_system(): Formats with speaker letters, verses, pages
+  - Creates timestamp_table dictionary
+
+Output Files:
+  - _deidentified.txt: Main transcript with citation system
+  - _mapping.json: Includes timestamp_table
+  - _tags.csv: Keyword tags (unchanged)
+
+================================================================================
+USAGE
+================================================================================
+
+The citation system is automatically enabled in v1.4.0. No configuration needed.
+
+To cite:
+  1. Use speaker.verse format: [A.2]
+  2. Optionally add page: [Page 1, A.2]
+  3. Optionally count lines: [A.2, line 15]
+  4. For timestamp: Look up in table at end
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================
+

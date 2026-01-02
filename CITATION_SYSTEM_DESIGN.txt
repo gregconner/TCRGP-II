@@ -1,0 +1,89 @@
+================================================================================
+CITATION SYSTEM DESIGN
+Hierarchical Reference System with Speaker Letters, Verses, Pages, and Timestamps
+================================================================================
+
+SYSTEM OVERVIEW:
+----------------
+1. Speaker Letters: A, B, C, etc. (assigned to each unique speaker)
+2. Verse Numbers: Per speaker (A.1, A.2, A.3... B.1, B.2...)
+3. Page Numbers: Based on line count (e.g., 50 lines per page)
+4. Line Numbers: User-countable within each verse
+5. Timestamp Table: Maps speaker.verse → timestamp at end
+
+CITATION FORMATS:
+----------------
+Primary (shown in text):     [A.2] Speaker: text
+Full citation:               [A.2] or [Page 3, A.2] or [A.2, line 15]
+Timestamp lookup:            See table at end: A.2 → 00:12:34
+
+EXAMPLE OUTPUT:
+---------------
+Page 1
+
+[A.1] Interviewer: And just thank you for taking the time to be with us so we can learn about the work that you do, and just a little bit of conversation I had with you. I was really excited about
+
+[A.2] Interviewer: how you're such an advocate for your communities, and so proud of your Location_24 culture. So, thank you for being with us.
+
+[B.1] Interviewee: Thank you.
+
+[B.2] Interviewee: So I just wanted to start off, by saying that I'm not a technical person.
+
+...
+
+================================================================================
+CITATION REFERENCE TABLE
+================================================================================
+
+Speaker.Verse | Timestamp | Speaker Role
+--------------|-----------|-------------
+A.1           | 00:00:01  | Interviewer
+A.2           | 00:00:12  | Interviewer
+B.1           | 00:00:22  | Interviewee
+B.2           | 00:00:25  | Interviewee
+...
+
+================================================================================
+IMPLEMENTATION REQUIREMENTS
+================================================================================
+
+1. EXTRACT TIMESTAMPS from WEBVTT format
+   - Parse: "00:00:01.900 --> 00:00:12.490"
+   - Store start timestamp with each segment
+   - Map to speaker and verse number
+
+2. ASSIGN SPEAKER LETTERS
+   - First unique speaker = A
+   - Second unique speaker = B
+   - Continue alphabetically
+   - Map Person_X codes to letters
+
+3. NUMBER VERSES per speaker
+   - Reset counter for each new speaker
+   - A.1, A.2, A.3... then B.1, B.2, B.3...
+   - Each speaker turn = one verse
+
+4. CALCULATE PAGE NUMBERS
+   - Count lines (e.g., 50 lines per page)
+   - Insert page breaks
+   - Format: "Page N" at start of each page
+
+5. FORMAT OUTPUT
+   - Show only [Speaker.Verse] in text
+   - Format: "[A.2] Speaker: text"
+   - Add page numbers at page breaks
+
+6. CREATE TIMESTAMP TABLE
+   - Map each speaker.verse to timestamp
+   - Include speaker role
+   - Format as table at end of document
+
+7. LINE NUMBERS
+   - Users count manually within each verse
+   - Can reference: [A.2, line 15]
+   - Not shown in text (to keep it clean)
+
+================================================================================
+END OF DESIGN
+================================================================================
+

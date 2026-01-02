@@ -1,0 +1,328 @@
+================================================================================
+TRANSCRIPT CITATION STANDARDS AND RECOMMENDATIONS
+For Research Citation (Like Chapter and Verse)
+================================================================================
+
+Date: 2026-01-01
+Context: USDA-funded tribal research study
+
+================================================================================
+EXECUTIVE SUMMARY
+================================================================================
+
+While there is no single universal standard for numbering transcripts, several
+established approaches exist. For research citation purposes, the most common
+approaches are:
+
+1. **Line Numbers** (most common in academic research)
+2. **Timestamps** (common in qualitative research, legal, media)
+3. **Paragraph Numbers** (used in some disciplines)
+4. **Hybrid Systems** (combining multiple methods)
+
+RECOMMENDATION: Use line numbers for citation, as they are:
+  - Standard in academic research
+  - Stable (don't change if audio is re-processed)
+  - Simple to reference
+  - Already partially implemented in our tagging system
+
+================================================================================
+ESTABLISHED CITATION SYSTEMS
+================================================================================
+
+1. LINE NUMBERS (Most Common for Academic Research)
+   Format: (Transcript Name, line 123)
+   Example: "(Alaska Electric Interview, line 45)"
+   
+   Advantages:
+   - Standard in academic research
+   - Stable reference (doesn't change)
+   - Simple to implement
+   - Easy to cite in papers
+   - Works with any transcript format
+   
+   Disadvantages:
+   - Can shift if transcript is edited
+   - Less precise than timestamps for audio alignment
+
+2. TIMESTAMPS (Common in Qualitative Research)
+   Format: (Transcript Name, 00:12:34)
+   Example: "(Alaska Electric Interview, 00:12:34)"
+   
+   Advantages:
+   - Links directly to audio/video source
+   - Precise location in recording
+   - Standard in qualitative research
+   - Useful for verification
+   
+   Disadvantages:
+   - Can be removed during cleaning
+   - May not be available in all formats
+   - Less stable if audio is re-processed
+
+3. PARAGRAPH NUMBERS (Some Disciplines)
+   Format: (Transcript Name, para. 12)
+   Example: "(Alaska Electric Interview, para. 12)"
+   
+   Advantages:
+   - Semantic units (not arbitrary)
+   - Stable across formatting changes
+   
+   Disadvantages:
+   - Less precise
+   - Paragraph boundaries can be ambiguous
+   - Not as common
+
+4. HYBRID SYSTEMS
+   - Line numbers + timestamps
+   - Paragraph numbers + line numbers
+   - Section numbers + line numbers
+
+================================================================================
+CURRENT PROGRAM BEHAVIOR
+================================================================================
+
+Our de-identification program (v1.3.0) currently:
+
+1. REMOVES timestamps completely
+   - Function: `remove_webvtt_timestamps()`
+   - Removes: "00:00:01.900 --> 00:00:12.490"
+   - Reason: Clean formatting
+
+2. USES line numbers in tagging
+   - Tag CSV includes: `Line_Number` column
+   - Example: "Tag_Category,Line_Number,Matched_Text,Context"
+   - Line numbers reference the de-identified output
+
+3. DOES NOT preserve timestamps for citation
+   - Timestamps are removed and lost
+   - No citation reference system in output
+
+PROBLEM: We're removing valuable citation information (timestamps) that could
+         be useful for research purposes.
+
+================================================================================
+RECOMMENDATIONS FOR IMPLEMENTATION
+================================================================================
+
+OPTION 1: PRESERVE TIMESTAMPS AS CITATION REFERENCES (Recommended)
+------------------------------------------------------------------
+Modify the program to:
+  - Keep timestamps but format them as citation references
+  - Format: [00:12:34] or (00:12:34) at start of each speaker turn
+  - Example: "[00:12:34] Interviewer: Thank you for..."
+  
+  Advantages:
+  ✓ Links to original audio
+  ✓ Standard in qualitative research
+  ✓ Precise citation
+  ✓ Useful for verification
+  
+  Implementation:
+  - Modify `remove_webvtt_timestamps()` to preserve timestamps
+  - Format timestamps as citation markers
+  - Keep them in de-identified output
+
+OPTION 2: ADD LINE NUMBERS TO OUTPUT (Alternative)
+---------------------------------------------------
+Modify the program to:
+  - Add line numbers to each line of output
+  - Format: "45: Interviewer: Thank you for..."
+  - Or: Number each speaker turn
+  
+  Advantages:
+  ✓ Standard in academic research
+  ✓ Simple citation format
+  ✓ Stable reference
+  
+  Implementation:
+  - Add line numbers during formatting
+  - Include in output text
+  - Update tag CSV to reference these numbers
+
+OPTION 3: HYBRID: TIMESTAMPS + LINE NUMBERS (Best of Both)
+-----------------------------------------------------------
+Modify the program to:
+  - Preserve timestamps as citation markers
+  - Add line numbers for easy reference
+  - Format: "[00:12:34] (line 45) Interviewer: Thank you..."
+  
+  Advantages:
+  ✓ Links to audio (timestamps)
+  ✓ Easy citation (line numbers)
+  ✓ Maximum flexibility
+  
+  Implementation:
+  - Combine both approaches
+  - Format clearly for readability
+
+OPTION 4: SECTION + LINE NUMBERS (Like Bible Chapter:Verse)
+------------------------------------------------------------
+Modify the program to:
+  - Divide transcript into sections (by topic or question)
+  - Number lines within each section
+  - Format: "Section 3, line 12" or "3:12"
+  
+  Advantages:
+  ✓ Semantic organization
+  ✓ Familiar format (like Bible)
+  ✓ Stable references
+  
+  Implementation:
+  - Detect section boundaries (by question, topic, etc.)
+  - Number sections and lines
+  - Format as "Section:Line"
+
+================================================================================
+RECOMMENDED APPROACH FOR THIS PROJECT
+================================================================================
+
+RECOMMENDATION: OPTION 3 - HYBRID (Timestamps + Line Numbers)
+
+Rationale:
+1. Timestamps link to original audio (important for verification)
+2. Line numbers provide simple citation format
+3. Both are standard in academic research
+4. Maximum flexibility for different citation needs
+
+Format:
+  "[00:12:34] (line 45) Interviewer: Thank you for taking the time..."
+
+Or more compact:
+  "[00:12:34:45] Interviewer: Thank you for taking the time..."
+  (timestamp:line_number)
+
+Citation Examples:
+  - "(Alaska Electric Interview, 00:12:34, line 45)"
+  - "(Alaska Electric Interview, line 45)" [if timestamps not needed]
+  - "(Alaska Electric Interview, 00:12:34)" [if line numbers not needed]
+
+================================================================================
+IMPLEMENTATION PLAN
+================================================================================
+
+To implement citation references in v1.3.0:
+
+1. MODIFY `remove_webvtt_timestamps()` FUNCTION
+   - Instead of removing timestamps, preserve them
+   - Extract timestamp from each segment
+   - Store with corresponding text
+
+2. ADD LINE NUMBERING
+   - Number each speaker turn or line
+   - Track line numbers during formatting
+   - Include in output
+
+3. FORMAT CITATION MARKERS
+   - Format: "[timestamp] (line N) Speaker: text"
+   - Or: "[timestamp:line] Speaker: text"
+   - Make clearly visible but not intrusive
+
+4. UPDATE TAG CSV
+   - Include both timestamp and line number
+   - Format: "Tag_Category,Timestamp,Line_Number,Matched_Text,Context"
+
+5. ADD CONFIGURATION OPTION
+   - `preserve_timestamps_for_citation: bool = True`
+   - `add_line_numbers: bool = True`
+   - `citation_format: str = "hybrid"` (options: "timestamp", "line", "hybrid")
+
+================================================================================
+ACADEMIC CITATION STANDARDS
+================================================================================
+
+Common formats in academic research:
+
+1. APA Style (American Psychological Association):
+   - (Participant, personal communication, date)
+   - For transcripts: (Interview Name, line number)
+   - Example: "(Alaska Electric Interview, line 45)"
+
+2. Chicago Style:
+   - (Author, "Title," page/line)
+   - For transcripts: (Interview Name, line number)
+   - Example: "(Alaska Electric Interview, line 45)"
+
+3. MLA Style:
+   - (Author page/line)
+   - For transcripts: (Interview Name, line number)
+   - Example: "(Alaska Electric Interview, line 45)"
+
+4. Qualitative Research Conventions:
+   - Often use timestamps: (Interview Name, 00:12:34)
+   - Or line numbers: (Interview Name, line 45)
+   - Or both: (Interview Name, 00:12:34, line 45)
+
+================================================================================
+BEST PRACTICES FOR THIS PROJECT
+================================================================================
+
+Given this is a USDA-funded research study on tribal entities:
+
+1. USE LINE NUMBERS AS PRIMARY CITATION
+   - Most standard in academic research
+   - Simple and clear
+   - Works with any format
+
+2. PRESERVE TIMESTAMPS AS SECONDARY REFERENCE
+   - Useful for verification
+   - Links to original audio
+   - Standard in qualitative research
+
+3. FORMAT CLEARLY
+   - Make citation markers visible
+   - Don't interfere with readability
+   - Consistent format throughout
+
+4. DOCUMENT CITATION SYSTEM
+   - Explain system in methodology
+   - Provide examples in documentation
+   - Train researchers on citation format
+
+5. CONSIDER PRIVACY
+   - Citation references don't reveal PII
+   - Line numbers are safe
+   - Timestamps are safe (just time, not location/date)
+
+================================================================================
+EXAMPLE IMPLEMENTATION
+================================================================================
+
+Current Output (no citation):
+  "Interviewer: Thank you for taking the time to be with us..."
+
+Proposed Output (with citation):
+  "[00:00:01] (line 1) Interviewer: Thank you for taking the time to be with us..."
+  "[00:00:12] (line 2) Interviewer: how you're such an advocate for your communities..."
+
+Or more compact:
+  "[00:00:01:1] Interviewer: Thank you for taking the time..."
+  "[00:00:12:2] Interviewer: how you're such an advocate..."
+
+Citation in paper:
+  "As one participant noted, 'we share a lot of traditional values' 
+   (Alaska Electric Interview, line 403)."
+
+Or with timestamp:
+  "As one participant noted, 'we share a lot of traditional values' 
+   (Alaska Electric Interview, 00:12:34, line 403)."
+
+================================================================================
+CONCLUSION
+================================================================================
+
+While there's no single universal standard, line numbers are the most common
+in academic research, and timestamps are standard in qualitative research.
+
+RECOMMENDATION: Implement a hybrid system preserving both timestamps and
+line numbers, formatted clearly for citation purposes. This provides maximum
+flexibility and follows best practices in both academic and qualitative
+research contexts.
+
+The current program removes timestamps, which eliminates valuable citation
+information. We should modify it to preserve timestamps as citation markers
+while also adding line numbers for simple academic citation.
+
+================================================================================
+END OF REPORT
+================================================================================
+
