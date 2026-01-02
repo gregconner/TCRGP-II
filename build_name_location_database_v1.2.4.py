@@ -245,7 +245,7 @@ def _normalize_name_token(s: str) -> str:
     # Keep apostrophes/hyphens; Title-case words.
     return re.sub(r"\s+", " ", s).title()
 
-def download_ssa_first_names(progress: OverallProgress | None = None, refresh: bool = False) -> List[Tuple[str, int, str]]:
+def download_ssa_first_names(progress: Optional[OverallProgress] = None, refresh: bool = False) -> List[Tuple[str, int, str]]:
     """Download SSA baby-name ZIP and return (name, rank, source) for first names.
 
     Source: https://www.ssa.gov/oact/babynames/names.zip
@@ -1146,7 +1146,7 @@ def download_ssa_names(year: int = 2022) -> tuple[List[str], List[str]]:
     
     return first_names, last_names
 
-def download_common_names(progress: OverallProgress | None = None, refresh: bool = False) -> tuple[List[str], List[str]]:
+def download_common_names(progress: Optional[OverallProgress] = None, refresh: bool = False) -> tuple[List[str], List[str]]:
     """Download common first and last names from public sources."""
     print("  Downloading common names from public sources...")
 
