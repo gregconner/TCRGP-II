@@ -1,0 +1,91 @@
+{
+  "transcript_name": "The Coalition to Stop Violence Against Native Women CSVANW N Michelena 8 4 25_deidentified.txt",
+  "date": "2026-01-01T20:40:44.153064",
+  "overall_grade": "B-",
+  "overall_score": 80.29787234042553,
+  "categories": {
+    "deidentification_completeness": {
+      "grade": "B",
+      "score": 20.0,
+      "max_score": 25,
+      "suggestions": [
+        "Good: 4 PII items remaining",
+        "  - 4 persons not de-identified: Nelson, Xyz, Youtube, Mandela"
+      ]
+    },
+    "deidentification_accuracy": {
+      "grade": "C",
+      "score": 14.0,
+      "max_score": 20,
+      "suggestions": [
+        "Error rate: 11.1%"
+      ]
+    },
+    "formatting_quality": {
+      "grade": "A",
+      "score": 14.0,
+      "max_score": 15,
+      "suggestions": [
+        "Standalone Person_X codes found"
+      ]
+    },
+    "citation_system": {
+      "grade": "A",
+      "score": 15.0,
+      "max_score": 15,
+      "suggestions": [
+        "Complete citation system",
+        "Found 2 speakers, 47 verses"
+      ]
+    },
+    "tagging_completeness": {
+      "grade": "F",
+      "score": 3.2978723404255317,
+      "max_score": 10,
+      "suggestions": [
+        "Tag coverage: 33.0%",
+        "Total tags: 220",
+        "Categories: 20"
+      ]
+    },
+    "tagging_precision": {
+      "grade": "A",
+      "score": 9.0,
+      "max_score": 10,
+      "suggestions": [
+        "No obvious false positives detected"
+      ]
+    },
+    "spelling_matching": {
+      "grade": "A",
+      "score": 5.0,
+      "max_score": 5,
+      "suggestions": [
+        "Name variants detected: 7",
+        "Unique persons: 5"
+      ]
+    }
+  },
+  "detailed_findings": {
+    "remaining_pii": {
+      "persons": [
+        "Nelson",
+        "Xyz",
+        "Youtube",
+        "Mandela"
+      ],
+      "organizations": [],
+      "locations": [],
+      "tribes": [],
+      "financial_amounts": [],
+      "years": []
+    },
+    "formatting_issues": [],
+    "citation_issues": [],
+    "tagging_stats": {
+      "tag_count": 220,
+      "category_count": 20,
+      "coverage": 0.32978723404255317
+    }
+  }
+}

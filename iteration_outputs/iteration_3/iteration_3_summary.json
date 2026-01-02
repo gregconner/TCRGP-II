@@ -1,0 +1,518 @@
+{
+  "iteration": 3,
+  "average_score": 64.8069646146248,
+  "grading_reports": [
+    {
+      "transcript_name": "GMT20250813-152303_Recording.transcript_httpsnmhu.zoom.usrecplayjPKEJWKIFAhT-M9jG7nEffk4IFhqOPFeNuTZOKEVwrddyY695IMl_TIWA LENDING SERVICES_deidentified.txt",
+      "date": "2026-01-01T20:40:29.602916",
+      "overall_grade": "B-",
+      "overall_score": 80.97604790419162,
+      "categories": {
+        "deidentification_completeness": {
+          "grade": "B",
+          "score": 20.0,
+          "max_score": 25,
+          "suggestions": [
+            "Good: 5 PII items remaining",
+            "  - 5 persons not de-identified: \u00e2\u20ac\u00a6, Danae, Miranda, Gabriel, Vicki"
+          ]
+        },
+        "deidentification_accuracy": {
+          "grade": "B",
+          "score": 16.0,
+          "max_score": 20,
+          "suggestions": [
+            "Error rate: 5.4%"
+          ]
+        },
+        "formatting_quality": {
+          "grade": "A",
+          "score": 14.0,
+          "max_score": 15,
+          "suggestions": [
+            "Standalone Person_X codes found"
+          ]
+        },
+        "citation_system": {
+          "grade": "A",
+          "score": 15.0,
+          "max_score": 15,
+          "suggestions": [
+            "Complete citation system",
+            "Found 2 speakers, 397 verses"
+          ]
+        },
+        "tagging_completeness": {
+          "grade": "F",
+          "score": 1.9760479041916168,
+          "max_score": 10,
+          "suggestions": [
+            "Tag coverage: 19.8%",
+            "Total tags: 302",
+            "Categories: 22"
+          ]
+        },
+        "tagging_precision": {
+          "grade": "A",
+          "score": 9.0,
+          "max_score": 10,
+          "suggestions": [
+            "No obvious false positives detected"
+          ]
+        },
+        "spelling_matching": {
+          "grade": "A",
+          "score": 5.0,
+          "max_score": 5,
+          "suggestions": [
+            "Name variants detected: 26",
+            "Unique persons: 12"
+          ]
+        }
+      },
+      "detailed_findings": {
+        "remaining_pii": {
+          "persons": [
+            "\u00e2\u20ac\u00a6",
+            "Danae",
+            "Miranda",
+            "Gabriel",
+            "Vicki"
+          ],
+          "organizations": [],
+          "locations": [],
+          "tribes": [],
+          "financial_amounts": [],
+          "years": []
+        },
+        "formatting_issues": [],
+        "citation_issues": [],
+        "tagging_stats": {
+          "tag_count": 302,
+          "category_count": 22,
+          "coverage": 0.19760479041916168
+        }
+      }
+    },
+    {
+      "transcript_name": "Raw Recording Transcript - Lea Zeise - Ohelaku Among the Cornstalks 12.17.25_deidentified.txt",
+      "date": "2026-01-01T20:40:33.180793",
+      "overall_grade": "C+",
+      "overall_score": 77.57635467980296,
+      "categories": {
+        "deidentification_completeness": {
+          "grade": "C",
+          "score": 17.0,
+          "max_score": 25,
+          "suggestions": [
+            "Acceptable: 6 PII items remaining",
+            "  - 4 persons not de-identified: COVID-19, Anishinaabe, Ungwehue, Oneidas",
+            "  - 2 locations not de-identified: Madeline Island, Spirit Lake"
+          ]
+        },
+        "deidentification_accuracy": {
+          "grade": "B",
+          "score": 16.0,
+          "max_score": 20,
+          "suggestions": [
+            "Error rate: 8.7%"
+          ]
+        },
+        "formatting_quality": {
+          "grade": "A",
+          "score": 14.0,
+          "max_score": 15,
+          "suggestions": [
+            "Standalone Person_X codes found"
+          ]
+        },
+        "citation_system": {
+          "grade": "A",
+          "score": 15.0,
+          "max_score": 15,
+          "suggestions": [
+            "Complete citation system",
+            "Found 2 speakers, 389 verses"
+          ]
+        },
+        "tagging_completeness": {
+          "grade": "F",
+          "score": 1.5763546798029557,
+          "max_score": 10,
+          "suggestions": [
+            "Tag coverage: 15.8%",
+            "Total tags: 245",
+            "Categories: 25"
+          ]
+        },
+        "tagging_precision": {
+          "grade": "A",
+          "score": 9.0,
+          "max_score": 10,
+          "suggestions": [
+            "No obvious false positives detected"
+          ]
+        },
+        "spelling_matching": {
+          "grade": "A",
+          "score": 5.0,
+          "max_score": 5,
+          "suggestions": [
+            "Name variants detected: 14",
+            "Unique persons: 9"
+          ]
+        }
+      },
+      "detailed_findings": {
+        "remaining_pii": {
+          "persons": [
+            "COVID-19",
+            "Anishinaabe",
+            "Ungwehue",
+            "Oneidas"
+          ],
+          "organizations": [],
+          "locations": [
+            "Madeline Island",
+            "Spirit Lake"
+          ],
+          "tribes": [],
+          "financial_amounts": [],
+          "years": []
+        },
+        "formatting_issues": [],
+        "citation_issues": [],
+        "tagging_stats": {
+          "tag_count": 245,
+          "category_count": 25,
+          "coverage": 0.15763546798029557
+        }
+      }
+    },
+    {
+      "transcript_name": "Raw transcript - Umuha Nation Public Schools - Ricardo Ariza from _10.24.25_deidentified.txt",
+      "date": "2026-01-01T20:40:38.336498",
+      "overall_grade": "F",
+      "overall_score": 44.06979405034325,
+      "categories": {
+        "deidentification_completeness": {
+          "grade": "F",
+          "score": 0,
+          "max_score": 25,
+          "suggestions": [
+            "Critical: 33 PII items remaining",
+            "  - 29 persons not de-identified: Webster, Parks, Kimmerer, Chris, jack-o'-lantern",
+            "  - 4 locations not de-identified: Sioux City, Cheyenne River, Waltz Hill, CNA"
+          ]
+        },
+        "deidentification_accuracy": {
+          "grade": "F",
+          "score": 0,
+          "max_score": 20,
+          "suggestions": [
+            "Error rate: 24.6%"
+          ]
+        },
+        "formatting_quality": {
+          "grade": "A",
+          "score": 14.0,
+          "max_score": 15,
+          "suggestions": [
+            "Standalone Person_X codes found"
+          ]
+        },
+        "citation_system": {
+          "grade": "A",
+          "score": 15.0,
+          "max_score": 15,
+          "suggestions": [
+            "Complete citation system",
+            "Found 5 speakers, 843 verses"
+          ]
+        },
+        "tagging_completeness": {
+          "grade": "F",
+          "score": 1.0697940503432495,
+          "max_score": 10,
+          "suggestions": [
+            "Tag coverage: 10.7%",
+            "Total tags: 321",
+            "Categories: 24"
+          ]
+        },
+        "tagging_precision": {
+          "grade": "A",
+          "score": 9.0,
+          "max_score": 10,
+          "suggestions": [
+            "No obvious false positives detected"
+          ]
+        },
+        "spelling_matching": {
+          "grade": "A",
+          "score": 5.0,
+          "max_score": 5,
+          "suggestions": [
+            "Name variants detected: 25",
+            "Unique persons: 14"
+          ]
+        }
+      },
+      "detailed_findings": {
+        "remaining_pii": {
+          "persons": [
+            "Webster",
+            "Parks",
+            "Kimmerer",
+            "Chris",
+            "jack-o'-lantern",
+            "the Tohonah Odom",
+            "Valentino",
+            "Barry",
+            "Ariza",
+            "Ricardo",
+            "Rufus",
+            "Pam",
+            "Ho-Chunk",
+            "Richard",
+            "Rich",
+            "Jodi",
+            "Umaha",
+            "Covid",
+            "Richardson",
+            "Lesson",
+            "Alatada",
+            "Pamela",
+            "Ho-Chump",
+            "Dave",
+            "richard",
+            "Roberto",
+            "sam",
+            "Diffin",
+            "Sam"
+          ],
+          "organizations": [],
+          "locations": [
+            "Sioux City",
+            "Cheyenne River",
+            "Waltz Hill",
+            "CNA"
+          ],
+          "tribes": [],
+          "financial_amounts": [],
+          "years": []
+        },
+        "formatting_issues": [],
+        "citation_issues": [],
+        "tagging_stats": {
+          "tag_count": 321,
+          "category_count": 24,
+          "coverage": 0.10697940503432495
+        }
+      }
+    },
+    {
+      "transcript_name": "San Xavier Coop Transcript - Duran Andrews 11.10.2025_deidentified.txt",
+      "date": "2026-01-01T20:40:41.379961",
+      "overall_grade": "F",
+      "overall_score": 41.114754098360656,
+      "categories": {
+        "deidentification_completeness": {
+          "grade": "F",
+          "score": 9,
+          "max_score": 25,
+          "suggestions": [
+            "Critical: 16 PII items remaining",
+            "  - 9 persons not de-identified: Amy, 00:21:16, Andrews, Pamela, Perry",
+            "  - 7 locations not de-identified: Hilla River, White River, San Javier, Turtle Island, the United States"
+          ]
+        },
+        "deidentification_accuracy": {
+          "grade": "F",
+          "score": 0,
+          "max_score": 20,
+          "suggestions": [
+            "Error rate: 26.7%"
+          ]
+        },
+        "formatting_quality": {
+          "grade": "C",
+          "score": 11.0,
+          "max_score": 15,
+          "suggestions": [
+            "No clear dialogue format or speaker labels",
+            "No dialogue format",
+            "Standalone Person_X codes found"
+          ]
+        },
+        "citation_system": {
+          "grade": "F",
+          "score": 4.0,
+          "max_score": 15,
+          "suggestions": [
+            "Speaker letters missing",
+            "Verse numbers missing",
+            "No speaker letters or verse numbers found"
+          ]
+        },
+        "tagging_completeness": {
+          "grade": "F",
+          "score": 3.114754098360656,
+          "max_score": 10,
+          "suggestions": [
+            "Tag coverage: 31.1%",
+            "Total tags: 328",
+            "Categories: 24"
+          ]
+        },
+        "tagging_precision": {
+          "grade": "A",
+          "score": 9.0,
+          "max_score": 10,
+          "suggestions": [
+            "No obvious false positives detected"
+          ]
+        },
+        "spelling_matching": {
+          "grade": "A",
+          "score": 5.0,
+          "max_score": 5,
+          "suggestions": [
+            "Name variants detected: 10",
+            "Unique persons: 8"
+          ]
+        }
+      },
+      "detailed_findings": {
+        "remaining_pii": {
+          "persons": [
+            "Amy",
+            "00:21:16",
+            "Andrews",
+            "Pamela",
+            "Perry",
+            "Joy",
+            "Instagram",
+            "Sekiros",
+            "Twitter"
+          ],
+          "organizations": [],
+          "locations": [
+            "Hilla River",
+            "White River",
+            "San Javier",
+            "Turtle Island",
+            "the United States",
+            "United States",
+            "the Babakiri District"
+          ],
+          "tribes": [],
+          "financial_amounts": [],
+          "years": []
+        },
+        "formatting_issues": [
+          "No clear dialogue format or speaker labels"
+        ],
+        "citation_issues": [
+          "No speaker letters or verse numbers found"
+        ],
+        "tagging_stats": {
+          "tag_count": 328,
+          "category_count": 24,
+          "coverage": 0.3114754098360656
+        }
+      }
+    },
+    {
+      "transcript_name": "The Coalition to Stop Violence Against Native Women CSVANW N Michelena 8 4 25_deidentified.txt",
+      "date": "2026-01-01T20:40:44.153064",
+      "overall_grade": "B-",
+      "overall_score": 80.29787234042553,
+      "categories": {
+        "deidentification_completeness": {
+          "grade": "B",
+          "score": 20.0,
+          "max_score": 25,
+          "suggestions": [
+            "Good: 4 PII items remaining",
+            "  - 4 persons not de-identified: Nelson, Xyz, Youtube, Mandela"
+          ]
+        },
+        "deidentification_accuracy": {
+          "grade": "C",
+          "score": 14.0,
+          "max_score": 20,
+          "suggestions": [
+            "Error rate: 11.1%"
+          ]
+        },
+        "formatting_quality": {
+          "grade": "A",
+          "score": 14.0,
+          "max_score": 15,
+          "suggestions": [
+            "Standalone Person_X codes found"
+          ]
+        },
+        "citation_system": {
+          "grade": "A",
+          "score": 15.0,
+          "max_score": 15,
+          "suggestions": [
+            "Complete citation system",
+            "Found 2 speakers, 47 verses"
+          ]
+        },
+        "tagging_completeness": {
+          "grade": "F",
+          "score": 3.2978723404255317,
+          "max_score": 10,
+          "suggestions": [
+            "Tag coverage: 33.0%",
+            "Total tags: 220",
+            "Categories: 20"
+          ]
+        },
+        "tagging_precision": {
+          "grade": "A",
+          "score": 9.0,
+          "max_score": 10,
+          "suggestions": [
+            "No obvious false positives detected"
+          ]
+        },
+        "spelling_matching": {
+          "grade": "A",
+          "score": 5.0,
+          "max_score": 5,
+          "suggestions": [
+            "Name variants detected: 7",
+            "Unique persons: 5"
+          ]
+        }
+      },
+      "detailed_findings": {
+        "remaining_pii": {
+          "persons": [
+            "Nelson",
+            "Xyz",
+            "Youtube",
+            "Mandela"
+          ],
+          "organizations": [],
+          "locations": [],
+          "tribes": [],
+          "financial_amounts": [],
+          "years": []
+        },
+        "formatting_issues": [],
+        "citation_issues": [],
+        "tagging_stats": {
+          "tag_count": 220,
+          "category_count": 20,
+          "coverage": 0.32978723404255317
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+
+INDIGENOUS COOPERATIVE SYSTEMS: A COMPARATIVE REPORT
+
+
+Thesis. Organizational health is driven by coherence: governance, cadence, partnerships, and capital aligned to mission outperform raw scale.
+
+We compare four Indigenous cooperatives on membership, finance, operations, markets, partnerships, culture, geography, and risk, using normalized metrics and selected quotes for nuance.
+
+
+METHODS
+
+
+We coded a shared schema from four interviews. Values were recorded only where supported; unknowns are -1. We cite only quotations and nuanced claims.
+
+
+PART I: CASE STUDIES
+
+
+
+ALLOTTEES (E' NUMU DIIP)
+
+
+Profile. Members: 17. Annual revenue bracket: 1. Financial reviews per year: 12.
+
+Capacity. Full-time staff: 0; Contractors: -1; Partners: 6; Grants: 4.
+
+Innovation and culture. New practices: 4; New offerings: 4; Cultural integration/preservation: 3/3.
+
+Operations. Equipment: 0; External processing: 0; Nonmember labor: 1.
+
+"Our Cooperative was formed in 2017 the E' Numu Allottee Association was formed in 2014" [allottees.txt L25]
+
+Interpretation. The indicators above are read in relation to mission and pacing. Unknowns (-1) are prompts for future interviews.
+
+
+DM, RSF (FISHERY CO-OP)
+
+
+Profile. Members: 5. Annual revenue bracket: 5. Financial reviews per year: 4.
+
+Capacity. Full-time staff: 2; Contractors: 2; Partners: 6; Grants: 2.
+
+Innovation and culture. New practices: 4; New offerings: 6; Cultural integration/preservation: 4/3.
+
+Operations. Equipment: 1; External processing: 1; Nonmember labor: 1.
+
+"PS: How long have you so you've been with a cooperative since the beginning? When did it start? DM: We were formally" [Interview with DM, RSF.txt L13]
+
+Interpretation. The indicators above are read in relation to mission and pacing. Unknowns (-1) are prompts for future interviews.
+
+
+MANY NATIONS (INSURANCE CO-OP)
+
+
+Profile. Members: 250. Annual revenue bracket: 5. Financial reviews per year: 12.
+
+Capacity. Full-time staff: 10; Contractors: 20; Partners: 3; Grants: 1.
+
+Innovation and culture. New practices: 3; New offerings: 3; Cultural integration/preservation: 2/2.
+
+Operations. Equipment: 0; External processing: -1; Nonmember labor: -1.
+
+"We have what 100. And oh, I should have I should have grabbed that number off the top of my head. We" [manynations.txt L49]
+
+Interpretation. The indicators above are read in relation to mission and pacing. Unknowns (-1) are prompts for future interviews.
+
+
+RTZ (ARTISTS CO-OP)
+
+
+Profile. Members: 46. Annual revenue bracket: 2. Financial reviews per year: -1.
+
+Capacity. Full-time staff: 0; Contractors: 2; Partners: 5; Grants: 2.
+
+Innovation and culture. New practices: 3; New offerings: 4; Cultural integration/preservation: 3/3.
+
+Operations. Equipment: -1; External processing: -1; Nonmember labor: -1.
+
+"KQ: Okay, do you have a ballpark number? How many members are in the coop? KE: Oh, I'm sure CG probably has" [Interview with RTZ Leadership.txt L14]
+
+Interpretation. The indicators above are read in relation to mission and pacing. Unknowns (-1) are prompts for future interviews.
+
+
+PART II: COMPARATIVE NARRATIVE
+
+
+
+MEMBERSHIP AND CONSTITUENCY
+
+
+Membership and Constituency shows systematic differences that reflect strategy, not only maturity.
+
+How many members are currently in good standing? -> Allottees (E' Numu Diip): 17, DM, RSF (Fishery Co-op): 5, Many Nations (Insurance Co-op): 250, RTZ (Artists Co-op): 46.
+
+Illustrative: "you mean of our co-op? Yes, please. Right now we only have 17. We are working on the bylaws still." [allottees.txt L37]
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+FINANCE AND FINANCIAL DISCIPLINE
+
+
+Finance and Financial Discipline shows systematic differences that reflect strategy, not only maturity.
+
+Which bracket best describes current annual revenue? -> Allottees (E' Numu Diip): 1, DM, RSF (Fishery Co-op): 5, Many Nations (Insurance Co-op): 5, RTZ (Artists Co-op): 2.
+
+How often are budgets/financials formally reviewed each year? -> Allottees (E' Numu Diip): 12, DM, RSF (Fishery Co-op): 4, Many Nations (Insurance Co-op): 12.
+
+Illustrative: "KQ: Going on to the next section, which is the general business questions. Number 21. What is the cost current" [Interview with RTZ Leadership.txt L59]
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+PARTNERSHIPS AND EXTERNAL SUPPORT
+
+
+Partnerships and External Support shows systematic differences that reflect strategy, not only maturity.
+
+How many active external partner organizations does the co-op work with? -> Allottees (E' Numu Diip): 6, DM, RSF (Fishery Co-op): 6, Many Nations (Insurance Co-op): 3, RTZ (Artists Co-op): 5.
+
+How many distinct grants or external funding sources have been secured? -> Allottees (E' Numu Diip): 4, DM, RSF (Fishery Co-op): 2, Many Nations (Insurance Co-op): 1, RTZ (Artists Co-op): 2.
+
+How many partners are non-Indigenous organizations? -> Allottees (E' Numu Diip): 3, DM, RSF (Fishery Co-op): 4, RTZ (Artists Co-op): 3.
+
+Illustrative: "Well, to begin with, we were assisted by the Northwest Cooperative Development Center out of Washington. Diane Gassaway, the executive" [allottees.txt L79-L97]
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+INNOVATION AND OFFERING DEVELOPMENT
+
+
+Innovation and Offering Development shows systematic differences that reflect strategy, not only maturity.
+
+How many notable new practices, models, or platforms has the co-op developed? -> Allottees (E' Numu Diip): 4, DM, RSF (Fishery Co-op): 4, Many Nations (Insurance Co-op): 3, RTZ (Artists Co-op): 3.
+
+How many new products or services has the co-op launched since founding? -> Allottees (E' Numu Diip): 4, DM, RSF (Fishery Co-op): 6, Many Nations (Insurance Co-op): 3, RTZ (Artists Co-op): 4.
+
+Does the co-op offer products uniquely difficult to source elsewhere? -> Allottees (E' Numu Diip): 0.
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+OPERATIONS AND SUPPLY CHAIN
+
+
+Operations and Supply Chain shows systematic differences that reflect strategy, not only maturity.
+
+Does the co-op own, lease, or rent production equipment that would be difficult for a single member to afford alone? -> Allottees (E' Numu Diip): 0, DM, RSF (Fishery Co-op): 1, Many Nations (Insurance Co-op): 0.
+
+Does the value chain rely on external processing, warehousing, or certification? -> Allottees (E' Numu Diip): 0, DM, RSF (Fishery Co-op): 1.
+
+Does the co-op employ nonmember workers to meet operational needs? -> Allottees (E' Numu Diip): 1, DM, RSF (Fishery Co-op): 1.
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+MARKETS AND SALES CHANNELS
+
+
+Markets and Sales Channels shows systematic differences that reflect strategy, not only maturity.
+
+How many primary, recurring revenue streams does the co-op have? -> Allottees (E' Numu Diip): 2, DM, RSF (Fishery Co-op): 2, Many Nations (Insurance Co-op): 1, RTZ (Artists Co-op): 3.
+
+Do most end customers buy directly from the coop, or mostly via distributors/retailers? -> Allottees (E' Numu Diip): 1, DM, RSF (Fishery Co-op): 2, RTZ (Artists Co-op): 1.
+
+What is the main sales footprint (local, regional, state/province, national, international)? -> Allottees (E' Numu Diip): 1, DM, RSF (Fishery Co-op): 5, RTZ (Artists Co-op): 1.
+
+Illustrative: "PS: What strategies did or did you use or use to raise capital? DM: Oh, yes, we broke our business" [Interview with DM, RSF.txt L70]
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+CULTURE AND HERITAGE
+
+
+Culture and Heritage shows systematic differences that reflect strategy, not only maturity.
+
+In how many concrete ways are traditional or cultural values integrated? -> Allottees (E' Numu Diip): 3, DM, RSF (Fishery Co-op): 4, Many Nations (Insurance Co-op): 2, RTZ (Artists Co-op): 3.
+
+How many ongoing initiatives support cultural preservation? -> Allottees (E' Numu Diip): 3, DM, RSF (Fishery Co-op): 3, Many Nations (Insurance Co-op): 2, RTZ (Artists Co-op): 3.
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+RISK, RELATIONS, AND ADAPTATION
+
+
+Risk, Relations, and Adaptation shows systematic differences that reflect strategy, not only maturity.
+
+How many persistent challenges or obstacles are recognized? -> Allottees (E' Numu Diip): 5, DM, RSF (Fishery Co-op): 5, Many Nations (Insurance Co-op): 4, RTZ (Artists Co-op): 5.
+
+How many adaptations address climate or market shifts? -> Allottees (E' Numu Diip): 3, DM, RSF (Fishery Co-op): 4, Many Nations (Insurance Co-op): 1, RTZ (Artists Co-op): 1.
+
+Are there significant government-related issues affecting business? -> Allottees (E' Numu Diip): 1, DM, RSF (Fishery Co-op): 1.
+
+Illustrative: "No, okay, because I don't think other cooperatives well. Where I live here Madras, there's a co op. It's a" [allottees.txt L85-L397]
+
+Implication. The same metric can indicate capacity or constraint depending on thesis and constraints. Target unknowns in future interviews.
+
+
+PART III: SYNTHESIS AND RECOMMENDATIONS
+
+
+Synthesis. Coherence correlates with resilience. Many Nations exhibits disciplined cadence and national scope; RSF reforms trade dynamics to enable small-scale fisheries; Allottees operationalizes land-first governance with conservative risk; RTZ converts community energy into markets needing formal scaffolding.
+
+Recommendations. Many Nations: expand channels and invest in Indigenous workforce pipelines tied to product innovation. RSF: scale distribution while preserving transparent bidding and brand. Allottees: capitalize enabling infrastructure and formalize finance cadence and contingency plans. RTZ: formalize inventory, scheduling, and partner finance.

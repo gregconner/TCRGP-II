@@ -23,3 +23,5 @@ if __name__ == "__main__":
     text = extract_text(docx_file)
     print(text)
 
+
+

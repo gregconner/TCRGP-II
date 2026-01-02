@@ -1,0 +1,112 @@
+{
+  "transcript_name": "San Xavier Coop Transcript - Duran Andrews 11.10.2025_deidentified.txt",
+  "date": "2026-01-01T20:41:47.806877",
+  "overall_grade": "F",
+  "overall_score": 41.114754098360656,
+  "categories": {
+    "deidentification_completeness": {
+      "grade": "F",
+      "score": 9,
+      "max_score": 25,
+      "suggestions": [
+        "Critical: 16 PII items remaining",
+        "  - 9 persons not de-identified: Andrews, 00:21:16, Instagram, Twitter, Joy",
+        "  - 7 locations not de-identified: San Javier, Turtle Island, Hilla River, United States, White River"
+      ]
+    },
+    "deidentification_accuracy": {
+      "grade": "F",
+      "score": 0,
+      "max_score": 20,
+      "suggestions": [
+        "Error rate: 26.7%"
+      ]
+    },
+    "formatting_quality": {
+      "grade": "C",
+      "score": 11.0,
+      "max_score": 15,
+      "suggestions": [
+        "No clear dialogue format or speaker labels",
+        "No dialogue format",
+        "Standalone Person_X codes found"
+      ]
+    },
+    "citation_system": {
+      "grade": "F",
+      "score": 4.0,
+      "max_score": 15,
+      "suggestions": [
+        "Speaker letters missing",
+        "Verse numbers missing",
+        "No speaker letters or verse numbers found"
+      ]
+    },
+    "tagging_completeness": {
+      "grade": "F",
+      "score": 3.114754098360656,
+      "max_score": 10,
+      "suggestions": [
+        "Tag coverage: 31.1%",
+        "Total tags: 328",
+        "Categories: 24"
+      ]
+    },
+    "tagging_precision": {
+      "grade": "A",
+      "score": 9.0,
+      "max_score": 10,
+      "suggestions": [
+        "No obvious false positives detected"
+      ]
+    },
+    "spelling_matching": {
+      "grade": "A",
+      "score": 5.0,
+      "max_score": 5,
+      "suggestions": [
+        "Name variants detected: 10",
+        "Unique persons: 8"
+      ]
+    }
+  },
+  "detailed_findings": {
+    "remaining_pii": {
+      "persons": [
+        "Andrews",
+        "00:21:16",
+        "Instagram",
+        "Twitter",
+        "Joy",
+        "Pamela",
+        "Sekiros",
+        "Perry",
+        "Amy"
+      ],
+      "organizations": [],
+      "locations": [
+        "San Javier",
+        "Turtle Island",
+        "Hilla River",
+        "United States",
+        "White River",
+        "the United States",
+        "the Babakiri District"
+      ],
+      "tribes": [],
+      "financial_amounts": [],
+      "years": []
+    },
+    "formatting_issues": [
+      "No clear dialogue format or speaker labels"
+    ],
+    "citation_issues": [
+      "No speaker letters or verse numbers found"
+    ],
+    "tagging_stats": {
+      "tag_count": 328,
+      "category_count": 24,
+      "coverage": 0.3114754098360656
+    }
+  }
+}

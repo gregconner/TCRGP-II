@@ -1,0 +1,92 @@
+{
+  "transcript_name": "GMT20250813-152303_Recording.transcript_httpsnmhu.zoom.usrecplayjPKEJWKIFAhT-M9jG7nEffk4IFhqOPFeNuTZOKEVwrddyY695IMl_TIWA LENDING SERVICES_deidentified.txt",
+  "date": "2026-01-01T20:40:29.602916",
+  "overall_grade": "B-",
+  "overall_score": 80.97604790419162,
+  "categories": {
+    "deidentification_completeness": {
+      "grade": "B",
+      "score": 20.0,
+      "max_score": 25,
+      "suggestions": [
+        "Good: 5 PII items remaining",
+        "  - 5 persons not de-identified: â€¦, Danae, Miranda, Gabriel, Vicki"
+      ]
+    },
+    "deidentification_accuracy": {
+      "grade": "B",
+      "score": 16.0,
+      "max_score": 20,
+      "suggestions": [
+        "Error rate: 5.4%"
+      ]
+    },
+    "formatting_quality": {
+      "grade": "A",
+      "score": 14.0,
+      "max_score": 15,
+      "suggestions": [
+        "Standalone Person_X codes found"
+      ]
+    },
+    "citation_system": {
+      "grade": "A",
+      "score": 15.0,
+      "max_score": 15,
+      "suggestions": [
+        "Complete citation system",
+        "Found 2 speakers, 397 verses"
+      ]
+    },
+    "tagging_completeness": {
+      "grade": "F",
+      "score": 1.9760479041916168,
+      "max_score": 10,
+      "suggestions": [
+        "Tag coverage: 19.8%",
+        "Total tags: 302",
+        "Categories: 22"
+      ]
+    },
+    "tagging_precision": {
+      "grade": "A",
+      "score": 9.0,
+      "max_score": 10,
+      "suggestions": [
+        "No obvious false positives detected"
+      ]
+    },
+    "spelling_matching": {
+      "grade": "A",
+      "score": 5.0,
+      "max_score": 5,
+      "suggestions": [
+        "Name variants detected: 26",
+        "Unique persons: 12"
+      ]
+    }
+  },
+  "detailed_findings": {
+    "remaining_pii": {
+      "persons": [
+        "â€¦",
+        "Danae",
+        "Miranda",
+        "Gabriel",
+        "Vicki"
+      ],
+      "organizations": [],
+      "locations": [],
+      "tribes": [],
+      "financial_amounts": [],
+      "years": []
+    },
+    "formatting_issues": [],
+    "citation_issues": [],
+    "tagging_stats": {
+      "tag_count": 302,
+      "category_count": 22,
+      "coverage": 0.19760479041916168
+    }
+  }
+}
