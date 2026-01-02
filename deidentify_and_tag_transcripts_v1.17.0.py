@@ -981,8 +981,12 @@ class DeIdentifier:
                             continue
                     
                     loc = ent_text
+                    # NEW v1.17.0: Pass context for disambiguation
+                    start = max(0, ent.start_char - 50)
+                    end = min(len(chunk), ent.end_char + 50)
+                    context = chunk[start:end]
                     if (len(loc) > 3 and 
-                        self.is_valid_location(loc) and 
+                        self.is_valid_location(loc, context) and 
                         loc not in extracted_locs):
                         entities["locations"].append(loc)
                         extracted_locs.add(loc)
