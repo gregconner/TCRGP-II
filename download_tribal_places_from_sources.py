@@ -848,9 +848,6 @@ def download_epa_tribes_data() -> List[Dict]:
                 
                 print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
                 print(f"    ✓ Includes: tribal names, reservations, locations, states, regions")
-                    
-                    # Get detailed information to extract ALL data
-                    if epa_tribal_id:
                         try:
                             details_url = f"{base_url}/tribeDetails/{epa_tribal_id}"
                             with urllib.request.urlopen(details_url, timeout=30) as details_response:
