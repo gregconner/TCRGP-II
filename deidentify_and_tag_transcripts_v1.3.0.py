@@ -335,7 +335,7 @@ class DeIdentifier:
             print("  → Continuing without spaCy (using regex patterns only)")
         
     def extract_entities_with_spacy(self, text: str) -> Dict[str, List[str]]:
-        """Extract entities using spaCy NER."""
+        """Extract entities using spaCy NER with improved filtering."""
         if not self.use_spacy or not self.nlp:
             return {"persons": [], "organizations": [], "locations": [], "tribes": []}
         
@@ -346,11 +346,19 @@ class DeIdentifier:
             "tribes": []
         }
         
+        # Known false positives to exclude
+        FALSE_POSITIVE_PERSONS = {
+            "facebook messenger", "cooper bay", "st. michael", "st michael",
+            "chuck cheese", "hooper bay", "old harbor", "new lotto"
+        }
+        FALSE_POSITIVE_ORGS = {
+            "flagstaff", "kotzebue", "kivalina", "hooper bay", "cooper bay",
+            "st. michael", "st michael", "old harbor", "new lotto", "webvtt"
+        }
+        
         # Process text with spaCy (in chunks if very long)
-        # spaCy has a default max_length, but we'll process in chunks for very long texts
         max_length = 1000000  # spaCy default
         if len(text) > max_length:
-            # Process in chunks
             chunks = [text[i:i+max_length] for i in range(0, len(text), max_length)]
         else:
             chunks = [text]
@@ -363,31 +371,65 @@ class DeIdentifier:
             doc = self.nlp(chunk)
             
             for ent in doc.ents:
+                ent_text = ent.text.strip()
+                ent_lower = ent_text.lower()
+                
                 # Filter and validate entities
                 if ent.label_ == "PERSON":
-                    name = ent.text.strip()
+                    # Exclude known false positives
+                    if any(fp in ent_lower for fp in FALSE_POSITIVE_PERSONS):
+                        continue
+                    
+                    # Exclude if contains common non-name words
+                    if any(word in ent_lower for word in ["messenger", "bay", "harbor", "cheese"]):
+                        continue
+                    
+                    # Must look like a name (2-4 words, proper capitalization)
+                    words = ent_text.split()
+                    if len(words) < 2 or len(words) > 4:
+                        continue
+                    
                     # Basic validation
-                    if (len(name) > 3 and 
-                        self.is_valid_name(name) and 
-                        name not in extracted_persons):
-                        entities["persons"].append(name)
-                        extracted_persons.add(name)
+                    if (len(ent_text) > 3 and 
+                        self.is_valid_name(ent_text) and 
+                        ent_text not in extracted_persons):
+                        entities["persons"].append(ent_text)
+                        extracted_persons.add(ent_text)
                         # Get context (surrounding words)
                         start = max(0, ent.start_char - 50)
                         end = min(len(chunk), ent.end_char + 50)
                         context = chunk[start:end]
-                        self.name_detector.add_name(name, context)
+                        self.name_detector.add_name(ent_text, context)
                 
                 elif ent.label_ in ["ORG", "ORGANIZATION"]:
-                    org = ent.text.strip()
+                    # Exclude known false positives (locations misidentified as orgs)
+                    if any(fp in ent_lower for fp in FALSE_POSITIVE_ORGS):
+                        continue
+                    
+                    # Exclude single-word place names that are likely locations
+                    if len(ent_text.split()) == 1 and ent_text[0].isupper():
+                        # Could be a location, skip
+                        continue
+                    
+                    org = ent_text
                     if (len(org) > 5 and 
-                        org.lower() not in EXCLUDED_WORDS.get("organizations", set()) and
-                        org not in extracted_orgs):
+                        ent_lower not in EXCLUDED_WORDS.get("organizations", set()) and
+                        org not in extracted_orgs and
+                        not any(word in ent_lower for word in ["the cooperative", "a cooperative", "this co-op", "your cooperative"])):
                         entities["organizations"].append(org)
                         extracted_orgs.add(org)
                 
                 elif ent.label_ in ["GPE", "LOC", "LOCATION"]:  # Geopolitical entity or location
-                    loc = ent.text.strip()
+                    # Exclude if it's actually a person name pattern
+                    words = ent_text.split()
+                    if len(words) == 2 and all(w[0].isupper() for w in words if w):
+                        # Could be a person name, be more careful
+                        # Check if it's in our known locations list
+                        if ent_lower not in ["hooper bay", "old harbor", "new lotto", "cooper bay", "st. michael"]:
+                            # Might be a person, skip
+                            continue
+                    
+                    loc = ent_text
                     if (len(loc) > 3 and 
                         self.is_valid_location(loc) and 
                         loc not in extracted_locs):
