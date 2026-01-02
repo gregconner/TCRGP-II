@@ -283,6 +283,10 @@ def format_with_citation_system(
         if not line:
             continue
         
+        # Skip lines that are just "Person_X." (standalone person codes without dialogue)
+        if re.match(r'^Person_\d+\.?\s*$', line):
+            continue
+        
         # Check if line starts with a person code (speaker)
         speaker_match = re.match(r'^(Person_\d+):\s*(.*)$', line)
         if speaker_match:
