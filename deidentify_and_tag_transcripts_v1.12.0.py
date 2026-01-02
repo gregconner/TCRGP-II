@@ -1413,12 +1413,13 @@ class DeIdentifier:
                         parts = variant.split('-')
                         variant_to_code['-'.join([p.capitalize() for p in parts])] = canonical_code
         
-        # Replace all variants (longest first to avoid partial matches)
+        # Replace all variants (longest first to avoid partial matches) - IMPROVED v1.12.0
         sorted_variants = sorted(variant_to_code.items(), key=lambda x: len(x[0]), reverse=True)
         for variant, code in sorted_variants:
             if variant and len(variant) > 2:  # Skip very short variants
                 # Use word boundaries to avoid partial matches
-                pattern = r'\b' + re.escape(variant) + r'\b'
+                # CRITICAL v1.12.0: Also match after punctuation and in citation format
+                pattern = r'(?<![A-Za-z])' + re.escape(variant) + r'(?![A-Za-z])'  # More flexible boundaries
                 deidentified = re.sub(pattern, code, deidentified, flags=re.IGNORECASE)
         
         # NEW v1.8.0: Final pass - replace misspellings that were corrected to names now in mapping
