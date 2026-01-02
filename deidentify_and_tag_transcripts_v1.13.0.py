@@ -1555,6 +1555,9 @@ class DeIdentifier:
         
         # NEW v1.13.0: Final post-processing pass AFTER citation formatting
         # This catches names that appear in citation format like "[C.70] Interviewer: Dave."
+        # CRITICAL: Re-get person_items after formatting (they might have changed)
+        person_items_post = sorted(self.mapping["persons"].items(), key=lambda x: len(x[0]), reverse=True)
+        
         known_names_to_replace = {
             'Vicki', 'Danae', 'Perry', 'Pamela', 'Chris', 'Dave', 'Valentino', 
             'Diffin', 'Alatada', 'Ho-Chunk', 'Ho-Chump'
@@ -1562,27 +1565,30 @@ class DeIdentifier:
         
         for name in known_names_to_replace:
             name_lower = name.lower()
-            # Find code for this name
+            # Find code for this name - check all mappings
             found_code = None
-            for orig, code in person_items:
+            for orig, code in person_items_post:
                 orig_lower = orig.lower()
                 if orig_lower == name_lower or name_lower in orig_lower or orig_lower in name_lower:
                     found_code = code
                     break
             
-            if not found_code:
-                for orig, code in self.mapping["persons"].items():
-                    if orig.lower() == name_lower or name_lower in orig.lower():
-                        found_code = code
-                        break
+            # Also check if name appears in text and create code if needed
+            if not found_code and re.search(r'\b' + re.escape(name) + r'\b', deidentified, re.IGNORECASE):
+                # Name appears but wasn't mapped - create code
+                self.person_counter += 1
+                found_code = f"Person_{self.person_counter}"
+                self.mapping["persons"][name] = found_code
+                person_items_post.append((name, found_code))
             
             if found_code:
-                # CRITICAL: Match names after colons, periods, in citation format
+                # CRITICAL v1.13.0: Match names in ALL citation format contexts
                 patterns = [
-                    r'(?::\s*)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After colon (lookahead)
+                    r'(?::\s*)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After colon: "Interviewer: Dave."
                     r'(?:\.\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After period
-                    r'(?:\]\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After ] in citation
-                    r'(?<![A-Za-z])' + re.escape(name) + r'(?![A-Za-z])',  # General word boundary
+                    r'(?:\]\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After ]: "] Dave"
+                    r'(?:\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After space
+                    r'(?<![A-Za-z])' + re.escape(name) + r'(?![A-Za-z])',  # General word boundary (fallback)
                 ]
                 for pattern in patterns:
                     deidentified = re.sub(pattern, found_code, deidentified, flags=re.IGNORECASE)
