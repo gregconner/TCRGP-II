@@ -8,9 +8,6 @@
 older transcripts/
 newer transcripts/
 
-# Iteration outputs may include grading artifacts and should not be committed.
-iteration_outputs/
-
 # Raw transcript files in root directory (with identifiable data)
 # These are the original transcripts before cleaning/de-identification
 Interview with DM, RSF.txt
@@ -77,6 +74,7 @@ ENV/
 # ============================================================================
 # TEMPORARY AND OUTPUT FILES
 # ============================================================================
+iteration_outputs/
 *.log
 *.tmp
 *.temp
