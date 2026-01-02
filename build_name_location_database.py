@@ -512,23 +512,6 @@ def download_common_names() -> tuple[List[str], List[str]]:
         "Pam", "Sam", "Barry", "Roberto", "Rufus", "Nelson", "Rich", "Richardson",
         "Vicki", "Danae", "Perry", "Chris", "Dave", "Valentino", "Diffin", "Alatada"
     ]
-        "James", "Robert", "John", "Michael", "David", "William", "Richard", "Joseph",
-        "Thomas", "Christopher", "Charles", "Daniel", "Matthew", "Anthony", "Mark",
-        "Donald", "Steven", "Paul", "Andrew", "Joshua", "Kenneth", "Kevin", "Brian",
-        "George", "Timothy", "Ronald", "Jason", "Edward", "Jeffrey", "Ryan", "Jacob",
-        "Gary", "Nicholas", "Eric", "Jonathan", "Stephen", "Larry", "Justin", "Scott",
-        "Brandon", "Benjamin", "Samuel", "Frank", "Gregory", "Raymond", "Alexander",
-        "Patrick", "Jack", "Dennis", "Jerry", "Tyler", "Aaron", "Jose", "Henry",
-        "Adam", "Douglas", "Nathan", "Zachary", "Kyle", "Noah", "Ethan", "Jeremy",
-        "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan",
-        "Jessica", "Sarah", "Karen", "Nancy", "Lisa", "Betty", "Margaret", "Sandra",
-        "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Dorothy", "Carol",
-        "Amanda", "Melissa", "Deborah", "Stephanie", "Rebecca", "Sharon", "Laura",
-        "Cynthia", "Kathleen", "Amy", "Shirley", "Angela", "Helen", "Anna", "Brenda",
-        "Pamela", "Nicole", "Samantha", "Katherine", "Emma", "Christine", "Debra",
-        "Rachel", "Carolyn", "Janet", "Virginia", "Maria", "Heather", "Diane",
-        "Julie", "Joyce", "Victoria", "Kelly", "Christina", "Joan", "Evelyn"
-    ]
     
     # Common US last names (top 100 from census data patterns)
     common_last = [
