@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Download Comprehensive Tribal Place Names from Public Sources
+Download Comprehensive Tribal Place Names from Public Sources v1.1.0
 
 This script downloads thousands of tribal place names from:
 - USGS GNIS (Geographic Names Information System)

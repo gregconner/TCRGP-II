@@ -79,6 +79,9 @@ ENV/
 *.temp
 *.bak
 *.backup
+*.pid
+name_location_database.db-wal
+name_location_database.db-shm
 
 # ============================================================================
 # NOTES
