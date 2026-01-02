@@ -108,10 +108,21 @@ INDIGENOUS_TERMS = [
 
 # Common transcription errors and patterns
 COMMON_MISSPELLINGS = {
-    "burshia": ["brache", "berchet", "berchet-gowazi", "brochure", "burche"],
+    "burshia": ["brache", "berchet", "berchet-gowazi", "brochure", "burche", "brochure"],
     "jodi": ["jody"],
+    "jodi burshia": ["jody brochure", "jody brochet", "jody burche"],
     "pamela": ["pam"],
-    "standing": ["stand"]
+    "standing": ["stand"],
+    "anna sattler": ["anna satler", "anna sattler"],
+    "pamela standing": ["pam standing", "pamela stand"]
+}
+
+# Common misspellings to correct (full name corrections)
+FULL_NAME_CORRECTIONS = {
+    "jody brochure": "Jodi Burshia",
+    "jody brochet": "Jodi Burshia",
+    "jody burche": "Jodi Burshia",
+    "jody": "Jodi",  # When context suggests it's the same person
 }
 
 # Common misspellings to correct
@@ -119,7 +130,9 @@ MISSPELLING_CORRECTIONS = {
     "upic": "Yupik",
     "yupic": "Yupik",
     "UPIC": "Yupik",
-    "YUPIC": "Yupik"
+    "YUPIC": "Yupik",
+    "brochure": "Burshia",  # When in name context
+    "jody": "Jodi",  # When in name context
 }
 
 # Words to exclude from entity extraction (common words that cause false positives)
@@ -135,7 +148,8 @@ EXCLUDED_WORDS = {
 
 # Fuzzy matching threshold (lowered for severe misspellings when using spaCy)
 SIMILARITY_THRESHOLD = 0.75
-SIMILARITY_THRESHOLD_LOW = 0.60  # For severe misspellings with context clues
+SIMILARITY_THRESHOLD_LOW = 0.55  # For severe misspellings with context clues or first name match
+SIMILARITY_THRESHOLD_FIRSTNAME = 0.50  # When first names match >=70%, use even lower threshold for last name
 
 # Citation system configuration
 LINES_PER_PAGE = 50  # Number of lines per page for pagination
@@ -190,10 +204,19 @@ def remove_webvtt_timestamps(text: str) -> str:
 def correct_misspellings(text: str) -> str:
     """Correct common misspellings in text."""
     corrected = text
+    
+    # First, correct full name misspellings (longest first)
+    for wrong, correct in sorted(FULL_NAME_CORRECTIONS.items(), key=lambda x: len(x[0]), reverse=True):
+        # Use word boundaries for whole word replacement
+        pattern = r'\b' + re.escape(wrong) + r'\b'
+        corrected = re.sub(pattern, correct, corrected, flags=re.IGNORECASE)
+    
+    # Then correct single-word misspellings
     for wrong, correct in MISSPELLING_CORRECTIONS.items():
         # Use word boundaries for whole word replacement
         pattern = r'\b' + re.escape(wrong) + r'\b'
         corrected = re.sub(pattern, correct, corrected, flags=re.IGNORECASE)
+    
     return corrected
 
 def parse_webvtt_with_timestamps(text: str) -> List[Dict[str, str]]:
@@ -416,15 +439,31 @@ class NameVariantDetector:
         name_lower = name.strip().lower()
         if name_lower in EXCLUDED_WORDS.get("persons", set()):
             return
-            
+        
+        # First, try full name corrections
         name_clean = name.strip()
+        if name_lower in FULL_NAME_CORRECTIONS:
+            name_clean = FULL_NAME_CORRECTIONS[name_lower]
+            name_lower = name_clean.lower()
+        
         self.name_counter[name_clean] += 1
         if context:
             self.name_contexts[name_clean].append(context)
         
-        # Check against known misspellings
+        # Check against known misspellings (improved matching)
         for canonical, variants in COMMON_MISSPELLINGS.items():
-            if name_lower in variants or canonical in name_lower:
+            # Check if name matches canonical or any variant exactly
+            if name_lower == canonical or name_lower in variants:
+                canonical_key = f"CANONICAL_{canonical}"
+                if canonical_key not in self.name_clusters:
+                    self.name_clusters[canonical_key] = []
+                if name_clean not in self.name_clusters[canonical_key]:
+                    self.name_clusters[canonical_key].append(name_clean)
+                return
+            
+            # Check if canonical or variant is contained in name (for partial matches)
+            # e.g., "jodi burshia" contains "jodi" and "burshia"
+            if canonical in name_lower or any(v in name_lower for v in variants):
                 canonical_key = f"CANONICAL_{canonical}"
                 if canonical_key not in self.name_clusters:
                     self.name_clusters[canonical_key] = []
@@ -432,20 +471,55 @@ class NameVariantDetector:
                     self.name_clusters[canonical_key].append(name_clean)
                 return
         
-        # Try fuzzy matching against existing clusters
+        # Try fuzzy matching against existing clusters (improved algorithm)
         matched = False
+        best_match = None
+        best_sim = 0
+        
         for cluster_key, cluster_names in self.name_clusters.items():
             for cluster_name in cluster_names:
+                # Calculate overall similarity
                 sim = similarity(name_clean, cluster_name)
-                # Use lower threshold if we have context clues
-                threshold = SIMILARITY_THRESHOLD_LOW if context else SIMILARITY_THRESHOLD
-                if sim >= threshold:
-                    if name_clean not in cluster_names:
-                        self.name_clusters[cluster_key].append(name_clean)
-                    matched = True
-                    break
-            if matched:
-                break
+                
+                # Also check first/last name separately for better matching
+                name_parts = name_clean.split()
+                cluster_parts = cluster_name.split()
+                
+                if len(name_parts) >= 2 and len(cluster_parts) >= 2:
+                    # Check first name similarity
+                    first_sim = similarity(name_parts[0], cluster_parts[0])
+                    # Check last name similarity
+                    last_sim = similarity(name_parts[-1], cluster_parts[-1])
+                    
+                    # If first names match well (>=70%), use lower threshold for last name
+                    if first_sim >= 0.70:
+                        # Weighted similarity: 40% first name, 40% last name, 20% full
+                        weighted_sim = (first_sim * 0.4) + (last_sim * 0.4) + (sim * 0.2)
+                        sim = max(sim, weighted_sim)
+                
+                # Use lower threshold if we have context clues or if first name matches
+                if len(name_parts) >= 2 and len(cluster_parts) >= 2:
+                    first_sim_check = similarity(name_parts[0], cluster_parts[0])
+                    if first_sim_check >= 0.70:
+                        # First names match well, use very low threshold
+                        threshold = SIMILARITY_THRESHOLD_FIRSTNAME
+                    elif context:
+                        threshold = SIMILARITY_THRESHOLD_LOW
+                    else:
+                        threshold = SIMILARITY_THRESHOLD
+                elif context:
+                    threshold = SIMILARITY_THRESHOLD_LOW
+                else:
+                    threshold = SIMILARITY_THRESHOLD
+                
+                if sim >= threshold and sim > best_sim:
+                    best_sim = sim
+                    best_match = cluster_key
+        
+        if best_match:
+            if name_clean not in self.name_clusters[best_match]:
+                self.name_clusters[best_match].append(name_clean)
+            matched = True
         
         # Create new cluster if no match
         if not matched:
@@ -859,10 +933,37 @@ class DeIdentifier:
         
         # Replace persons (longest matches first)
         person_items = sorted(self.mapping["persons"].items(), key=lambda x: len(x[0]), reverse=True)
+        
+        # Build first name to code mapping for standalone first name replacement
+        first_name_to_code = {}
+        for original, code in person_items:
+            name_parts = original.split()
+            if len(name_parts) >= 2:
+                first_name = name_parts[0]
+                # Use the most common code for this first name
+                if first_name not in first_name_to_code:
+                    first_name_to_code[first_name] = code
+        
+        # First, replace full names
         for original, code in person_items:
             # Use word boundaries to avoid partial matches
             pattern = r'\b' + re.escape(original) + r'\b'
             deidentified = re.sub(pattern, code, deidentified, flags=re.IGNORECASE)
+        
+        # Then replace standalone first names in name-like contexts
+        # Only replace when it's clearly a person name (after "Sorry,", "said", etc., or capitalized at start)
+        for first_name, code in first_name_to_code.items():
+            # Pattern 1: "Sorry, Jodi" or ", Jodi" or ": Jodi"
+            pattern1 = r'(?:Sorry,\s+|,\s+|:\s+)' + re.escape(first_name) + r'(?:\s|,|\.|$|,)'
+            deidentified = re.sub(pattern1, lambda m: m.group(0).replace(first_name, code), deidentified, flags=re.IGNORECASE)
+            
+            # Pattern 2: "Jodi has" or "Jodi said" (first name at start of sentence or after period)
+            pattern2 = r'(?:^|\.\s+)([A-Z])' + re.escape(first_name[1:] if len(first_name) > 1 else first_name) + r'(?:\s+has|\s+said|\s+asked|\s+told|\s+called)'
+            deidentified = re.sub(pattern2, lambda m: m.group(1) + code + m.group(0)[len(m.group(1) + first_name):], deidentified, flags=re.IGNORECASE | re.MULTILINE)
+            
+            # Pattern 3: "and Jodi" (after "and")
+            pattern3 = r'\band\s+' + re.escape(first_name) + r'(?:\s|,|\.|$)'
+            deidentified = re.sub(pattern3, lambda m: m.group(0).replace(first_name, code), deidentified, flags=re.IGNORECASE)
         
         # Replace organizations
         org_items = sorted(self.mapping["organizations"].items(), key=lambda x: len(x[0]), reverse=True)
