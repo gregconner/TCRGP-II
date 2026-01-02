@@ -1548,6 +1548,62 @@ class DeIdentifier:
             else:
                 deidentified = format_as_dialogue(deidentified, speaker_mapping)
         
+        # NEW v1.13.0: Final post-processing pass AFTER citation formatting
+        # This catches names that appear in citation format like "[C.70] Interviewer: Dave."
+        known_names_to_replace = {
+            'Vicki', 'Danae', 'Perry', 'Pamela', 'Chris', 'Dave', 'Valentino', 
+            'Diffin', 'Alatada', 'Ho-Chunk', 'Ho-Chump'
+        }
+        
+        for name in known_names_to_replace:
+            name_lower = name.lower()
+            # Find code for this name
+            found_code = None
+            for orig, code in person_items:
+                orig_lower = orig.lower()
+                if orig_lower == name_lower or name_lower in orig_lower or orig_lower in name_lower:
+                    found_code = code
+                    break
+            
+            if not found_code:
+                for orig, code in self.mapping["persons"].items():
+                    if orig.lower() == name_lower or name_lower in orig.lower():
+                        found_code = code
+                        break
+            
+            if found_code:
+                # CRITICAL: Match names after colons, periods, in citation format
+                patterns = [
+                    r'(?::\s*)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After colon (lookahead)
+                    r'(?:\.\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After period
+                    r'(?:\]\s+)' + re.escape(name) + r'(?=\s|\.|,|$)',  # After ] in citation
+                    r'(?<![A-Za-z])' + re.escape(name) + r'(?![A-Za-z])',  # General word boundary
+                ]
+                for pattern in patterns:
+                    deidentified = re.sub(pattern, found_code, deidentified, flags=re.IGNORECASE)
+        
+        # Final location pass for "the Babakiri District" (AFTER formatting)
+        known_locations_final = ['Babakiri District', 'the Babakiri District', 'CNA']
+        for loc in known_locations_final:
+            loc_clean = loc.replace('the ', '').strip()
+            loc_code = None
+            for orig, code in loc_items:
+                orig_clean = orig.replace('the ', '').strip().lower()
+                if orig_clean == loc_clean.lower() or 'babakiri' in orig_clean or orig_clean == 'cna':
+                    loc_code = code
+                    break
+            
+            if not loc_code and loc_clean in self.mapping["locations"]:
+                loc_code = self.mapping["locations"][loc_clean]
+            
+            if loc_code:
+                patterns = [
+                    r'(?<![A-Za-z])' + re.escape(loc) + r'(?![A-Za-z])',
+                    r'(?<![A-Za-z])the\s+' + re.escape(loc_clean) + r'(?![A-Za-z])',
+                ]
+                for pattern in patterns:
+                    deidentified = re.sub(pattern, loc_code, deidentified, flags=re.IGNORECASE)
+        
         return deidentified, timestamp_table
 
 # ============================================================================
