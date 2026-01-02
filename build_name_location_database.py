@@ -513,8 +513,12 @@ def download_common_names() -> tuple[List[str], List[str]]:
         "Vicki", "Danae", "Perry", "Chris", "Dave", "Valentino", "Diffin", "Alatada"
     ]
     
+    # Combine SSA names with additional common names
+    common_first = ssa_first + additional_first
+    
     # Common US last names (top 100 from census data patterns)
-    common_last = [
+    # In production, could download from Census Bureau datasets
+    additional_last = [
         "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis",
         "Rodriguez", "Martinez", "Hernandez", "Lopez", "Wilson", "Anderson", "Thomas",
         "Taylor", "Moore", "Jackson", "Martin", "Lee", "Thompson", "White", "Harris",
