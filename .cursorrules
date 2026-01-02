@@ -10,6 +10,16 @@
 - Use event flags, completion signals, or status checks rather than polling with sleep().
 - Prefer async/await patterns or event-driven approaches over blocking waits.
 
+## User Instructions - CRITICAL
+- YOU MUST FOLLOW EXPLICIT USER INSTRUCTIONS IMMEDIATELY AND COMPLETELY.
+- When user requests a progress monitor, it MUST:
+  - Update in real-time (every second or more frequently)
+  - Be visible at ALL times while the program is running
+  - Show fine-grained, comprehensive progress information
+  - Display current status, percentage, ETA, speed, and other relevant metrics
+  - Use live updating (e.g., \r, sys.stdout.write, or similar) so it's always visible
+- DO NOT ignore or delay implementing explicit user requests.
+
 ## Version Management
 - Always work with specific version numbers. Use the VERSION file to track current version.
 - Use descriptive filenames with version numbers (e.g., ConnerFrac_v0.1.X.jl, deidentify_and_tag_transcripts_v1.X.X.py).

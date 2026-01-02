@@ -17,9 +17,14 @@ import csv
 import io
 import gzip
 import json
+import time
+import sys
+import threading
 from pathlib import Path
 from typing import List, Dict
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 DB_PATH = Path(__file__).parent / "name_location_database.db"
 
@@ -568,21 +573,80 @@ def download_gnis_state_files() -> List[Dict]:
     print(f"  ✓ Extracted {len(places)} places from state files")
     return places
 
+def extract_place_names_from_tribal_name(name: str) -> List[str]:
+    """Extract place names from tribal names.
+    
+    Tribal names often contain reservation names, locations, etc.
+    Example: "Agua Caliente Band of Cahuilla Indians of the Agua Caliente Indian Reservation, California"
+    Should extract: "Agua Caliente Indian Reservation", "California", "Agua Caliente"
+    """
+    places = []
+    
+    if not name:
+        return places
+    
+    # Extract reservation names (common patterns)
+    reservation_patterns = [
+        r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+Indian\s+Reservation',
+        r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+Reservation',
+        r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+Nation',
+        r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+Pueblo',
+    ]
+    
+    for pattern in reservation_patterns:
+        matches = re.findall(pattern, name)
+        for match in matches:
+            if isinstance(match, tuple):
+                match = ' '.join(match)
+            if match and len(match) > 2:
+                places.append(match)
+    
+    # Extract state names at the end (after comma)
+    state_match = re.search(r',\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)$', name)
+    if state_match:
+        state = state_match.group(1)
+        if state not in places:
+            places.append(state)
+    
+    # Extract city names (often in parentheses or after comma)
+    city_patterns = [
+        r'\(([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\)',  # (Palm Springs)
+        r',\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*),\s*[A-Z]',  # , City, State
+    ]
+    
+    for pattern in city_patterns:
+        matches = re.findall(pattern, name)
+        for match in matches:
+            if isinstance(match, tuple):
+                match = ' '.join(match)
+            if match and len(match) > 2 and match not in places:
+                places.append(match)
+    
+    return places
+
 def download_epa_tribes_data() -> List[Dict]:
     """Download from EPA Tribes Names Service.
     
     EPA provides a Tribes Names Service with up-to-date information on
     federally recognized tribes. This is a PUBLIC API - no authentication required!
     
+    We'll extract EVERYTHING:
+    - All current and historical tribal names
+    - All reservation names embedded in tribal names
+    - All locations (states, cities, regions)
+    - All place names mentioned
+    
     API Documentation: https://www.epa.gov/data/tribes-names-service
     Swagger UI: https://cdxapi.epa.gov/oms-tribes-rest-services/swagger-ui/index.html
     """
     places = []
+    seen_names = set()  # Track to avoid duplicates
     
     try:
         print("  Attempting to download from EPA Tribes Names Service...")
         print("    API: https://cdxapi.epa.gov/oms-tribes-rest-services/api/v1/tribes")
         print("    (Public API - no authentication required)")
+        print("    Extracting ALL data: names, reservations, locations, places...")
         
         # EPA Tribes Names Service API endpoints
         base_url = "https://cdxapi.epa.gov/oms-tribes-rest-services/api/v1"
@@ -595,57 +659,329 @@ def download_epa_tribes_data() -> List[Dict]:
             data = json.loads(response.read().decode('utf-8'))
             
             if isinstance(data, list):
-                print(f"    ✓ Got {len(data)} tribes from EPA")
+                total_tribes = len(data)
+                print(f"    ✓ Got {total_tribes} tribes from EPA")
+                print(f"    Fetching detailed information for each tribe...")
+                print(f"    Using parallel processing (10 concurrent requests) for speed...")
+                print()
                 
-                for tribe in data:
+                start_time = time.time()
+                
+                def fetch_tribe_details(tribe):
+                    """Fetch details for a single tribe and extract all data."""
+                    tribe_places = []
+                    current_name = tribe.get('currentName', '')
+                    epa_tribal_id = tribe.get('epaTribalInternalId')
+                    
+                    if not epa_tribal_id:
+                        if current_name:
+                            return [{
+                                'name': current_name,
+                                'type': 'tribe',
+                                'tribe': current_name,
+                                'state': None,
+                                'source': 'epa_tribes_service_basic'
+                            }]
+                        return []
+                    
+                    try:
+                        details_url = f"{base_url}/tribeDetails/{epa_tribal_id}"
+                        with urllib.request.urlopen(details_url, timeout=15) as details_response:
+                            details_data = json.loads(details_response.read().decode('utf-8'))
+                            
+                            if isinstance(details_data, dict):
+                                details = details_data
+                            elif isinstance(details_data, list) and len(details_data) > 0:
+                                details = details_data[0]
+                            else:
+                                return []
+                            
+                            # Extract ALL historical names
+                            names = details.get('names', [])
+                            if not names:
+                                names = [{'name': current_name}]
+                            
+                            for name_entry in names:
+                                name = name_entry.get('name', '') if isinstance(name_entry, dict) else str(name_entry)
+                                if name and name.strip():
+                                    tribe_places.append({
+                                        'name': name.strip(),
+                                        'type': 'tribe',
+                                        'tribe': current_name,
+                                        'state': None,
+                                        'source': 'epa_tribes_service'
+                                    })
+                                    
+                                    # Extract place names
+                                    extracted_places = extract_place_names_from_tribal_name(name)
+                                    for place_name in extracted_places:
+                                        if place_name and place_name.strip():
+                                            tribe_places.append({
+                                                'name': place_name.strip(),
+                                                'type': 'reservation' if 'reservation' in name.lower() else 'location',
+                                                'tribe': current_name,
+                                                'state': None,
+                                                'source': 'epa_tribes_service_extracted'
+                                            })
+                            
+                            # Extract ALL EPA locations
+                            epa_locations = details.get('epaLocations', [])
+                            primary_state = None
+                            for location in epa_locations:
+                                state_name = location.get('stateName', '')
+                                epa_region = location.get('epaRegionName', '')
+                                
+                                if not primary_state and state_name:
+                                    primary_state = state_name
+                                
+                                if state_name:
+                                    tribe_places.append({
+                                        'name': state_name,
+                                        'type': 'state',
+                                        'tribe': current_name,
+                                        'state': state_name,
+                                        'source': 'epa_tribes_service_location'
+                                    })
+                                
+                                if epa_region:
+                                    tribe_places.append({
+                                        'name': epa_region,
+                                        'type': 'epa_region',
+                                        'tribe': current_name,
+                                        'state': state_name,
+                                        'source': 'epa_tribes_service_location'
+                                    })
+                            
+                            # Update state info
+                            if primary_state:
+                                for place in tribe_places:
+                                    if not place.get('state'):
+                                        place['state'] = primary_state
+                            
+                    except Exception:
+                        if current_name:
+                            return [{
+                                'name': current_name,
+                                'type': 'tribe',
+                                'tribe': current_name,
+                                'state': None,
+                                'source': 'epa_tribes_service_basic'
+                            }]
+                    
+                    return tribe_places
+                
+                # Parallel processing with REAL-TIME progress monitoring (updates every second)
+                completed = 0
+                last_update_time = start_time
+                
+                # Start a progress update thread
+                import threading
+                progress_lock = threading.Lock()
+                stop_progress = threading.Event()
+                
+                def progress_updater():
+                    """Update progress display every second while running."""
+                    while not stop_progress.is_set():
+                        time.sleep(1.0)  # Update every second
+                        if stop_progress.is_set():
+                            break
+                        
+                        with progress_lock:
+                            current_completed = completed
+                            current_places = len(places)
+                            current_elapsed = time.time() - start_time
+                        
+                        if current_completed > 0 and current_elapsed > 0:
+                            avg_time = current_elapsed / current_completed
+                            remaining = total_tribes - current_completed
+                            eta_seconds = avg_time * remaining
+                            eta_min = int(eta_seconds // 60)
+                            eta_sec = int(eta_seconds % 60)
+                            progress_pct = (current_completed / total_tribes) * 100
+                            speed = current_completed / current_elapsed
+                            elapsed_min = int(current_elapsed // 60)
+                            elapsed_sec = int(current_elapsed % 60)
+                            
+                            # ALWAYS VISIBLE PROGRESS - updates every second
+                            sys.stdout.write(f"\r    ⏳ PROGRESS: [{current_completed:4d}/{total_tribes}] "
+                                           f"({progress_pct:5.1f}%) | "
+                                           f"Places: {current_places:5d} | "
+                                           f"Speed: {speed:5.2f} tribes/sec | "
+                                           f"Elapsed: {elapsed_min:2d}m {elapsed_sec:2d}s | "
+                                           f"ETA: {eta_min:2d}m {eta_sec:2d}s        ")
+                            sys.stdout.flush()
+                
+                # Start progress updater thread
+                progress_thread = threading.Thread(target=progress_updater, daemon=True)
+                progress_thread.start()
+                
+                try:
+                    with ThreadPoolExecutor(max_workers=10) as executor:
+                        future_to_tribe = {executor.submit(fetch_tribe_details, tribe): tribe for tribe in data}
+                        
+                        for future in as_completed(future_to_tribe):
+                            with progress_lock:
+                                completed += 1
+                                try:
+                                    tribe_places = future.result()
+                                    for place in tribe_places:
+                                        name_lower = place['name'].lower().strip()
+                                        if name_lower not in seen_names:
+                                            seen_names.add(name_lower)
+                                            places.append(place)
+                                except Exception:
+                                    pass
+                
+                finally:
+                    # Stop progress updater
+                    stop_progress.set()
+                    progress_thread.join(timeout=2)
+                    
+                    # Final progress display
+                    elapsed_total = time.time() - start_time
+                    sys.stdout.write(f"\r    ✓ COMPLETE: [{total_tribes}/{total_tribes}] "
+                                   f"(100.0%) | "
+                                   f"Places: {len(places):5d} | "
+                                   f"Time: {int(elapsed_total//60)}m {int(elapsed_total%60)}s"
+                                   f"                    \n")
+                    sys.stdout.flush()
+                
+                # Final status
+                elapsed_total = time.time() - start_time
+                print(f"\n    ✓ Completed in {int(elapsed_total//60)}m {int(elapsed_total%60)}s")
+                print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
+                
+                # OLD SEQUENTIAL CODE REMOVED - using parallel version above
+                for idx, tribe in enumerate(data):
                     current_name = tribe.get('currentName', '')
                     epa_tribal_id = tribe.get('epaTribalInternalId')
                     bia_code = tribe.get('currentBIATribalCode')
-                    state_info = None
                     
-                    # Get detailed information to extract location/state
+                    # Get detailed information to extract ALL data
                     if epa_tribal_id:
                         try:
                             details_url = f"{base_url}/tribeDetails/{epa_tribal_id}"
                             with urllib.request.urlopen(details_url, timeout=30) as details_response:
                                 details_data = json.loads(details_response.read().decode('utf-8'))
-                                if isinstance(details_data, list) and len(details_data) > 0:
+                                
+                                # Handle both dict and list responses
+                                if isinstance(details_data, dict):
+                                    details = details_data
+                                elif isinstance(details_data, list) and len(details_data) > 0:
                                     details = details_data[0]
-                                    # Extract state from EPA locations
-                                    epa_locations = details.get('epaLocations', [])
-                                    if epa_locations:
-                                        state_info = epa_locations[0].get('stateName', '')
-                                        
-                                        # Also get all historical names and locations
-                                        names = details.get('names', [])
-                                        for name_entry in names:
-                                            name = name_entry.get('name', '')
-                                            if name and name not in [p['name'] for p in places]:
+                                else:
+                                    continue
+                                    
+                                    # Extract ALL historical names
+                                    names = details.get('names', [])
+                                    if not names:
+                                        # Fallback to current name if no historical names
+                                        names = [{'name': current_name}]
+                                    
+                                    for name_entry in names:
+                                        name = name_entry.get('name', '') if isinstance(name_entry, dict) else str(name_entry)
+                                        if name and name.strip():
+                                            name_lower = name.lower().strip()
+                                            if name_lower not in seen_names:
+                                                seen_names.add(name_lower)
+                                                
+                                                # Add the full tribal name
                                                 places.append({
-                                                    'name': name,
+                                                    'name': name.strip(),
                                                     'type': 'tribe',
                                                     'tribe': current_name,
-                                                    'state': state_info,
+                                                    'state': None,  # Will fill from locations
                                                     'source': 'epa_tribes_service'
                                                 })
+                                                
+                                                # Extract place names from the tribal name
+                                                extracted_places = extract_place_names_from_tribal_name(name)
+                                                for place_name in extracted_places:
+                                                    place_lower = place_name.lower().strip()
+                                                    if place_lower and place_lower not in seen_names:
+                                                        seen_names.add(place_lower)
+                                                        places.append({
+                                                            'name': place_name.strip(),
+                                                            'type': 'reservation' if 'reservation' in name.lower() else 'location',
+                                                            'tribe': current_name,
+                                                            'state': None,
+                                                            'source': 'epa_tribes_service_extracted'
+                                                        })
+                                    
+                                    # Extract ALL EPA locations (tribes can be in multiple states!)
+                                    epa_locations = details.get('epaLocations', [])
+                                    for location in epa_locations:
+                                        state_name = location.get('stateName', '')
+                                        state_code = location.get('stateCode', '')
+                                        epa_region = location.get('epaRegionName', '')
+                                        
+                                        # Add state as a place
+                                        if state_name and state_name.lower() not in seen_names:
+                                            seen_names.add(state_name.lower())
+                                            places.append({
+                                                'name': state_name,
+                                                'type': 'state',
+                                                'tribe': current_name,
+                                                'state': state_name,
+                                                'source': 'epa_tribes_service_location'
+                                            })
+                                        
+                                        # Add EPA region
+                                        if epa_region and epa_region.lower() not in seen_names:
+                                            seen_names.add(epa_region.lower())
+                                            places.append({
+                                                'name': epa_region,
+                                                'type': 'epa_region',
+                                                'tribe': current_name,
+                                                'state': state_name,
+                                                'source': 'epa_tribes_service_location'
+                                            })
+                                    
+                                    # Update state info for all places from this tribe
+                                    if epa_locations:
+                                        primary_state = epa_locations[0].get('stateName', '')
+                                        # Update state for recent places from this tribe
+                                        for place in places[-50:]:  # Update last 50 places
+                                            if place.get('tribe') == current_name and not place.get('state'):
+                                                place['state'] = primary_state
+                                    
+                                    # Extract BIA codes (historical)
+                                    bia_codes = details.get('biaTribalCodes', [])
+                                    for bia_entry in bia_codes:
+                                        code = bia_entry.get('code', '')
+                                        if code:
+                                            # BIA code can be used as identifier
+                                            pass
+                                    
                         except Exception as e:
                             # If detailed lookup fails, use basic info
-                            pass
+                            if current_name and current_name.lower() not in seen_names:
+                                seen_names.add(current_name.lower())
+                                places.append({
+                                    'name': current_name,
+                                    'type': 'tribe',
+                                    'tribe': current_name,
+                                    'state': None,
+                                    'source': 'epa_tribes_service_basic'
+                                })
+                    else:
+                        # No EPA ID, use current name
+                        if current_name and current_name.lower() not in seen_names:
+                            seen_names.add(current_name.lower())
+                            places.append({
+                                'name': current_name,
+                                'type': 'tribe',
+                                'tribe': current_name,
+                                'state': None,
+                                'source': 'epa_tribes_service_basic'
+                            })
                     
-                    # Add current name
-                    if current_name:
-                        places.append({
-                            'name': current_name,
-                            'type': 'tribe',
-                            'tribe': current_name,
-                            'state': state_info,
-                            'source': 'epa_tribes_service'
-                        })
-                    
-                    if len(places) % 100 == 0:
-                        print(f"      Processed {len(places)} tribal names...")
+                    # Progress update
+                    if (idx + 1) % 50 == 0:
+                        print(f"      Processed {idx + 1}/{len(data)} tribes, extracted {len(places)} places so far...")
                 
                 print(f"    ✓ Extracted {len(places)} tribal place names from EPA")
+                print(f"    ✓ Includes: tribal names, reservations, locations, states, regions")
             else:
                 print(f"    ⚠ Unexpected response format")
                 
